@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
 import handleSignUp from '../services/api'
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import Container from '@mui/material/Container';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import { Grid2 } from '@mui/material';
+import './SignUpPage.css'
 
 
 function SignUpPage() {
@@ -24,7 +25,7 @@ function SignUpPage() {
     const [error, setError] = useState("")
 
     // get the history object
-    const histpry = useNavigate();
+    // const histpry = useNavigate();
 
     const configureSignUp = async () => {
         try {
@@ -55,64 +56,122 @@ function SignUpPage() {
             console.error('Signup failed:', error.response ? error.response.data : error.message);
             setError(error.response ? error.response.data : error.message);
         }
-        return (
-            <Container>
-                <Form>
-                    <Row className="mb-3">
-                        <Form.Group as={Col} controlId="formGridFirstName">
-                            <Form.Label>First Name</Form.Label>
-                            <Form.Control type="text" placeholder="Enter first name" />
-                        </Form.Group>
-
-                        <Form.Group as={Col} controlId="formGridLastName">
-                            <Form.Label>Last Name</Form.Label>
-                            <Form.Control type="text" placeholder="Enter last name" />
-                        </Form.Group>
-                    </Row>
-
-                    <Row className="mb-3">
-                    <Form.Group as={Col} controlId="formGridDateOfBirth">
-                        <Form.Label>Date Of Birth</Form.Label>
-                        <Form.Control placeholder="DD-MM-YYYY" />
-                    </Form.Group>
-
-                    <Form.Group as={Col} controlId="formGridEmail">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control placeholder="Enter email address" />
-                    </Form.Group>
-                    </Row>
-                    <Row className="mb-3">
-                        <Form.Group as={Col} controlId="formGridPostCode">
-                            <Form.Label>Postcode</Form.Label>
-                            <Form.Control type="text" placeholder="Enter postcode" />
-                        </Form.Group>
-
-                        <Form.Group as={Col} controlId="formGridPhoneNumber">
-                            <Form.Label>Phone Number</Form.Label>
-                            <Form.Control type="text" placeholder="Enter phone number" />
-                        </Form.Group>
-                    </Row>
-                    <Row className="mb-3">
-                        <Form.Group as={Col} controlId="formGridPassword">
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control type="text" placeholder="Enter password" />
-                        </Form.Group>
-
-                        <Form.Group as={Col} controlId="formGridConfirmPassword">
-                            <Form.Label>Confirm Password</Form.Label>
-                            <Form.Control type="text" placeholder="Confirm password" />
-                        </Form.Group>
-                        <Form.Group as={Col} controlId="formGridAccessCode">
-                            <Form.Label>Access Code</Form.Label>
-                            <Form.Control type="text" placeholder="Enter access code" />
-                        </Form.Group>
-                    </Row>
-                    <Button variant="primary" type="submit">
-                        Submit
-                    </Button>
-                </Form>
-                );
-            </Container>
-        )
     }
+    return (
+        <Container className='signUpContainer' maxWidth="sm" sx={{ mt: 4 }}>
+          <Typography variant="h4" gutterBottom>
+            Sign Up Form
+          </Typography>
+      
+          <Grid2 container spacing={2}>
+            <Grid2 size={{ xs: 6, md: 6 }}>
+              <TextField
+                label="First Name"
+                variant="outlined"
+                fullWidth
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+            </Grid2>
+      
+            <Grid2 size={{ xs: 6, md: 6 }}>
+              <TextField
+                label="Last Name"
+                variant="outlined"
+                fullWidth
+                value={lastName}
+                onChange={(e) => setLasttName(e.target.value)}
+              />
+            </Grid2>
+      
+            <Grid2 size={{ xs: 6, md: 6 }}>
+              <TextField
+                label="Date of Birth"
+                variant="outlined"
+                fullWidth
+                placeholder="DD-MM-YYYY"
+                value={dateOfBirth}
+                onChange={(e) => setDateOfBirth(e.target.value)}
+              />
+            </Grid2>
+      
+            <Grid2 size={{ xs: 6, md: 6 }}>
+              <TextField
+                label="Email"
+                variant="outlined"
+                fullWidth
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </Grid2>
+      
+            <Grid2 size={{ xs: 6, md: 6 }}>
+              <TextField
+                label="Postcode"
+                variant="outlined"
+                fullWidth
+                value={postcode}
+                onChange={(e) => setPostcode(e.target.value)}
+              />
+            </Grid2>
+      
+            <Grid2 size={{ xs: 6, md: 6 }}>
+              <TextField
+                label="Phone Number"
+                variant="outlined"
+                fullWidth
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+              />
+            </Grid2>
+      
+            <Grid2 size={{ xs: 6, md: 4 }}>
+              <TextField
+                label="Password"
+                variant="outlined"
+                fullWidth
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </Grid2>
+      
+            <Grid2 size={{ xs: 6, md: 4 }}>
+              <TextField
+                label="Confirm Password"
+                variant="outlined"
+                fullWidth
+                type="password"
+                value={confirmedPassword}
+                onChange={(e) => setConfirmedPassword(e.target.value)}
+              />
+            </Grid2>
+      
+            <Grid2 size={{ xs: 12, md: 4 }}>
+              <TextField
+                label="Access Code"
+                variant="outlined"
+                fullWidth
+                value={accessCode}
+                onChange={(e) => setAccessCode(e.target.value)}
+              />
+            </Grid2>
+      
+            {error && (
+              <Grid2 size={{ xs: 6, md: 6 }}>
+                <Typography color="error">{error}</Typography>
+              </Grid2>
+            )}
+      
+            <Grid2 xs={12}>
+              <Button variant="contained" onClick={configureSignUp}>
+                Sign Up
+              </Button>
+            </Grid2>
+          </Grid2>
+        </Container>
+      );
+      
+
 } export default SignUpPage;
