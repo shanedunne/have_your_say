@@ -1,23 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useEffect, useState } from "react";
+import getGreeting from './api';
+
 
 function App() {
+
+  const [dataFromApi, setDataFromApi] = useState();
+  useEffect(() =>
+  {
+    getGreeting().then((data) => {
+      console.log(data.content)
+      setDataFromApi(data.content);
+      console.log(dataFromApi)
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+  }, []);
+
+    // Monitor changes in dataFromApi
+    useEffect(() => {
+      console.log("Updated dataFromApi:", dataFromApi);
+    }, [dataFromApi]);
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {dataFromApi}
     </div>
   );
 }
