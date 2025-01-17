@@ -1,4 +1,4 @@
-package com.example.haveyoursay;
+package com.example.haveyoursay.controllers;
 
 import java.util.concurrent.atomic.AtomicLong;
 
