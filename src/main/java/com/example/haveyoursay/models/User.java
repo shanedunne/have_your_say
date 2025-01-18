@@ -39,27 +39,21 @@ public class User {
     public void setId(String id) {
         this.id = id;
     }
-    public String get_id() {
-        return id;
-    }
-    public void set_id(String id) {
-        this.id = id;
-    }
 
     // get and set first name
     public String getFirstName() {
         return firstName;
     }
-    public void seFirsttName(String lastName) {
-        this.lastName = lastName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     // get and set last name
     public String getLastName() {
         return lastName;
     }
-    public void setLastName(String fullName) {
-        this.firstName = fullName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
      // get and set date of birth

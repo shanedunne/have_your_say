@@ -89,8 +89,8 @@ public class UserController {
 
 
 
-    @PostMapping("/signin")
-    public ResponseEntity<AuthResponse> signin(@RequestBody User loginRequest) {
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> login(@RequestBody User loginRequest) {
         String username = loginRequest.getEmail();
         String password = loginRequest.getPassword();
 
