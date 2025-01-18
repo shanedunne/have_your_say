@@ -27,7 +27,7 @@ public class User {
     private String postcode;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-    private String role = "ROLE_CUSTOMER";
+    private String role = "ROLE_CITIZEN";
     private String accessCode;
     
 
