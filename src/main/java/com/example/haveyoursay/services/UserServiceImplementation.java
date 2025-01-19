@@ -17,13 +17,34 @@ import java.util.List;
 
 
 @Service
-public class UserServiceImplementation implements UserDetailsService {
+public class UserServiceImplementation implements UserService, UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
     
     public UserServiceImplementation(UserRepository userRepository) {
         this.userRepository=userRepository;
+    }
+
+    @Override
+    public List<User> getAllUser() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public User findUserProfileByJwt(String jwt) {
+        // Implement logic to extract user profile from JWT
+        return null;
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User findUserById(String userId) {
+        return userRepository.findById(userId).orElse(null);
     }
     
     
