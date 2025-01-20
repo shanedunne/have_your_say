@@ -4,12 +4,18 @@ package com.example.haveyoursay.response;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
 @NoArgsConstructor
 public class AuthResponse {
     private String jwt;
     private String message;
     private Boolean status;
+
+    public AuthResponse(String jwt, String message, Boolean status) {
+        this.jwt = jwt;
+        this.message = message;
+        this.status = status;
+    }
+
 
     public String getJwt() {
         return jwt;
