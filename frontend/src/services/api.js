@@ -24,6 +24,7 @@ export const handleSignUp = async ({
       phoneNumber,
       accessCode
     });
+    console.log(response)
     return response.data;
   } catch (error) {
     console.error("Sign-up error:", error);

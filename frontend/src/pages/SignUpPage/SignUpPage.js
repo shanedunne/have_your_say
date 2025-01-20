@@ -40,7 +40,7 @@ function SignUpPage() {
             }
 
             // call axios post request
-            handleSignUp(firstName,
+            handleSignUp({firstName,
                 lastName,
                 dateOfBirth,
                 email,
@@ -48,7 +48,8 @@ function SignUpPage() {
                 password,
                 confirmedPassword,
                 phoneNumber,
-                accessCode);
+                accessCode
+            });
 
 
         } catch (error) {
