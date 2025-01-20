@@ -73,6 +73,8 @@ public class UserController {
         createdUser.setPassword(passwordEncoder.encode(password));
 
         User savedUser = userRepository.save(createdUser);
+        System.out.println("Saved user: " + savedUser);
+
         Authentication authentication = new UsernamePasswordAuthenticationToken(savedUser.getEmail(),
                 savedUser.getPassword());
         try {
@@ -94,8 +96,6 @@ public class UserController {
     public ResponseEntity<AuthResponse> login(@RequestBody User loginRequest) {
         String username = loginRequest.getEmail();
         String password = loginRequest.getPassword();
-
-        System.out.println(username + "-------" + password);
 
         Authentication authentication = authenticate(username, password);
         SecurityContextHolder.getContext().setAuthentication(authentication);

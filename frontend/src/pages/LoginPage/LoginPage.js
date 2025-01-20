@@ -27,9 +27,10 @@ function LoginPage() {
             }
 
             // call axios post request
-            handleLogin(
+            handleLogin({
                 email,
-                password,);
+                password
+            });
 
 
         } catch (error) {
