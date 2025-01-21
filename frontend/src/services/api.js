@@ -1,5 +1,6 @@
-// api.js
 import axios from "axios";
+import Cookies from 'js-cookie';
+
 
 export const handleSignUp = async ({
   firstName,
@@ -32,7 +33,7 @@ export const handleSignUp = async ({
   }
 };
 
-export const handleLogin = async ({ 
+export const handleLogin = async ({
   email,
   password,
 }) => {
@@ -41,9 +42,22 @@ export const handleLogin = async ({
       email,
       password,
     });
+
+    const { jwt } = response.data;
+
+    Cookies.set("JwtToken", jwt, { expires: 7, secure: true })
+
     return response.data;
   } catch (error) {
     console.error("Login error: ", error);
     throw error;
   }
 };
+
+export const handlelogout = async (
+  JwtTokenName) => {
+  Cookies.remove(JwtTokenName);
+  console.log("cookie removed on logout")
+  console.log('Remaining cookies:', Cookies.get());
+
+}

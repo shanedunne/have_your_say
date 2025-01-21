@@ -7,14 +7,14 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from 'react-router-dom';
+import { handlelogout } from '../services/api';
 
 export default function ButtonAppBar() {
 
   let navigate = useNavigate();
 
-  const handleLogout = () => {
-    // Perform logout actions here (e.g., clear session, remove authentication token)
-    // After logout, redirect to the login page
+  const logout = () => {
+    handlelogout("JwtToken")
     navigate('/');
 };
 
@@ -36,7 +36,7 @@ export default function ButtonAppBar() {
             Have Your Say
           </Typography>
           <Button color="inherit" onClick={() => navigate('/login')}>Login</Button>
-          <Button color="inherit" onClick={handleLogout}>Logout</Button>
+          <Button color="inherit" onClick={logout}>Logout</Button>
         </Toolbar>
       </AppBar>
     </Box>
