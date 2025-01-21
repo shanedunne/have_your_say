@@ -17,7 +17,7 @@ function LoginPage() {
     const [error, setError] = useState("")
 
     // get the history object
-    // const histpry = useNavigate();
+    const navigate = useNavigate();
 
     const configureLogin = async () => {
         try {
@@ -31,6 +31,8 @@ function LoginPage() {
                 email,
                 password
             });
+            
+            navigate("/dashboard")
 
 
         } catch (error) {

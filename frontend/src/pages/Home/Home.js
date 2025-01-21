@@ -5,12 +5,8 @@ import Button from '@mui/material/Button';
 
 
 
-function Dashboard() {
-    const history = useNavigate();
-
-    const handleLogout = () => {
-        history("/");
-    }
+function HomePage() {
+    const navigate = useNavigate();
 
     return (
         <Box sx={{
@@ -23,9 +19,10 @@ function Dashboard() {
             margin: '0 auto',
         }}>
             <h2>
-                Welcome to the dashboard!
+                Welcome to the Have Your Say!
             </h2>
+            <p>Please login or signup</p>
 
         </Box>
     )
-} export default Dashboard;
+} export default HomePage;

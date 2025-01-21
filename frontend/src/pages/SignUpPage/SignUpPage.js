@@ -25,7 +25,7 @@ function SignUpPage() {
     const [error, setError] = useState("")
 
     // get the history object
-    // const histpry = useNavigate();
+    const navigate = useNavigate();
 
     const configureSignUp = async () => {
         try {
@@ -50,6 +50,8 @@ function SignUpPage() {
                 phoneNumber,
                 accessCode
             });
+
+            navigate("/login")
 
 
         } catch (error) {

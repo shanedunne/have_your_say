@@ -6,8 +6,19 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import { useNavigate } from 'react-router-dom';
 
 export default function ButtonAppBar() {
+
+  let navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Perform logout actions here (e.g., clear session, remove authentication token)
+    // After logout, redirect to the login page
+    navigate('/');
+};
+
+  
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -24,7 +35,8 @@ export default function ButtonAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Have Your Say
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button color="inherit" onClick={() => navigate('/login')}>Login</Button>
+          <Button color="inherit" onClick={handleLogout}>Logout</Button>
         </Toolbar>
       </AppBar>
     </Box>
