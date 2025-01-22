@@ -29,8 +29,8 @@ function CreatePetition({ open, handleOpenPetitionModal, handleClosePetitionModa
     // create category select options
     function createSelectOptions() {
         let selectOptions = [];
-        for (let i = 0; i <= categoryOptions; i++) {
-            selectOptions.push(<MenuItem value={i}>{i}</MenuItem>)
+        for (let i = 0; i <= categoryOptions.length; i++) {
+            selectOptions.push(<MenuItem value={categoryOptions[i]}>{categoryOptions[i]}</MenuItem>)
         }
         return selectOptions;
     }
@@ -41,27 +41,24 @@ function CreatePetition({ open, handleOpenPetitionModal, handleClosePetitionModa
 
     const submitPetition = async () => {
         console.log("petition submitted", title)
+        
 
         // set timestamp for petition starting
         setStartTime(Date.now())
+        console.log(title, category, body, startTime)
         try {
             if(!title || !category || !body || !startTime) {
                 setError("Please fill in all fields");
                 return;
             }
-
-            handleCreatePetition({title, category, body, startTime})
+            
+            // handleCreatePetition({title, category, body, startTime})
             navigate('/dashboard')
         } catch (error) {
             console.error("Creation of petition failed")
             setError("Error creating petition")
         }
-
     }
-
-
-
-    // <Button onClick={handleOpenPetitionModel}>Open modal</Button>
 
     return (
 
@@ -105,8 +102,9 @@ function CreatePetition({ open, handleOpenPetitionModal, handleClosePetitionModa
                         <TextField
                             label="Title"
                             variant="outlined"
+                            type='text'
                             fullWidth
-                            value={email}
+                            value={title}
                             onChange={(e) => setTitle(e.target.value)}
                         />
                     </Grid2>

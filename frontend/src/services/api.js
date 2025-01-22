@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from 'js-cookie';
 
-
+// function to post details of new user
 export const handleSignUp = async ({
   firstName,
   lastName,
@@ -33,6 +33,7 @@ export const handleSignUp = async ({
   }
 };
 
+// function to handle login by checking data on back end and setting cookie
 export const handleLogin = async ({
   email,
   password,
@@ -54,6 +55,7 @@ export const handleLogin = async ({
   }
 };
 
+// function to handle logging out and clearing cookie
 export const handlelogout = async (
   JwtTokenName) => {
   Cookies.remove(JwtTokenName);
@@ -61,7 +63,7 @@ export const handlelogout = async (
   console.log('Remaining cookies:', Cookies.get());
 
 };
-
+// api call to post new petitions
 export const handleCreatePetition = async ({
   title,
   category,
