@@ -8,14 +8,16 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { Grid2 } from '@mui/material';
 import Modal from '@mui/material/Modal';
+import { handleCreatePetition } from '../services/api';
 
 
 function CreatePetition({ open, handleOpenPetitionModal, handleClosePetitionModal }) {
     // create states for form fields
     const [email, setEmail] = useState("");
-    const [tite, setTitle] = useState("");
+    const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
     const [body, setBody] = useState("");
+    const [startTime, setStartTime] = useState();
     const categoryOptions = ["Infrastructure", "Transport", "Education", "Youth Services", "Health & Social Care", "Environment", "Housing", "Urban Development", "Local Business", "Culture & Recreation"];
 
     // state for error message
@@ -38,7 +40,23 @@ function CreatePetition({ open, handleOpenPetitionModal, handleClosePetitionModa
     }
 
     const submitPetition = async () => {
-        console.log("petition submitted", tite)
+        console.log("petition submitted", title)
+
+        // set timestamp for petition starting
+        setStartTime(Date.now())
+        try {
+            if(!title || !category || !body || !startTime) {
+                setError("Please fill in all fields");
+                return;
+            }
+
+            handleCreatePetition({title, category, body, startTime})
+            navigate('/dashboard')
+        } catch (error) {
+            console.error("Creation of petition failed")
+            setError("Error creating petition")
+        }
+
     }
 
 
@@ -88,7 +106,6 @@ function CreatePetition({ open, handleOpenPetitionModal, handleClosePetitionModa
                             label="Title"
                             variant="outlined"
                             fullWidth
-                            type="email"
                             value={email}
                             onChange={(e) => setTitle(e.target.value)}
                         />

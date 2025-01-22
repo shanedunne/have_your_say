@@ -37,7 +37,7 @@ function LoginPage() {
 
         } catch (error) {
             // Handle login error
-            console.error('Login failed:', error.response ? error.response.data : error.message);
+            console.error('Login failed');
             setError('Invalid email or password');
         }
     }

@@ -60,4 +60,28 @@ export const handlelogout = async (
   console.log("cookie removed on logout")
   console.log('Remaining cookies:', Cookies.get());
 
-}
+};
+
+export const handleCreatePetition = async ({
+  title,
+  category,
+  body,
+  startTime,
+  userJwt,
+}) => {
+  try {
+    const userJwt = Cookies.get("JwtToken");
+    const response = await axios.post("http://localhost:8080/createpetition", {
+      title,
+      category,
+      body,
+      startTime,
+      userJwt,
+    });
+    console.log(response)
+    return response.data;
+  } catch (error) {
+    console.error("Error creating petition:", error);
+    throw error;
+  }
+};
