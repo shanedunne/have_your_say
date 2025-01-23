@@ -18,8 +18,8 @@ public class Petition {
     private String title;
     private String category;
     private String body;
-    private Integer startTime;
-    private Integer closeTime;
+    private Long startTime;
+    private Long closeTime;
     private String userId;
 
     // Getters
@@ -55,19 +55,19 @@ public class Petition {
         this.body = body;
     }
 
-    public Integer getStartTime() {
+    public Long getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Integer startTime) {
+    public void setStartTime(Long startTime) {
         this.startTime = startTime;
     }
 
-    public Integer getCloseTime() {
+    public Long getCloseTime() {
         return closeTime;
     }
 
-    public void setCloseTime(Integer closeTime) {
+    public void setCloseTime(Long closeTime) {
         this.closeTime = closeTime;
     }
 

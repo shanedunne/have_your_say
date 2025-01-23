@@ -15,9 +15,9 @@ public class PetitionServiceImplementation implements PetitionService {
     }
 
     @Override
-    public Integer getPetitionCloseTime(Integer petitionStartTime) {
+    public Long getPetitionCloseTime(Long petitionStartTime) {
         // add 7 days to the petition start time
-        int petitionCloseTime = petitionStartTime + 604800000;
+        Long petitionCloseTime = petitionStartTime + 604800000;
         return petitionCloseTime;
     }
     

@@ -69,16 +69,20 @@ export const handleCreatePetition = async ({
   category,
   body,
   startTime,
-  userJwt,
 }) => {
   try {
     const userJwt = Cookies.get("JwtToken");
-    const response = await axios.post("http://localhost:8080/createpetition", {
+    const response = await axios.post("http://localhost:8080/petition/create", {
       title,
       category,
       body,
       startTime,
-      userJwt,
+    },
+    {
+      // pass the token in the header to not expose it
+      headers: {
+        Authorization: `Bearer ${userJwt}`,
+      },
     });
     console.log(response)
     return response.data;

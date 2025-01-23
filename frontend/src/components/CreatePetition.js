@@ -17,7 +17,6 @@ function CreatePetition({ open, handleOpenPetitionModal, handleClosePetitionModa
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
     const [body, setBody] = useState("");
-    const [startTime, setStartTime] = useState();
     const categoryOptions = ["Infrastructure", "Transport", "Education", "Youth Services", "Health & Social Care", "Environment", "Housing", "Urban Development", "Local Business", "Culture & Recreation"];
 
     // state for error message
@@ -44,12 +43,15 @@ function CreatePetition({ open, handleOpenPetitionModal, handleClosePetitionModa
         
 
         // set timestamp for petition starting
-        setStartTime(Date.now())
+        const startTime = Date.now();
         console.log(title, category, body, startTime)
         try {
             if(!title || !category || !body || !startTime) {
+                console.log("missing fields")
                 setError("Please fill in all fields");
                 return;
+            } else {
+                handleCreatePetition({title, category, body, startTime});
             }
             
             // handleCreatePetition({title, category, body, startTime})
