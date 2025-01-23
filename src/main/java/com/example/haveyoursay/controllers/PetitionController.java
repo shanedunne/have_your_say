@@ -2,6 +2,7 @@ package com.example.haveyoursay.controllers;
 
 import com.example.haveyoursay.models.Petition;
 import com.example.haveyoursay.repositories.PetitionRepository;
+import com.example.haveyoursay.services.PetitionServiceImplementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,9 @@ public class PetitionController {
     @Autowired
     private PetitionRepository petitionRepository;
 
+    @Autowired
+    private PetitionServiceImplementation petitionServiceImplementation;
+
     @PostMapping("/create")
     public Petition createPetition(@RequestBody Petition petition) {
         System.out.println("Received request to create petition: " + petition.toString());
@@ -23,8 +27,7 @@ public class PetitionController {
         String category = petition.getCategory();
         String body = petition.getBody();
         Integer startTime = petition.getStartTime();
-        Integer closeTime = petition.getCloseTime();
-        String userId = petition.getUserId();
+        Integer closeTime = petitionServiceImplementation.getPetitionCloseTime(startTime);
 
         Petition createdPetition = new Petition();
         createdPetition.setTitle(title);
