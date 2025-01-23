@@ -5,6 +5,8 @@ import com.example.haveyoursay.repositories.PetitionRepository;
 import com.example.haveyoursay.services.PetitionServiceImplementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +22,7 @@ public class PetitionController {
     private PetitionServiceImplementation petitionServiceImplementation;
 
     @PostMapping("/create")
-    public Petition createPetition(@RequestBody Petition petition) {
+    public ResponseEntity<?> createPetition(@RequestBody Petition petition) {
         System.out.println("Received request to create petition: " + petition.toString());
 
         String title = petition.getTitle();
@@ -36,9 +38,14 @@ public class PetitionController {
         createdPetition.setStartTime(startTime);
         createdPetition.setCloseTime(closeTime);
 
-        Petition savedPetition = petitionRepository.save(createdPetition);
+        try {
+            Petition savedPetition = petitionRepository.save(createdPetition);
         System.out.println("Saved petition: " + savedPetition);
-        return petition;
+        return ResponseEntity.ok(savedPetition);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating petition");
+        }
+        
     }
 
 }

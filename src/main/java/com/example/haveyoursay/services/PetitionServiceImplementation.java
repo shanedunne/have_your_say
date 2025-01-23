@@ -6,7 +6,7 @@ import com.example.haveyoursay.models.Petition;
 import com.example.haveyoursay.repositories.PetitionRepository;
 
 @Service
-public class PetitionServiceImplementation implements UserService {
+public class PetitionServiceImplementation implements PetitionService {
 
     private PetitionRepository petitionRepository;
 
