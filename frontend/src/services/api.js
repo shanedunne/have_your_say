@@ -11,7 +11,7 @@ export const handleSignUp = async ({
   password,
   confirmedPassword,
   phoneNumber,
-  accessCode,
+  region,
 }) => {
   try {
     const response = await axios.post("http://localhost:8080/auth/signup", {
@@ -23,7 +23,7 @@ export const handleSignUp = async ({
       password,
       confirmedPassword,
       phoneNumber,
-      accessCode
+      region
     });
     console.log(response)
     return response.data;

@@ -89,7 +89,7 @@ function CreatePetition({ open, handleOpenPetitionModal, handleClosePetitionModa
                 px: 4,
                 pb: 3,
             }}>
-                <Grid2 container spacing={2}>
+                <Grid2 container size={{md: 6}} offset={{md: 2}}>
                     <Typography variant="h4" >
                         Create A Petition
                     </Typography>
