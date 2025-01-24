@@ -32,32 +32,7 @@ function PetitionCard({ title, category, body, closeTime }) {
             justifyContent: "space-between"
           }}
         >
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center"
-            }}
-          >
-            <Typography variant="subtitle1" sx={{ ml: 1, fontWeight: "light" }}>
-              {category}
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              display: "inline-flex",
-              flexDirection: "row",
-              alignItems: "center"
-            }}
-          >
-            <Typography
-              variant="subtitle1"
-              sx={{ ml: 1 }}
-            >
-
-              {msToTimeShort(closeTime)}
-            </Typography>
-          </Box>
+          
         </Box>
         <CardContent sx={{ p: 0, mb: 0 }}>
           <Typography variant="h5" sx={{ mb: 1, fontWeight: "bold" }}>
@@ -101,7 +76,7 @@ function PetitionCard({ title, category, body, closeTime }) {
         title={title}
         body={body}
         category={category}
-        closeTime={msToTimeLong(closeTime)}
+        closeTime={msToTimeShort(closeTime)}
       />
     </Grid>
 
