@@ -8,12 +8,14 @@ export default function ArticleDrawer({ anchor = "right", open, onClose, title, 
   return (
     <Drawer anchor={anchor} open={open} onClose={onClose}>
       <Box sx={{
-        width: 550, p: 2, mb: 2,
+        width: { xs: '100%', sm: 400, md: 550 }
+        , p: 2, mb: 2,
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between"
       }} role="presentation">
+         
         <CardContent sx={{ paddingTop: '100px' }}>
           <Typography variant="h1" sx={{ mb: 2, fontWeight: "bold" }}>
             {title}
@@ -22,10 +24,6 @@ export default function ArticleDrawer({ anchor = "right", open, onClose, title, 
             {category}
           </Typography>
           <Typography variant="subtitle1" sx={{paddingBottom: '20px'}}>{closeTime}</Typography>
-
-          
-
-
           <Typography variant="body1">{body}</Typography>
         </CardContent>
       </Box>

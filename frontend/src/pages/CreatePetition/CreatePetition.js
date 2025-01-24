@@ -84,7 +84,7 @@ function CreatePetition({ pathname }) {
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
-            idth: "100%",
+            maxWidth: {xs: '100%', sm: 400, md: 600},
             height: "100vh",
             padding: 2,
         }}>
@@ -95,7 +95,7 @@ function CreatePetition({ pathname }) {
                 Do you have an idea to improve your community? Create a petition and if enough of your neighbours support it, your local representatives will consider it
             </Typography>
 
-            <Grid container spacing={3} sx={{ maxWidth: "600px", width: "100%" }}>
+            <Grid container spacing={3} sx={{ maxWidth: {xs: '100%', sm: 400, md: 600} }}>
                 <Grid item xs={12}>
                     <TextField
                         label="Title"
