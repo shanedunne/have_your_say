@@ -8,6 +8,7 @@ import HomePage from './pages/Home/Home';
 import ButtonAppBar from './components/AppBar';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import theme from './assets/theme.js'
+import DashboardLayoutBasic from './pages/Dashboard/Dashboard';
 
 
 
@@ -18,14 +19,15 @@ function App() {
   return (
     <div className='App'>
       <BrowserRouter >
-       <AppProvider theme={theme}>
-        <Routes>
-          <Route path="/" element={<HomePage/>} />
-          <Route path="/login" element={<LoginPage/>} />
-          <Route path="/signup" element={<SignUpPage/>} />
-          <Route path="/dashboard" element={<Dashboard/>} />
-        </Routes>
-        </AppProvider>
+          <DashboardLayoutBasic>
+
+          </DashboardLayoutBasic>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Routes>
       </BrowserRouter>
     </div>
   );

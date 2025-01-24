@@ -28,7 +28,7 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String role = "ROLE_CITIZEN";
-    private String accessCode;
+    private String region;
     
 
     
@@ -105,11 +105,11 @@ public class User {
     }
 
     // get and set role
-    public String getAccessCode() {
-        return accessCode;
+    public String getRegion() {
+        return region;
     }
-    public void setAccessCode(String accessCode) {
-        this.accessCode = accessCode;
+    public void setRegion(String region) {
+        this.region = region;
     }
     
 }

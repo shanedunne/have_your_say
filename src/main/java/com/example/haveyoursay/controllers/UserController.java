@@ -49,7 +49,7 @@ public class UserController {
         String postcode = user.getPostcode();
         String password = user.getPassword();
         String role = user.getRole();
-        String accessCode = user.getAccessCode();
+        String region = user.getRegion();
 
         User isEmailExist = userRepository.findByEmail(email);
         System.out.println("Checking if email exists: " + email);
@@ -69,7 +69,7 @@ public class UserController {
         createdUser.setPhoneNumber(phoneNumber);
         createdUser.setPostcode(postcode);
         createdUser.setRole(role);
-        createdUser.setAccessCode(accessCode);
+        createdUser.setRegion(region);
         createdUser.setPassword(passwordEncoder.encode(password));
 
         User savedUser = userRepository.save(createdUser);
