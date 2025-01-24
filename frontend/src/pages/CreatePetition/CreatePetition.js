@@ -7,10 +7,10 @@ import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { Grid } from '@mui/material';
-import OpenSnackBar from './SnackBar'
+import OpenSnackBar from '../../components/SnackBar'
 
 import Modal from '@mui/material/Modal';
-import { handleCreatePetition } from '../services/api';
+import { handleCreatePetition } from '../../services/api';
 
 
 function CreatePetition({ pathname }) {

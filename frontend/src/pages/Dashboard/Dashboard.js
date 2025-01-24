@@ -13,7 +13,8 @@ import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import { useDemoRouter } from '@toolpad/core/internal';
 import theme from '../../assets/theme';
-import CreatePetition from '../../components/CreatePetition';
+import CreatePetition from '../CreatePetition/CreatePetition';
+import OpenPetitions from '../OpenPetitions/OpenPetitions';
 
 const NAVIGATION = [
     {
@@ -24,107 +25,109 @@ const NAVIGATION = [
         segment: 'createPetition',
         title: 'Create Petition',
         icon: <CreateIcon />,
-      },
+    },
     {
         kind: 'divider',
-      },
-  {
-    kind: 'header',
-    title: 'Petitions',
-  },
-  {
-    segment: 'openPetitions',
-    title: 'Open Petitions',
-    icon: <FileOpenIcon />,
-  },
-  {
-    segment: 'closedPetitions',
-    title: 'Closed Petitions',
-    icon: <AssignmentTurnedInIcon />,
-  },
-  {
-    kind: 'divider',
-  },
-  {
-    kind: 'header',
-    title: 'Proposals',
-  },
-  {
-    segment: 'openProposals',
-    title: 'Open Proposals',
-    icon: <FileOpenIcon />,
-  },
-  {
-    segment: 'closedProposals',
-    title: 'Closed Proposals',
-    icon: <AssignmentTurnedInIcon />,
-  },
-  {
-    kind: 'divider',
-  },
-  {
-    kind: 'header',
-    title: 'Integrations',
-  },
-  {
-    segment: 'integrations',
-    title: 'Integrations',
-    icon: <LayersIcon />,
-  },
+    },
+    {
+        kind: 'header',
+        title: 'Petitions',
+    },
+    {
+        segment: 'openPetitions',
+        title: 'Open Petitions',
+        icon: <FileOpenIcon />,
+    },
+    {
+        segment: 'closedPetitions',
+        title: 'Closed Petitions',
+        icon: <AssignmentTurnedInIcon />,
+    },
+    {
+        kind: 'divider',
+    },
+    {
+        kind: 'header',
+        title: 'Proposals',
+    },
+    {
+        segment: 'openProposals',
+        title: 'Open Proposals',
+        icon: <FileOpenIcon />,
+    },
+    {
+        segment: 'closedProposals',
+        title: 'Closed Proposals',
+        icon: <AssignmentTurnedInIcon />,
+    },
+    {
+        kind: 'divider',
+    },
+    {
+        kind: 'header',
+        title: 'Integrations',
+    },
+    {
+        segment: 'integrations',
+        title: 'Integrations',
+        icon: <LayersIcon />,
+    },
 ];
 
 
 function PageContent({ pathname }) {
-  return (
-    <Box
-      sx={{
-        py: 4,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        textAlign: 'center',
-      }}
-    >
-              {pathname === '/createPetition' && <CreatePetition />}
-    </Box>
-  );
+    return (
+        <Box
+            sx={{
+                py: 4,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                textAlign: 'center',
+            }}
+        >
+            {pathname === '/createPetition' && <CreatePetition />}
+            {pathname === '/openPetitions' && <OpenPetitions />}
+        </Box>
+    );
 }
 
 PageContent.propTypes = {
-  pathname: PropTypes.string.isRequired,
+    pathname: PropTypes.string.isRequired,
 };
 
 function DashboardLayoutBasic(props) {
-  const { window } = props;
+    const { window } = props;
 
-  const router = useDemoRouter('/dashboard');
+    const router = useDemoRouter('/dashboard');
 
 
-  return (
-    // preview-start
-    <AppProvider
-      navigation={NAVIGATION}
-      router={router}
-      theme={theme}
-      branding={{
-        logo: <img src="https://mui.com/static/logo.png" alt="MUI logo" />,
-        title: 'Have Your Say',
-        homeUrl: '/',}}
-    >
-      <DashboardLayout>
-        <PageContent pathname={router.pathname} />
-      </DashboardLayout>
-    </AppProvider>
-    // preview-end
-  );
+    return (
+        // preview-start
+        <AppProvider
+            navigation={NAVIGATION}
+            router={router}
+            theme={theme}
+            branding={{
+                logo: <img src="https://mui.com/static/logo.png" alt="MUI logo" />,
+                title: 'Have Your Say',
+                homeUrl: '/',
+            }}
+        >
+            <DashboardLayout>
+                <PageContent pathname={router.pathname} />
+            </DashboardLayout>
+        </AppProvider>
+        // preview-end
+    );
 }
 
 DashboardLayoutBasic.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * Remove this when copying and pasting into your project.
-   */
-  window: PropTypes.func,
+    /**
+     * Injected by the documentation to work in an iframe.
+     * Remove this when copying and pasting into your project.
+     */
+    window: PropTypes.func,
 };
 
 export default DashboardLayoutBasic;
