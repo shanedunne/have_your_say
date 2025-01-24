@@ -8,9 +8,10 @@ import Typography from '@mui/material/Typography';
 import theme from '../assets/theme';
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import { Grid } from '@mui/material';
+import { msToTimeShort } from '../util/msToTime';
 
 
-function PetitionCard() {
+function PetitionCard({title, category, body, closeTime}) {
     return(
         <Grid item xs={12} sm={6} md={6} lg={4} xl={3} sx={{ width: "50%" }}>
             <Card sx={{ borderRadius: 1, p: 3 }}>
@@ -31,7 +32,7 @@ function PetitionCard() {
                   }}
                 >
                   <Typography variant="h5" sx={{ ml: 1, fontWeight: "light" }}>
-                    Transportation
+                    {category}
                   </Typography>
                 </Box>
                 <Box
@@ -47,17 +48,16 @@ function PetitionCard() {
                     color="text.secondary"
                     sx={{ ml: 1 }}
                   >
-                    1 Day 4 Hours left
+                    {msToTimeShort(closeTime)}
                   </Typography>
                 </Box>
               </Box>
               <CardContent sx={{ p: 0, mb: 0 }}>
                 <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold" }}>
-                  Mountains day
+                  {title}
                 </Typography>
                 <Typography variant="body1" sx={{ mb: 3 }}>
-                  This impressive paella is a perfect party dish and a fun meal
-                  to cook together with your guests. Add 1 cup of frozen..
+                  {body}
                 </Typography>
               </CardContent>
               <Box
