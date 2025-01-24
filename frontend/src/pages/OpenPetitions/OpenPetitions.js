@@ -23,7 +23,6 @@ function OpenPetitions() {
         <Box sx={{
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center',
             alignItems: 'center',
             idth: "100%",
             height: "100vh",

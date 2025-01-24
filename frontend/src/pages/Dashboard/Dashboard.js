@@ -7,8 +7,10 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import CreateIcon from '@mui/icons-material/Create';
+import AccountCircleSharpIcon from '@mui/icons-material/AccountCircleSharp';
 import FileOpenIcon from '@mui/icons-material/FileOpen';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
+import LogoutSharpIcon from '@mui/icons-material/LogoutSharp';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import { useDemoRouter } from '@toolpad/core/internal';
@@ -16,7 +18,7 @@ import theme from '../../assets/theme';
 import CreatePetition from '../CreatePetition/CreatePetition';
 import OpenPetitions from '../OpenPetitions/OpenPetitions';
 
-const NAVIGATION = [
+export const NAVIGATION = [
     {
         kind: 'header',
         title: 'Create'
@@ -72,6 +74,23 @@ const NAVIGATION = [
         title: 'Integrations',
         icon: <LayersIcon />,
     },
+    {
+        kind: 'divider',
+    },
+    {
+        kind: 'header',
+        title: 'Account',
+    },
+    {
+        segment: 'accountSettings',
+        title: 'Account Settings',
+        icon: <AccountCircleSharpIcon />,
+    },
+    {
+        segment: 'logout',
+        title: 'Logout',
+        icon: <LogoutSharpIcon />, 
+    },
 ];
 
 
@@ -114,7 +133,7 @@ function DashboardLayoutBasic(props) {
                 homeUrl: '/',
             }}
         >
-            <DashboardLayout>
+            <DashboardLayout >
                 <PageContent pathname={router.pathname} />
             </DashboardLayout>
         </AppProvider>
@@ -122,12 +141,5 @@ function DashboardLayoutBasic(props) {
     );
 }
 
-DashboardLayoutBasic.propTypes = {
-    /**
-     * Injected by the documentation to work in an iframe.
-     * Remove this when copying and pasting into your project.
-     */
-    window: PropTypes.func,
-};
 
 export default DashboardLayoutBasic;

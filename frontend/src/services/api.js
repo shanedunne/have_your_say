@@ -95,7 +95,10 @@ export const handleCreatePetition = async ({
 };
 
 export const getPetitions = async () => {
-  const response = await axios.get("http://localhost:8080/petition/get");
+  const now = new Date().getTime();
+  const response = await axios.get("http://localhost:8080/petition/get", now);
+  
+
   console.log(response.data)
   return response.data;
 }

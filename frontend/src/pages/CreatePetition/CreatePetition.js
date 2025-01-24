@@ -87,7 +87,6 @@ function CreatePetition({ pathname }) {
             idth: "100%",
             height: "100vh",
             padding: 2,
-            backgroundColor: "#f9f9f9",
         }}>
             <Typography variant="h4" sx={{ textAlign: "center", mb: 2 }}>
                 Create A Petition

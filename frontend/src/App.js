@@ -19,9 +19,6 @@ function App() {
   return (
     <div className='App'>
       <BrowserRouter >
-          <DashboardLayoutBasic>
-
-          </DashboardLayoutBasic>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
