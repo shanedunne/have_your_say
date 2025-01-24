@@ -6,8 +6,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import { Grid2 } from '@mui/material';
 import { Grid } from '@mui/material';
+import OpenSnackBar from './SnackBar'
 
 import Modal from '@mui/material/Modal';
 import { handleCreatePetition } from '../services/api';
@@ -21,6 +21,10 @@ function CreatePetition({ pathname }) {
     const [body, setBody] = useState("");
     const categoryOptions = ["Infrastructure", "Transport", "Education", "Youth Services", "Health & Social Care", "Environment", "Housing", "Urban Development", "Local Business", "Culture & Recreation"];
 
+    // snackbar message for succesfully creating a petition
+    const message = "Petition successfully created";
+    const [snackBarOpen, setSnackBarOpen] = useState(false);
+
     // state for error message
     const [error, setError] = useState("")
 
@@ -31,7 +35,7 @@ function CreatePetition({ pathname }) {
     function createSelectOptions() {
         let selectOptions = [];
         for (let i = 0; i <= categoryOptions.length; i++) {
-            selectOptions.push(<MenuItem value={categoryOptions[i]}>{categoryOptions[i]}</MenuItem>)
+            selectOptions.push(<MenuItem key={i} value={categoryOptions[i]}>{categoryOptions[i]}</MenuItem>)
         }
         return selectOptions;
     }
@@ -52,17 +56,26 @@ function CreatePetition({ pathname }) {
                 console.log("missing fields")
                 setError("Please fill in all fields");
                 return;
-            } else {
-                handleCreatePetition({ title, category, body, startTime });
             }
 
-            // handleCreatePetition({title, category, body, startTime})
-            navigate('/dashboard')
+            const petitionSuccessfullyCreated = handleCreatePetition({ title, category, body, startTime });
+            if (petitionSuccessfullyCreated) {
+                setSnackBarOpen(true);
+                setTimeout(() => window.location.reload(), 3000);
+                
+            } else {
+                setError("Failed to create petition, please try again");
+
+            }
         } catch (error) {
             console.error("Creation of petition failed")
             setError("Error creating petition")
         }
     }
+    // close snackbar
+    const handleSnackBarClose = () => {
+        setSnackBarOpen(false);
+    };
 
     return (
 
@@ -76,12 +89,12 @@ function CreatePetition({ pathname }) {
             padding: 2,
             backgroundColor: "#f9f9f9",
         }}>
-                <Typography variant="h4" sx={{ textAlign: "center", mb: 2 }}>
-                    Create A Petition
-                </Typography>
-                <Typography variant='body1' sx={{ textAlign: "center", mb: 2 }}>
-                    Do you have an idea to improve your community? Create a petition and if enough of your neighbours support it, your local representatives will consider it
-                </Typography>
+            <Typography variant="h4" sx={{ textAlign: "center", mb: 2 }}>
+                Create A Petition
+            </Typography>
+            <Typography variant='body1' sx={{ textAlign: "center", mb: 2 }}>
+                Do you have an idea to improve your community? Create a petition and if enough of your neighbours support it, your local representatives will consider it
+            </Typography>
 
             <Grid container spacing={3} sx={{ maxWidth: "600px", width: "100%" }}>
                 <Grid item xs={12}>
@@ -133,7 +146,13 @@ function CreatePetition({ pathname }) {
                     </Button>
                 </Grid>
             </Grid>
+            <OpenSnackBar
+                message={message}
+                open={snackBarOpen}
+                onClose={handleSnackBarClose}
+            />
         </Box>
+
     );
 
 

@@ -84,8 +84,10 @@ export const handleCreatePetition = async ({
         Authorization: `Bearer ${userJwt}`,
       },
     });
-    console.log(response)
-    return response.data;
+    // return true if id assigned to petition
+    if (response.data.id !== null) {
+      return true;
+    }
   } catch (error) {
     console.error("Error creating petition:", error);
     throw error;
