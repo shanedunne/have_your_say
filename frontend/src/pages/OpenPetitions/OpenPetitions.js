@@ -32,7 +32,7 @@ function OpenPetitions() {
             <Typography variant="h4" sx={{ textAlign: "center", mb: 2 }}>
                 Open Petitions
             </Typography>
-            <Grid>
+            <Grid container spacing={3}>
                 {openPetitions.map((petition) => {
                     const comp = openPetitions[petition];
                     return <PetitionCard title={petition.title} body={petition.body} closeTime={petition.closeTime} category={petition.category}/>

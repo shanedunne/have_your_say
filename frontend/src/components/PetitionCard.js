@@ -9,11 +9,12 @@ import theme from '../assets/theme';
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import { Grid } from '@mui/material';
 import { msToTimeShort } from '../util/msToTime';
+import { truncateText } from '../util/truncateText';
 
 
 function PetitionCard({title, category, body, closeTime}) {
     return(
-        <Grid item xs={12} sm={6} md={6} lg={4} xl={3} sx={{ width: "50%" }}>
+        <Grid item xs={12} sm={6} md={6} lg={4} xl={3} sx={{ width: "30%" }}>
             <Card sx={{ borderRadius: 1, p: 3 }}>
               <Box
                 sx={{
@@ -31,7 +32,7 @@ function PetitionCard({title, category, body, closeTime}) {
                     alignItems: "center"
                   }}
                 >
-                  <Typography variant="h5" sx={{ ml: 1, fontWeight: "light" }}>
+                  <Typography variant="subtitle1" sx={{ ml: 1, fontWeight: "light" }}>
                     {category}
                   </Typography>
                 </Box>
@@ -42,12 +43,11 @@ function PetitionCard({title, category, body, closeTime}) {
                     alignItems: "center"
                   }}
                 >
-                  <AccessAlarmIcon />
                   <Typography
-                    variant="body1"
-                    color="text.secondary"
+                    variant="subtitle1"
                     sx={{ ml: 1 }}
                   >
+                    
                     {msToTimeShort(closeTime)}
                   </Typography>
                 </Box>
@@ -57,7 +57,7 @@ function PetitionCard({title, category, body, closeTime}) {
                   {title}
                 </Typography>
                 <Typography variant="body1" sx={{ mb: 3 }}>
-                  {body}
+                  {truncateText(body, 100)}
                 </Typography>
               </CardContent>
               <Box
