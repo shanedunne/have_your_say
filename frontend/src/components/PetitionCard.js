@@ -10,10 +10,10 @@ import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import { Grid } from '@mui/material';
 
 
-function PetitionCardNew() {
+function PetitionCard() {
     return(
         <Grid item xs={12} sm={6} md={6} lg={4} xl={3} sx={{ width: "50%" }}>
-            <Card sx={{ borderRadius: 4, p: 3 }}>
+            <Card sx={{ borderRadius: 1, p: 3 }}>
               <Box
                 sx={{
                   mb: 4,
@@ -90,4 +90,4 @@ function PetitionCardNew() {
             </Card>
           </Grid>
     )
-} export default PetitionCardNew;
+} export default PetitionCard;

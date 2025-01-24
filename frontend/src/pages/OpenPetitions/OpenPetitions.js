@@ -1,12 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { Grid } from '@mui/material';
-import PetitionCardNew from '../../components/PetitionCardNew';
+import PetitionCard from '../../components/PetitionCard';
+import { getPetitions } from '../../services/api';
 
 
 function OpenPetitions() {
-    
+    const [openPetitions, setOpenPetitions] = useState([]);
+
+    useEffect(() => {
+        populatePetitions();
+    }, []);
+
+    const populatePetitions = async () => {
+        const petitionData = await getPetitions();
+        setOpenPetitions(petitionData);
+        
+    } 
 
     return (
         <Box sx={{
@@ -22,7 +33,11 @@ function OpenPetitions() {
                 Open Petitions
             </Typography>
             <Grid>
-                <PetitionCardNew />
+                {openPetitions.map((petition) => {
+                    const comp = openPetitions[petition];
+                    return <PetitionCard title={petition.title} body={petition.body} closeTime={petition.closeTime} category={petition.category}/>
+                })}
+                
             </Grid>
         </Box>
     )
