@@ -22,6 +22,8 @@ function HomePage() {
                 Welcome to the Have Your Say!
             </h2>
             <p>Please login or signup</p>
+            <Button variant="outlined" color="inherit" size='large' onClick={() => navigate('/login')}>Login</Button>
+            <Button variant="outlined" color="inherit" size='large' onClick={() => navigate('/signup')}>Signup</Button>
 
         </Box>
     )
