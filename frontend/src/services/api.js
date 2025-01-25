@@ -45,10 +45,9 @@ export const handleLogin = async ({
     });
 
     const { jwt } = response.data;
+    console.log(jwt)
 
-    Cookies.set("JwtToken", jwt, { expires: 7, secure: true })
-
-    return response.data;
+    return jwt;
   } catch (error) {
     console.error("Login error: ", error);
     throw error;

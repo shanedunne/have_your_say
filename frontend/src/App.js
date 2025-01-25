@@ -9,6 +9,8 @@ import ButtonAppBar from './components/AppBar';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import theme from './assets/theme.js'
 import DashboardLayoutBasic from './pages/Dashboard/Dashboard';
+import { AuthProvider } from './services/authProvider.js';
+import ProtectedRoute from './services/protectedRoutes.js';
 
 
 
@@ -19,12 +21,14 @@ function App() {
   return (
     <div className='App'>
       <BrowserRouter >
+        <AuthProvider>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
           </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </div>
   );

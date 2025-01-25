@@ -6,9 +6,12 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Grid2 } from '@mui/material';
+import { useAuth } from "../../services/authProvider";
+
 
 
 function LoginPage() {
+    const { login } = useAuth;
     // create states for form fields
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -27,10 +30,12 @@ function LoginPage() {
             }
 
             // call axios post request
-            handleLogin({
+            const jwt = await handleLogin({
                 email,
                 password
             });
+            console.log("from login: ", jwt)
+            login(jwt);
             
             navigate("/dashboard")
 
