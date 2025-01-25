@@ -17,6 +17,7 @@ import { useDemoRouter } from '@toolpad/core/internal';
 import theme from '../../assets/theme';
 import CreatePetition from '../CreatePetition/CreatePetition';
 import OpenPetitions from '../OpenPetitions/OpenPetitions';
+import Logout from '../LogoutPage/LogoutPage';
 
 export const NAVIGATION = [
     {
@@ -107,6 +108,7 @@ function PageContent({ pathname }) {
         >
             {pathname === '/createPetition' && <CreatePetition />}
             {pathname === '/openPetitions' && <OpenPetitions />}
+            {pathname === '/logout' && <Logout />}
         </Box>
     );
 }
