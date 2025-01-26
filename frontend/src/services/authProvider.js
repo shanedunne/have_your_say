@@ -14,10 +14,24 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(!!token);
   }, []);
 
+  useEffect(() => {
+    const testJwt = "test-jwt-token";
+    Cookies.set("JwtToken", testJwt, { expires: 7 });
+    console.log("Test Cookie:", Cookies.get("JwtToken")); // Should log "test-jwt-token"
+  }, []);
+  
+
   const login = (jwt) => {
-    Cookies.set("JwtToken", jwt, { expires: 7, secure: true });
+    if (!jwt) {
+        console.error("Invalid JWT:", jwt); // Log if JWT is undefined or null
+        return;
+      }
+    console.log("Setting cookie with JWT:", jwt); // Debug log
+
+    Cookies.set("JwtToken", jwt, { expires: 7});
+    console.log("Cookie after setting:", Cookies.get("JwtToken")); // Check if it is set
+
     setIsAuthenticated(true);
-    navigate("/dashboard");
   };
 
   const logout = () => {

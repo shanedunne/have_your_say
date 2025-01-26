@@ -7,11 +7,13 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Grid2 } from '@mui/material';
 import { useAuth } from "../../services/authProvider";
+import Cookies from 'js-cookie';
+
 
 
 
 function LoginPage() {
-    const { login } = useAuth;
+    const { login } = useAuth();
     // create states for form fields
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -29,13 +31,17 @@ function LoginPage() {
                 return;
             }
 
+            console.log("calling api")
             // call axios post request
             const jwt = await handleLogin({
                 email,
                 password
             });
             console.log("from login: ", jwt)
+            console.log("calling cookie setter")
             login(jwt);
+            console.log("JwtToken in cookie:", Cookies.get("JwtToken"));
+
             
             navigate("/dashboard")
 
