@@ -18,6 +18,8 @@ import theme from '../../assets/theme';
 import CreatePetition from '../CreatePetition/CreatePetition';
 import OpenPetitions from '../OpenPetitions/OpenPetitions';
 import Logout from '../LogoutPage/LogoutPage';
+import logo from '../../assets/images/logo.png';
+
 
 export const NAVIGATION = [
     {
@@ -130,7 +132,7 @@ function DashboardLayoutBasic(props) {
             router={router}
             theme={theme}
             branding={{
-                logo: <img src="https://mui.com/static/logo.png" alt="MUI logo" />,
+                logo: <img src={logo} alt="MUI logo" />,
                 title: 'Have Your Say',
                 homeUrl: '/',
             }}
