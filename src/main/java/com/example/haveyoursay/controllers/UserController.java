@@ -80,7 +80,7 @@ public class UserController {
         try {
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            String token = JwtProvider.generateToken(authentication);
+            String token = JwtProvider.generateToken(authentication, region);
             String successMessage = "Registration was successful";
             Boolean regBoolean = true;
             return new ResponseEntity<AuthResponse>(new AuthResponse(token, successMessage, regBoolean), HttpStatus.OK);
@@ -100,7 +100,14 @@ public class UserController {
         Authentication authentication = authenticate(username, password);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String token = JwtProvider.generateToken(authentication);
+        User user = userRepository.findByEmail(username);
+        if(user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        String region = user.getRegion();
+
+        String token = JwtProvider.generateToken(authentication, region);
         String loginSuccess = "Login was successful";
         Boolean loginStatus = true;
 

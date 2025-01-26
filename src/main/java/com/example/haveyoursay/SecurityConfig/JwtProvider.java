@@ -3,6 +3,7 @@ package com.example.haveyoursay.SecurityConfig;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -15,19 +16,11 @@ import java.util.Set;
 public class JwtProvider {
     static SecretKey key = Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes());
 
-    public static String generateToken(Authentication auth) {
+    public static String generateToken(Authentication auth, String region) {
         Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
-
-        // get email
-        String email = auth.getName();
-
-        // get user
-        User user = userRepository.findByEmail(email);
 
         String roles = populateAuthorities(authorities);
 
-        // get region of user and add to token
-        String region = user.getRegion();
         @SuppressWarnings("deprecation")
         String jwt = Jwts.builder()
                 .setIssuedAt(new Date())
