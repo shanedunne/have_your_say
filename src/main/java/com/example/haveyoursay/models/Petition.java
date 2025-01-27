@@ -5,13 +5,9 @@ import java.util.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Document(collection = "petitions")
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
 public class Petition {
 
@@ -53,6 +49,9 @@ public class Petition {
         this.lastUpdated = new Date(); // Set the current date/time
     }
     
+    public Petition() {
+        
+    }
 
 
     // Getters

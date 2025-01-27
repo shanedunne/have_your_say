@@ -29,6 +29,8 @@ public class User {
     private String password;
     private String role = "ROLE_CITIZEN";
     private String region;
+    private String[] petitionsVotedOn;
+    private String[] proposalsVotedOn;
     
 
     
