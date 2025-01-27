@@ -24,7 +24,7 @@ import javax.crypto.SecretKey;
 public class UserServiceImplementation implements UserService, UserDetailsService {
 
     // Get secret key
-    static SecretKey key = Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes());
+    static SecretKey key = Keys.hmacShaKeyFor(System.getenv("JWT_SECRET_KEY").getBytes());
 
     @Autowired
     private UserRepository userRepository;
