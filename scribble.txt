@@ -1,6 +1,0 @@
-Run the spring boot app
-./mvnw spring-boot:run
-
-add this on every clean
-
-export MONGO_URI="mongodb+srv://shanejjdunne:CQrcCZddwt7GHpWt@cluster0.ca8bz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
