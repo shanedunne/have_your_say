@@ -1,5 +1,6 @@
 package com.example.haveyoursay.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
@@ -29,8 +30,8 @@ public class User {
     private String password;
     private String role = "ROLE_CITIZEN";
     private String region;
-    private String[] petitionsVotedOn;
-    private String[] proposalsVotedOn;
+    private List<String> petitionsVotedOn = new ArrayList<>();
+    private List<String> proposalsVotedOn = new ArrayList<>();
     
 
     
@@ -112,6 +113,22 @@ public class User {
     }
     public void setRegion(String region) {
         this.region = region;
+    }
+
+    public List<String> getPetitionsVotedOn() {
+        return petitionsVotedOn;
+    }
+
+    public void setPetitionsVotedOn(List<String> petitionsVotedOn) {
+        this.petitionsVotedOn = petitionsVotedOn;
+    }
+
+    public List<String> getProposalsVotedOn() {
+        return proposalsVotedOn;
+    }
+
+    public void setProposalsVotedOn(List<String> proposalsVotedOn) {
+        this.proposalsVotedOn = proposalsVotedOn;
     }
     
 }

@@ -85,4 +85,8 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
                 user.getPassword(),
                 authorities);
     }
+
+    public void updateUser(User user) {
+        userRepository.save(user);
+    }
 }

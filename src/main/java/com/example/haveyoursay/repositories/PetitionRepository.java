@@ -8,7 +8,6 @@ import com.example.haveyoursay.models.Petition;
 
 @Repository
 public interface PetitionRepository extends MongoRepository<Petition,String> {
-    
 }
 
 

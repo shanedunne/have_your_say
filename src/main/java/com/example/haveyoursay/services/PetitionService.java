@@ -4,4 +4,5 @@ import com.example.haveyoursay.models.Petition;
 
 public interface PetitionService {
     public Long getPetitionCloseTime(Long petitionStartTime);
+    public Petition getPetitionById(String petitionId);
 }

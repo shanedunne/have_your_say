@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -83,6 +84,93 @@ public class PetitionController {
         List<Petition> allPetitions = petitionRepository.findAll();
         return ResponseEntity.ok(allPetitions);
     }
-    
 
+    @GetMapping("/{id}")
+    public Petition getPetitionById(@PathVariable String id) {
+            Petition petition = petitionServiceImplementation.getPetitionById(id);
+            return petition;
+    }
+}
+
+    @PostMapping("/vote")
+    public ResponseEntity<?> petitionVote(String petitionId, @RequestHeader("Authorization") String token, String decision) {
+        
+        // remove prefix from token
+        if (token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+
+        // call implenetation method to get user from token
+        User user = userServiceImplementation.findUserProfileByJwt(token);
+        if(user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
+        }
+
+        if(checkHasVoted(token, petitionId)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User has already voted on this petition");
+        }
+
+        try {
+            // Add petition id to the users records
+            Petition petition = getPetitionById(petitionId);
+            petition.setVotedCount(petition.getVotedCount() + 1);
+
+            // check that the vote standing is below the quota
+            if(petition.getVoteStanding() < petition.getQuota()) {
+
+                // if decision is to support, increment support votes count and vote standing
+                if (decision.equals("support") ) {
+                
+                    petition.setSupportVotes(petition.getSupportVotes() + 1);
+                    petition.setVoteStanding(petition.getVoteStanding() + 1);
+                
+                
+                // if decision is to oppose, increment opposed votes count and decrement vote standing
+                } else if (decision.equals("oppose")) {
+                    
+                    petition.setOpposeVotes(petition.getOpposeVotes() + 1);
+                    petition.setVoteStanding(petition.getVoteStanding() - 1);
+                }
+            }
+            
+            // add petition to users voting records
+            user.getPetitionsVotedOn().add(petitionId);
+            userServiceImplementation.updateUser(user);
+
+            // check if latest vote has met the quota
+            if (petition.getVoteStanding() >= petition.getQuota()) {
+                petition.setStatus("Closed - Petition Supported");
+            } else if (petition.getVotedCount() >= petition.getParticipantsAtStart()) {
+                petition.setStatus("Closed - Petition Opposed");
+            }
+
+            petitionServiceImplementation.savePetition(petition);
+
+            return ResponseEntity.ok(petition);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error has occured");
+        }
+        
+    }
+
+    @GetMapping("checkHasVoted")
+    public Boolean checkHasVoted(String token, String petitionId) {
+        // remove prefix from token
+        if (token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+
+        // call implenetation method to get user from token
+        User user = userServiceImplementation.findUserProfileByJwt(token);
+        if(user == null) {
+            return false;
+        }
+
+        if(user.getPetitionsVotedOn().contains(petitionId)) {
+            return true;
+        } else {
+            return false;
+        } 
+    
 }

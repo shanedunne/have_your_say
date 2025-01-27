@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.haveyoursay.models.Petition;
 import com.example.haveyoursay.repositories.PetitionRepository;
+import java.util.Optional;
+
 
 @Service
 public class PetitionServiceImplementation implements PetitionService {
@@ -19,6 +21,16 @@ public class PetitionServiceImplementation implements PetitionService {
         // add 7 days to the petition start time
         Long petitionCloseTime = petitionStartTime + 604800000;
         return petitionCloseTime;
+    }
+
+    @Override
+    public Petition getPetitionById(String id) {
+        Optional<Petition> petition = petitionRepository.findById(id);
+        return petition.orElseThrow(() -> new IllegalArgumentException("Petition not found with ID: " + id));
+    }
+
+    public void savePetition(Petition petition) {
+        petitionRepository.save(petition);
     }
     
 }
