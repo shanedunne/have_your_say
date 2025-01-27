@@ -17,3 +17,6 @@ When a petition meets its support quota, representatives must respond with a for
 - Outline an actionable proposal based on the petition’s goals.
 
 Once submitted, users vote on the proposal’s outcome, and representatives are expected to act on the result, ensuring accountability and progress.
+
+### Integrations
+An integrations section will track and document the progress of successful proposals as they move toward implementation.
