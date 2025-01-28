@@ -37,10 +37,10 @@ export default function ArticleDrawer({ anchor = "right", open, onClose, title, 
         console.error("Error checking vote status:", error);
       }
     };
-    if(open) {
+    if (open) {
       fetchVoteStatus();
     }
-    
+
   }, [open, petitionId]);
 
 
@@ -85,8 +85,11 @@ export default function ArticleDrawer({ anchor = "right", open, onClose, title, 
                 <Button variant="outlined" value="oppose" onClick={(e) => { handleOpen(); setPetitionDecision(e.target.value); console.log(petitionDecision) }}>Oppose</Button>
               </Grid>
             ) : (
-              <Grid>
-                <p>You have already voted on this petition.</p>
+              <Grid item xs={12} sm={6} md={4} lg={4} xl={3} >
+                <Box>
+                  <p>You have already voted on this petition.</p>
+                </Box>
+                
               </Grid>
             )}
             <Grid item xs={12}>
@@ -107,7 +110,7 @@ export default function ArticleDrawer({ anchor = "right", open, onClose, title, 
             <Typography id="modal-modal-description" sx={{ m: 2 }}>
               Are you sure you want to {petitionDecision} this petition? This decision is final.
             </Typography>
-            <Button sx={{ m: 1 }} variant="contained" size='large'onClick={submitVote}>Confirm</Button>
+            <Button sx={{ m: 1 }} variant="contained" size='large' onClick={submitVote}>Confirm</Button>
             <Button sx={{ m: 1 }} variant='contained' size='medium' color='error' onClick={() => { setPetitionDecision(null); handleClose(); }}>Cancel</Button>
           </Box>
         </Modal>

@@ -10,7 +10,7 @@ import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import { Grid } from '@mui/material';
 import { msToTimeLong, msToTimeShort } from '../util/msToTime';
 import { truncateText } from '../util/truncateText';
-import PetitionDrawer from '../pages/PetitionDrawer';
+import PetitionDrawer from './PetitionDrawer';
 
 
 function PetitionCard({ title, category, body, closeTime, petitionId }) {

@@ -19,7 +19,7 @@ public class Petition {
     private Long startTime;
     private Long closeTime;
     private String userId;
-    private String region;
+    private String community;
     private int participantsAtStart; // count of eligible voters
     private int quota; // quota to reach
     private int votedCount; // Total number of votes cast
@@ -30,7 +30,7 @@ public class Petition {
     private Date lastUpdated; // time of last vote
 
     // constructor
-    public Petition(String id, String title, String category, String body, Long startTime, Long closeTime, String userId, String region, int participantsAtStart, int quota) {
+    public Petition(String id, String title, String category, String body, Long startTime, Long closeTime, String userId, String community, int participantsAtStart, int quota) {
         this.id = id;
         this.title = title;
         this.category = category;
@@ -38,7 +38,7 @@ public class Petition {
         this.startTime = startTime;
         this.closeTime = closeTime;
         this.userId = userId;
-        this.region = region;
+        this.community = community;
         this.participantsAtStart = participantsAtStart;
         this.quota = quota;
         this.votedCount = 0;
@@ -111,12 +111,12 @@ public class Petition {
         this.userId = userId;
     }
 
-    public String getRegion() {
-        return region;
+    public String getCommunity() {
+        return community;
     }
 
-    public void setRegion(String region) {
-        this.region = region;
+    public void setCommunity(String community) {
+        this.community = community;
     }
 
     public int getParticipantsAtStart() {

@@ -16,7 +16,7 @@ import java.util.Set;
 public class JwtProvider {
     static SecretKey key = Keys.hmacShaKeyFor(System.getenv("JWT_SECRET_KEY").getBytes());
 
-    public static String generateToken(Authentication auth, String region) {
+    public static String generateToken(Authentication auth, String community) {
         Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
 
         String roles = populateAuthorities(authorities);
@@ -27,7 +27,7 @@ public class JwtProvider {
                 .setExpiration(new Date(new Date().getTime()+86400000))
                 .claim("email", auth.getName())
                 .claim( "authorities",roles)
-                .claim("region", region)
+                .claim("community", community)
                 .signWith(key)
                 .compact();
         System.out.println("Token for parsing in JwtProvider: " + jwt);

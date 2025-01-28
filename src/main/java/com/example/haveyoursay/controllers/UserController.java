@@ -49,7 +49,7 @@ public class UserController {
         String postcode = user.getPostcode();
         String password = user.getPassword();
         String role = user.getRole();
-        String region = user.getRegion();
+        String community = user.getCommunity();
 
         User isEmailExist = userRepository.findByEmail(email);
         System.out.println("Checking if email exists: " + email);
@@ -69,7 +69,7 @@ public class UserController {
         createdUser.setPhoneNumber(phoneNumber);
         createdUser.setPostcode(postcode);
         createdUser.setRole(role);
-        createdUser.setRegion(region);
+        createdUser.setCommunity(community);
         createdUser.setPassword(passwordEncoder.encode(password));
 
         User savedUser = userRepository.save(createdUser);
@@ -80,7 +80,7 @@ public class UserController {
         try {
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            String token = JwtProvider.generateToken(authentication, region);
+            String token = JwtProvider.generateToken(authentication, community);
             String successMessage = "Registration was successful";
             Boolean regBoolean = true;
             return new ResponseEntity<AuthResponse>(new AuthResponse(token, successMessage, regBoolean), HttpStatus.OK);
@@ -105,9 +105,9 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
 
-        String region = user.getRegion();
+        String community = user.getCommunity();
 
-        String token = JwtProvider.generateToken(authentication, region);
+        String token = JwtProvider.generateToken(authentication, community);
         String loginSuccess = "Login was successful";
         Boolean loginStatus = true;
 

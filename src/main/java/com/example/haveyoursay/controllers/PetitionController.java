@@ -62,7 +62,7 @@ public class PetitionController {
         createdPetition.setStartTime(startTime);
         createdPetition.setCloseTime(closeTime);
         createdPetition.setUserId(user.getId());
-        createdPetition.setRegion(user.getRegion());
+        createdPetition.setCommunity(user.getCommunity());
 
         // hard coded below for testing
         createdPetition.setParticipantsAtStart(10);

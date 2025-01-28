@@ -29,7 +29,7 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String role = "ROLE_CITIZEN";
-    private String region;
+    private String community;
     private List<String> petitionsVotedOn = new ArrayList<>();
     private List<String> proposalsVotedOn = new ArrayList<>();
     
@@ -108,11 +108,11 @@ public class User {
     }
 
     // get and set role
-    public String getRegion() {
-        return region;
+    public String getCommunity() {
+        return community;
     }
-    public void setRegion(String region) {
-        this.region = region;
+    public void setCommunity(String community) {
+        this.community = community;
     }
 
     public List<String> getPetitionsVotedOn() {
