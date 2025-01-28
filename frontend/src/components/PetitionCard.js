@@ -13,7 +13,7 @@ import { truncateText } from '../util/truncateText';
 import PetitionDrawer from './PetitionDrawer';
 
 
-function PetitionCard({ title, category, body, closeTime, petitionId }) {
+function PetitionCard({ title, category, body, closeTime, petitionId, status}) {
 
   // handle opening petition drawer
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
@@ -21,7 +21,7 @@ function PetitionCard({ title, category, body, closeTime, petitionId }) {
     setIsDrawerOpen(open);
   };
   return (
-    <Grid item xs={12} sm={6} md={6} lg={4} xl={3} sx={{ width: "30%" }}>
+    <Grid item xs={12} sm={6} md={6} lg={4} xl={4} sx={{ width: "30%" }}>
       <Card sx={{ borderRadius: 1, p: 2, maxHeight: '300px', minHeight: '300px' }}>
         <Box
           sx={{
@@ -78,6 +78,7 @@ function PetitionCard({ title, category, body, closeTime, petitionId }) {
         category={category}
         closeTime={msToTimeShort(closeTime)}
         petitionId={petitionId}
+        status={status}
       />
     </Grid>
 

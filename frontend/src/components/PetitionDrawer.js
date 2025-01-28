@@ -8,6 +8,7 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import { checkHasVotedPetition } from '../services/api';
 import { submitPetitionVote } from '../services/api';
+import theme from '../assets/theme';
 
 const modalStyle = {
   position: 'absolute',
@@ -22,7 +23,7 @@ const modalStyle = {
 };
 
 
-export default function ArticleDrawer({ anchor = "right", open, onClose, title, body, category, closeTime, petitionId }) {
+export default function ArticleDrawer({ anchor = "right", open, onClose, title, body, category, closeTime, petitionId, status }) {
 
   const [petitionDecision, setPetitionDecision] = useState(null)
   const [hasVotedStatus, setHasVotedStatus] = useState(false);
@@ -69,28 +70,36 @@ export default function ArticleDrawer({ anchor = "right", open, onClose, title, 
           justifyContent: "space-between"
         }} role="presentation">
 
-          <CardContent sx={{ paddingTop: '100px' }}>
+          <CardContent sx={{ paddingTop: '100px', fontFamily: theme.typography.fontFamily }}>
             <Typography variant="h1" sx={{ mb: 2, fontWeight: "bold" }}>
               {title}
             </Typography>
-            <Grid item xs={12} sm={6} md={4} lg={4} xl={3}>
+            <Grid item xs={12}>
               <Typography variant="h5" sx={{}}>
                 {category}
               </Typography>
               <Typography variant="subtitle1" sx={{ paddingBottom: '20px' }}>{closeTime}</Typography>
             </Grid>
-            {hasVotedStatus === false ? (
-              <Grid className='votePetitions' item xs={12} sm={6} md={6} sx={{ mb: 2 }}>
-                <Button variant="outlined" value="support" sx={{ mr: 1 }} onClick={(e) => { handleOpen(); setPetitionDecision(e.target.value); }}>Support</Button>
-                <Button variant="outlined" value="oppose" onClick={(e) => { handleOpen(); setPetitionDecision(e.target.value); console.log(petitionDecision) }}>Oppose</Button>
-              </Grid>
+            {status === "open" ? (
+              hasVotedStatus === false ? (
+                <Grid className='votePetitions' item xs={12} sm={6} md={6} sx={{ mb: 2 }}>
+                  <Button variant="outlined" value="support" sx={{ mr: 1 }} onClick={(e) => { handleOpen(); setPetitionDecision(e.target.value); }}>Support</Button>
+                  <Button variant="outlined" value="oppose" onClick={(e) => { handleOpen(); setPetitionDecision(e.target.value); console.log(petitionDecision) }}>Oppose</Button>
+                </Grid>
+              ) : (
+                <Grid >
+                  <Box>
+                    <Typography>You have already voted on this petition.</Typography>
+                  </Box>
+
+                </Grid>
+              )
             ) : (
-              <Grid item xs={12} sm={6} md={4} lg={4} xl={3} >
-                <Box>
-                  <p>You have already voted on this petition.</p>
-                </Box>
-                
+              <Grid>
+                <Typography variant='h5'
+                sx={{mb: 1, color: theme.palette.secondary.main}}>{status}</Typography>
               </Grid>
+
             )}
             <Grid item xs={12}>
               <Typography variant="body1">{body}</Typography>
