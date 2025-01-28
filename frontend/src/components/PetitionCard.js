@@ -13,7 +13,7 @@ import { truncateText } from '../util/truncateText';
 import PetitionDrawer from '../pages/PetitionDrawer';
 
 
-function PetitionCard({ title, category, body, closeTime }) {
+function PetitionCard({ title, category, body, closeTime, petitionId }) {
 
   // handle opening petition drawer
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
@@ -77,6 +77,7 @@ function PetitionCard({ title, category, body, closeTime }) {
         body={body}
         category={category}
         closeTime={msToTimeShort(closeTime)}
+        petitionId={petitionId}
       />
     </Grid>
 

@@ -95,9 +95,28 @@ export const handleCreatePetition = async ({
 
 export const getPetitions = async () => {
   const now = new Date().getTime();
+  console.log("calling all petitions in api")
   const response = await axios.get("http://localhost:8080/petition/get", now);
   
 
   console.log(response.data)
   return response.data;
 }
+
+// check if user has voted on petition
+export const checkHasVotedPetition = async (petitionId) => {
+  const userJwt = Cookies.get("JwtToken");
+  try {
+    const response = await axios.get("http://localhost:8080/petition/checkHasVoted", {
+      headers: {
+        Authorization: `Bearer ${userJwt}`,
+      },
+      params: { petitionId },
+    });
+    console.log(response.data);
+    return response.data === true; 
+  } catch (error) {
+    console.error("Error in checking if user has voted on this petition", error);
+    throw error;
+  }
+};

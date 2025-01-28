@@ -29,6 +29,7 @@ public class PetitionServiceImplementation implements PetitionService {
         return petition.orElseThrow(() -> new IllegalArgumentException("Petition not found with ID: " + id));
     }
 
+    @Override
     public void savePetition(Petition petition) {
         petitionRepository.save(petition);
     }

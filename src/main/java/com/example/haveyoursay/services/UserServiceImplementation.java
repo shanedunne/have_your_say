@@ -86,6 +86,7 @@ public class UserServiceImplementation implements UserService, UserDetailsServic
                 authorities);
     }
 
+    @Override
     public void updateUser(User user) {
         userRepository.save(user);
     }

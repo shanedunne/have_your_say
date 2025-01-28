@@ -14,7 +14,9 @@ function OpenPetitions() {
     }, []);
 
     const populatePetitions = async () => {
+        console.log("calling api")
         const petitionData = await getPetitions();
+        console.log("setting petition data")
         setOpenPetitions(petitionData);
         
     } 
@@ -34,7 +36,7 @@ function OpenPetitions() {
             <Grid container spacing={3}>
                 {openPetitions.map((petition) => {
                     const comp = openPetitions[petition];
-                    return <PetitionCard title={petition.title} body={petition.body} closeTime={petition.closeTime} category={petition.category}/>
+                    return <PetitionCard key={petition.id} title={petition.title} body={petition.body} closeTime={petition.closeTime} category={petition.category} petitionId={petition.id}/>
                 })}
                 
             </Grid>
