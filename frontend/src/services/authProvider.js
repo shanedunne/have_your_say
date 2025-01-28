@@ -13,7 +13,6 @@ export const AuthProvider = ({ children }) => {
   // handle refresh of page to keep logged in
   useEffect(() => {
     const token = Cookies.get("JwtToken");
-    console.log("Token on app load:", token);
     if (token) {
       setIsAuthenticated(true); 
     } else {

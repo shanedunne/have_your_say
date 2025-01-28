@@ -6,7 +6,6 @@ import com.example.haveyoursay.models.Petition;
 import com.example.haveyoursay.repositories.PetitionRepository;
 import java.util.Optional;
 
-
 @Service
 public class PetitionServiceImplementation implements PetitionService {
 
@@ -25,13 +24,19 @@ public class PetitionServiceImplementation implements PetitionService {
 
     @Override
     public Petition getPetitionById(String id) {
-        Optional<Petition> petition = petitionRepository.findById(id);
-        return petition.orElseThrow(() -> new IllegalArgumentException("Petition not found with ID: " + id));
+        System.out.println("getting petition from service implementation: " + id);
+        Petition petition = petitionRepository.findById(id).orElse(null);
+        if (petition == null) {
+            System.err.println("no petition found " + id);
+        } else {
+            System.out.println("Found petition with title: " + petition.getTitle());
+        }
+        return petition;
     }
 
     @Override
-    public void savePetition(Petition petition) {
+    public void updatePetition(Petition petition) {
         petitionRepository.save(petition);
     }
-    
+
 }

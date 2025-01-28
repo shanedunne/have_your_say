@@ -95,11 +95,7 @@ export const handleCreatePetition = async ({
 
 export const getPetitions = async () => {
   const now = new Date().getTime();
-  console.log("calling all petitions in api")
   const response = await axios.get("http://localhost:8080/petition/get", now);
-  
-
-  console.log(response.data)
   return response.data;
 }
 
@@ -120,3 +116,24 @@ export const checkHasVotedPetition = async (petitionId) => {
     throw error;
   }
 };
+
+// submit petition vote
+export const submitPetitionVote = async (decision, petitionId) => {
+  const userJwt = Cookies.get("JwtToken");
+  try {
+    console.log("calling from the api")
+    const response = await axios.post("http://localhost:8080/petition/vote",
+    {},
+     {
+      headers: {
+        Authorization: `Bearer ${userJwt}`,
+      },
+      params: { decision, petitionId },
+    });
+    console.log("response from api")
+    console.log(response.data)
+  } catch (error) {
+    console.error("Error in submitting vote", error);
+    throw error;
+  }
+}

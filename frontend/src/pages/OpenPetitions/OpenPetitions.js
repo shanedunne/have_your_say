@@ -14,9 +14,7 @@ function OpenPetitions() {
     }, []);
 
     const populatePetitions = async () => {
-        console.log("calling api")
         const petitionData = await getPetitions();
-        console.log("setting petition data")
         setOpenPetitions(petitionData);
         
     } 

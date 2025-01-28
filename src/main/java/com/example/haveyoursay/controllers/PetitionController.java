@@ -97,8 +97,13 @@ public class PetitionController {
     }
 
     @PostMapping("/vote")
-    public ResponseEntity<?> petitionVote(String petitionId, @RequestHeader("Authorization") String token,
-            String decision) {
+    public ResponseEntity<?> petitionVote(@RequestHeader("Authorization") String token, @RequestParam String decision,
+            @RequestParam String petitionId) {
+
+                // Log incoming parameters
+        System.out.println("Token: " + token);
+        System.out.println("Petition ID: " + petitionId);
+        System.out.println("Decision: " + decision);
 
         // remove prefix from token
         if (token.startsWith("Bearer ")) {
@@ -110,21 +115,19 @@ public class PetitionController {
         if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
         }
+        System.out.println("User email from petition page: " + user.getEmail());
 
-        if (checkHasVoted(token, petitionId)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User has already voted on this petition");
-        }
 
         try {
             // Add petition id to the users records
-            Petition petition = getPetitionById(petitionId);
+            Petition petition = petitionServiceImplementation.getPetitionById(petitionId);
+            System.out.println("This is the petition" + petition.getTitle());
             petition.setVotedCount(petition.getVotedCount() + 1);
-
-            // check that the vote standing is below the quota
-            if (petition.getVoteStanding() < petition.getQuota()) {
+            System.out.println("just updated votedcOUNT");
 
                 // if decision is to support, increment support votes count and vote standing
                 if (decision.equals("support")) {
+                    System.out.println("PETITION DECISION IS SUPPORT");
 
                     petition.setSupportVotes(petition.getSupportVotes() + 1);
                     petition.setVoteStanding(petition.getVoteStanding() + 1);
@@ -132,15 +135,17 @@ public class PetitionController {
                     // if decision is to oppose, increment opposed votes count and decrement vote
                     // standing
                 } else if (decision.equals("oppose")) {
+                    System.out.println("PETITION DECISION IS OPPOSE");
 
                     petition.setOpposeVotes(petition.getOpposeVotes() + 1);
                     petition.setVoteStanding(petition.getVoteStanding() - 1);
                 }
-            }
 
             // add petition to users voting records
             user.getPetitionsVotedOn().add(petitionId);
             userServiceImplementation.updateUser(user);
+            System.out.println("User updated successfully: " + user);
+
 
             // check if latest vote has met the quota
             if (petition.getVoteStanding() >= petition.getQuota()) {
@@ -149,7 +154,9 @@ public class PetitionController {
                 petition.setStatus("Closed - Petition Opposed");
             }
 
-            petitionServiceImplementation.savePetition(petition);
+            petitionServiceImplementation.updatePetition(petition);
+            System.out.println("Petition saved successfully: " + petition);
+
 
             return ResponseEntity.ok(petition);
         } catch (Exception e) {

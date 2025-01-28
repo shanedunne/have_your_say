@@ -7,6 +7,7 @@ import { Grid } from '@mui/material';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import { checkHasVotedPetition } from '../services/api';
+import { submitPetitionVote } from '../services/api';
 
 const modalStyle = {
   position: 'absolute',
@@ -23,9 +24,7 @@ const modalStyle = {
 
 export default function ArticleDrawer({ anchor = "right", open, onClose, title, body, category, closeTime, petitionId }) {
 
-  console.log(petitionId)
-  let petitionDecision;
-
+  const [petitionDecision, setPetitionDecision] = useState(null)
   const [hasVotedStatus, setHasVotedStatus] = useState(false);
 
   useEffect(() => {
@@ -38,13 +37,21 @@ export default function ArticleDrawer({ anchor = "right", open, onClose, title, 
         console.error("Error checking vote status:", error);
       }
     };
-    fetchVoteStatus();
-  }, [open]);
+    if(open) {
+      fetchVoteStatus();
+    }
+    
+  }, [open, petitionId]);
 
 
-
-  const setPetitionDecision = (decision) => {
-    petitionDecision = decision;
+  const submitVote = async () => {
+    try {
+      console.log("submitting vote from frontend", petitionDecision, petitionId);
+      await submitPetitionVote(petitionDecision, petitionId);
+      setTimeout(() => setOpenModal(false), 2000);
+    } catch (error) {
+      console.error("error submitting vote", error)
+    }
   }
 
   const [openModal, setOpenModal] = useState(false);
@@ -72,10 +79,16 @@ export default function ArticleDrawer({ anchor = "right", open, onClose, title, 
               </Typography>
               <Typography variant="subtitle1" sx={{ paddingBottom: '20px' }}>{closeTime}</Typography>
             </Grid>
-            <Grid item xs={12} sm={6} md={6} sx={{ mb: 2 }}>
-              <Button variant="outlined" value="support" sx={{ mr: 1 }} onClick={(e) => { handleOpen(); setPetitionDecision(e.target.value); console.log(petitionDecision) }}>Support</Button>
-              <Button variant="outlined" value="oppose" onClick={(e) => { handleOpen(); setPetitionDecision(e.target.value); console.log(petitionDecision) }}>Oppose</Button>
-            </Grid>
+            {hasVotedStatus === false ? (
+              <Grid className='votePetitions' item xs={12} sm={6} md={6} sx={{ mb: 2 }}>
+                <Button variant="outlined" value="support" sx={{ mr: 1 }} onClick={(e) => { handleOpen(); setPetitionDecision(e.target.value); }}>Support</Button>
+                <Button variant="outlined" value="oppose" onClick={(e) => { handleOpen(); setPetitionDecision(e.target.value); console.log(petitionDecision) }}>Oppose</Button>
+              </Grid>
+            ) : (
+              <Grid>
+                <p>You have already voted on this petition.</p>
+              </Grid>
+            )}
             <Grid item xs={12}>
               <Typography variant="body1">{body}</Typography>
             </Grid>
@@ -94,7 +107,7 @@ export default function ArticleDrawer({ anchor = "right", open, onClose, title, 
             <Typography id="modal-modal-description" sx={{ m: 2 }}>
               Are you sure you want to {petitionDecision} this petition? This decision is final.
             </Typography>
-            <Button sx={{ m: 1 }} variant="contained" size='large'>Confirm</Button>
+            <Button sx={{ m: 1 }} variant="contained" size='large'onClick={submitVote}>Confirm</Button>
             <Button sx={{ m: 1 }} variant='contained' size='medium' color='error' onClick={() => { setPetitionDecision(null); handleClose(); }}>Cancel</Button>
           </Box>
         </Modal>
