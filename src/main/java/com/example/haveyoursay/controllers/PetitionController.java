@@ -114,6 +114,28 @@ public class PetitionController {
 
     }
     // get closed petitions
+    @GetMapping("/getClosed")
+    public ResponseEntity<?> getClosedPetitions(@RequestHeader("Authorization") String token) {
+        // remove prefix from token
+        if (token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+
+        // call implenetation method to get user from token
+        User user = userServiceImplementation.findUserProfileByJwt(token);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
+        }
+        String community = user.getCommunity();
+        try {
+            List<Petition> OpenPetitions = petitionRepository.findByCommunityAndStatusNot(community, "open");
+            return ResponseEntity.ok(OpenPetitions);
+        } catch (Exception e) {
+            e.printStackTrace(); // Log the exception for debugging
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error fetching petitions");
+        }
+
+    }
     
 
     @GetMapping("/{id}")

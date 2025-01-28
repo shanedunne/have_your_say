@@ -3,21 +3,21 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { Grid } from '@mui/material';
 import PetitionCard from '../../components/PetitionCard';
-import { getOpenPetitions } from '../../services/api';
+import { getClosedPetitions } from '../../services/api';
 
 
-function OpenPetitions() {
-    const [openPetitions, setOpenPetitions] = useState([]);
+function ClosedPetitions() {
+    const [closedPetitions, setClosedPetitions] = useState([]);
 
     useEffect(() => {
         populatePetitions();
     }, []);
 
     const populatePetitions = async () => {
-        const petitionData = await getOpenPetitions();
-        setOpenPetitions(petitionData);
-        
-    } 
+        const petitionData = await getClosedPetitions();
+        setClosedPetitions(petitionData);
+
+    }
 
     return (
         <Box sx={{
@@ -29,15 +29,15 @@ function OpenPetitions() {
             padding: 2,
         }}>
             <Typography variant="h4" sx={{ textAlign: "center", mb: 2 }}>
-                Open Petitions
+                Closed Petitions
             </Typography>
             <Grid container spacing={3}>
-                {openPetitions.map((petition) => {
-                    const comp = openPetitions[petition];
-                    return <PetitionCard key={petition.id} title={petition.title} body={petition.body} closeTime={petition.closeTime} category={petition.category} petitionId={petition.id} status={petition.status}/>
+                {closedPetitions.map((petition) => {
+                    const comp = closedPetitions[petition];
+                    return <PetitionCard key={petition.id} title={petition.title} body={petition.body} closeTime={petition.closeTime} category={petition.category} petitionId={petition.id} status={petition.status} />
                 })}
-                
+
             </Grid>
         </Box>
     )
-} export default OpenPetitions;
+} export default ClosedPetitions;

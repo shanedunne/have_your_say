@@ -11,6 +11,7 @@ import com.example.haveyoursay.models.Petition;
 @Repository
 public interface PetitionRepository extends MongoRepository<Petition,String> {
     List<Petition> findByCommunityAndStatus(String community, String status);
+    List<Petition> findByCommunityAndStatusNot(String community, String status);
 
 }
 

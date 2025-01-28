@@ -17,6 +17,7 @@ import { useDemoRouter } from '@toolpad/core/internal';
 import theme from '../../assets/theme';
 import CreatePetition from '../CreatePetition/CreatePetition';
 import OpenPetitions from '../OpenPetitions/OpenPetitions';
+import ClosedPetitions from '../ClosedPetitions/ClosedPetitions';
 import Logout from '../LogoutPage/LogoutPage';
 import logo from '../../assets/images/logo.png';
 
@@ -110,6 +111,7 @@ function PageContent({ pathname }) {
         >
             {pathname === '/createPetition' && <CreatePetition />}
             {pathname === '/openPetitions' && <OpenPetitions />}
+            {pathname === '/closedPetitions' && <ClosedPetitions />}
             {pathname === '/logout' && <Logout />}
         </Box>
     );
