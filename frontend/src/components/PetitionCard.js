@@ -32,7 +32,13 @@ function PetitionCard({ title, category, body, closeTime, petitionId, status}) {
             justifyContent: "space-between"
           }}
         >
+          {status === "open" ? (
+            <Typography>{msToTimeShort(closeTime)}</Typography>
+          ) : (
+            <Typography> </Typography>
+          )}
           
+        <Typography sx={{ color: status === "open" ? "green" : "red" }}>{status}</Typography>
         </Box>
         <CardContent sx={{ p: 0, mb: 0 }}>
           <Typography variant="h5" sx={{ mb: 1, fontWeight: "bold" }}>
