@@ -63,6 +63,7 @@ public class PetitionController {
         createdPetition.setCloseTime(closeTime);
         createdPetition.setUserId(user.getId());
         createdPetition.setCommunity(user.getCommunity());
+        createdPetition.setStatus("open");
 
         // hard coded below for testing
         createdPetition.setParticipantsAtStart(10);
@@ -77,7 +78,7 @@ public class PetitionController {
         }
 
     }
-
+    // get all petitions
     @GetMapping("/get")
     public ResponseEntity<?> getAllPetitions() {
         try {
@@ -89,6 +90,31 @@ public class PetitionController {
         }
 
     }
+    // get open petitions of for given community
+    @GetMapping("/getOpen")
+    public ResponseEntity<?> getOpenPetitions(@RequestHeader("Authorization") String token) {
+        // remove prefix from token
+        if (token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+
+        // call implenetation method to get user from token
+        User user = userServiceImplementation.findUserProfileByJwt(token);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
+        }
+        String community = user.getCommunity();
+        try {
+            List<Petition> OpenPetitions = petitionRepository.findByCommunityAndStatus(community, "open");
+            return ResponseEntity.ok(OpenPetitions);
+        } catch (Exception e) {
+            e.printStackTrace(); // Log the exception for debugging
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error fetching petitions");
+        }
+
+    }
+    // get closed petitions
+    
 
     @GetMapping("/{id}")
     public Petition getPetitionById(@PathVariable String id) {
@@ -99,11 +125,6 @@ public class PetitionController {
     @PostMapping("/vote")
     public ResponseEntity<?> petitionVote(@RequestHeader("Authorization") String token, @RequestParam String decision,
             @RequestParam String petitionId) {
-
-                // Log incoming parameters
-        System.out.println("Token: " + token);
-        System.out.println("Petition ID: " + petitionId);
-        System.out.println("Decision: " + decision);
 
         // remove prefix from token
         if (token.startsWith("Bearer ")) {

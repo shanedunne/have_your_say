@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { Grid } from '@mui/material';
 import PetitionCard from '../../components/PetitionCard';
-import { getPetitions } from '../../services/api';
+import { getOpenPetitions } from '../../services/api';
 
 
 function OpenPetitions() {
@@ -14,7 +14,7 @@ function OpenPetitions() {
     }, []);
 
     const populatePetitions = async () => {
-        const petitionData = await getPetitions();
+        const petitionData = await getOpenPetitions();
         setOpenPetitions(petitionData);
         
     } 
