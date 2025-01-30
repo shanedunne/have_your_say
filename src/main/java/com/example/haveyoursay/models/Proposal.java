@@ -7,51 +7,49 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
 
-@Document(collection = "petitions")
+@Document(collection = "proposals")
 @Data
-public class Petition {
+public class Proposal {
 
     @Id
     private String id;
     private String title;
     private String category;
     private String body;
+    private String petitionId;
     private Long startTime;
     private Long closeTime;
     private String userId;
     private String community;
     private int participantsAtStart; // count of eligible voters
-    private int quota; // quota to reach
     private int votedCount; // Total number of votes cast
     private int supportVotes; // votes in support
     private int opposeVotes; // votes that oppose
     private int voteStanding; // supportVotes - opposeVotes
-    private String status; // open, closedSupported, closedOpposed
+    private String status; // draft, open, Closed - Passed, Closed - Rejected
     private Date lastUpdated; // time of last vote
-    private String proposalId;
 
     // constructor
-    public Petition(String id, String title, String category, String body, Long startTime, Long closeTime, String userId, String community, int participantsAtStart, int quota) {
+    public Proposal(String id, String title, String category, String body, String petitionId, Long startTime, Long closeTime, String userId, String community, int participantsAtStart) {
         this.id = id;
         this.title = title;
         this.category = category;
         this.body = body;
+        this.petitionId = petitionId;
         this.startTime = startTime;
         this.closeTime = closeTime;
         this.userId = userId;
         this.community = community;
         this.participantsAtStart = participantsAtStart;
-        this.quota = quota;
         this.votedCount = 0;
         this.supportVotes = 0;
         this.opposeVotes = 0;
         this.voteStanding = 0;
         this.status = "open";
-        this.lastUpdated = new Date(); // Set the current date/time
-        this.proposalId = null;
+        this.lastUpdated = new Date();
     }
     
-    public Petition() {
+    public Proposal() {
         
     }
 
@@ -87,6 +85,14 @@ public class Petition {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public String getPetitionId() {
+        return petitionId;
+    }
+
+    public void setPetitionId(String petitionId) {
+        this.petitionId = petitionId;
     }
 
     public Long getStartTime() {
@@ -129,13 +135,6 @@ public class Petition {
         this.participantsAtStart = participantsAtStart;
     }
 
-    public int getQuota() {
-        return quota;
-    }
-
-    public void setQuota(int quota) {
-        this.quota = quota;
-    }
 
     public int getVotedCount() {
         return votedCount;
@@ -183,14 +182,6 @@ public class Petition {
 
     public void setLastUpdated(Date lastUpdated) {
         this.lastUpdated = lastUpdated;
-    }
-
-    public String getProposalId() {
-        return proposalId;
-    }
-
-    public void setProposalId(String proposalId) {
-        this.proposalId = proposalId;
     }
 
 }

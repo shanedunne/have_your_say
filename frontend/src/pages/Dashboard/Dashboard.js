@@ -219,7 +219,7 @@ function DashboardLayoutBasic(props) {
             theme={theme}
             branding={{
                 logo: <img src={logo} alt="MUI logo" />,
-                title: 'Have Your Say',
+                title: `Have Your Say - ${community}`,
                 homeUrl: '/',
             }}
         >
