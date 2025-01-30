@@ -89,7 +89,10 @@ export default function ArticleDrawer({ anchor = "right", open, onClose, title, 
               ) : (
                 <Grid >
                   <Box>
-                    <Typography>You have already voted on this petition.</Typography>
+                    <Typography variant='h5' sx={{
+                      mb: 2,
+                      color: theme.palette.primary.main
+                    }} >You have already voted on this petition.</Typography>
                   </Box>
 
                 </Grid>
@@ -97,7 +100,7 @@ export default function ArticleDrawer({ anchor = "right", open, onClose, title, 
             ) : (
               <Grid>
                 <Typography variant='h5'
-                sx={{mb: 1, color: theme.palette.secondary.main}}>{status}</Typography>
+                  sx={{ mb: 1, color: theme.palette.secondary.main }}>{status}</Typography>
               </Grid>
 
             )}

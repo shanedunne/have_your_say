@@ -1,5 +1,6 @@
 import axios from "axios";
 import Cookies from 'js-cookie';
+import { jwtDecode } from "jwt-decode";
 
 // function to post details of new user
 export const handleSignUp = async ({
@@ -45,7 +46,8 @@ export const handleLogin = async ({
     });
 
     const { jwt } = response.data;
-    console.log(jwt)
+
+    Cookies.set("JwtToken", jwt, { expires: 7 });
 
     return jwt;
   } catch (error) {
