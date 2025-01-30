@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 import com.example.haveyoursay.repositories.UserRepository;
 import com.example.haveyoursay.repositories.PetitionRepository;
+import com.example.haveyoursay.repositories.ProposalRepository;
 
 @SpringBootApplication
 @EnableMongoRepositories
@@ -15,6 +16,7 @@ public class HaveYourSayApplication {
 	@Autowired
 	UserRepository userRepository;
 	PetitionRepository petitionRepository;
+	ProposalRepository proposalRepository;
 	public static void main(String[] args) {
 		SpringApplication.run(HaveYourSayApplication.class, args);
 	}
