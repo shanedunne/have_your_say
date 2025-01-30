@@ -136,6 +136,29 @@ public class PetitionController {
         }
 
     }
+
+    // get closed petitions that have not been made into a proposal yet
+    @GetMapping("/getFutureProposals")
+    public ResponseEntity<?> getFutureProposals(@RequestHeader("Authorization") String token) {
+        // remove prefix from token
+        if (token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+
+        // call implenetation method to get user from token
+        User user = userServiceImplementation.findUserProfileByJwt(token);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
+        }
+        try {
+            List<Petition> futureProposals = petitionRepository.findFutureProposals("Closed - Petition Supported");
+        return ResponseEntity.ok(futureProposals);
+        } catch (Exception e) {
+            e.printStackTrace(); // Log the exception for debugging
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error fetching petitions");
+        }
+
+    }
     
     
 

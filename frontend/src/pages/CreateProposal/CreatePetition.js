@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -8,18 +8,33 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { Grid } from '@mui/material';
 import OpenSnackBar from '../../components/SnackBar'
+import { getFutureProposals } from '../../services/api';
 
 import Modal from '@mui/material/Modal';
 // import { handleCreatePetition } from '../../services/api';
 
 
-function createProposal({ pathname }) {
+function CreateProposal({ pathname }) {
     // create states for form fields
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
     const [body, setBody] = useState("");
-    const categoryOptions = ["Infrastructure", "Transport", "Education", "Youth Services", "Health & Social Care", "Environment", "Housing", "Urban Development", "Local Business", "Culture & Recreation"];
+    const [petition, setPetition] = useState({});
+    const [futureProposals, setFutureProposals] = useState([]);
 
+    const getFutureProposalData = async () => {
+        let data = await getFutureProposals();
+        setFutureProposals(data);
+        console.log(data);
+    }
+
+    useEffect(() => {
+        getFutureProposalData();
+    }, []);
+
+
+    
+    
     // snackbar message for succesfully creating a petition
     const message = "Proposal successfully created";
     const [snackBarOpen, setSnackBarOpen] = useState(false);
@@ -33,8 +48,8 @@ function createProposal({ pathname }) {
     // create category select options
     function createSelectOptions() {
         let selectOptions = [];
-        for (let i = 0; i <= categoryOptions.length; i++) {
-            selectOptions.push(<MenuItem key={i} value={categoryOptions[i]}>{categoryOptions[i]}</MenuItem>)
+        for (let i = 0; i < futureProposals.length; i++) {
+            selectOptions.push(<MenuItem key={i} value={futureProposals[i].id}>{futureProposals[i].title}</MenuItem>)
         }
         return selectOptions;
     }
@@ -43,8 +58,9 @@ function createProposal({ pathname }) {
         console.log("Selected option: ", e.target.value);
     }
 
+    /*
     const submitProposal = async () => {
-        console.log("petition submitted", title)
+        console.log("proposal submitted", title)
 
 
         // set timestamp for petition starting
@@ -71,10 +87,12 @@ function createProposal({ pathname }) {
             setError("Error creating proposal")
         }
     }
+    */
     // close snackbar
     const handleSnackBarClose = () => {
         setSnackBarOpen(false);
     };
+    
 
     return (
 
@@ -93,11 +111,21 @@ function createProposal({ pathname }) {
             <Typography variant='body1' sx={{ textAlign: "center", mb: 2 }}>
                 Provide your proposal in response to the supported petition below
             </Typography>
-            <Typography variant='h5' sx={{ textAlign: "center", mb: 2 }}>
-                {petition}
-            </Typography>
 
             <Grid container spacing={3} sx={{ maxWidth: {xs: '100%', sm: 400, md: 600} }}>
+            <Grid item xs={12}>
+                    <Select
+                        displayEmpty
+                        value={petition}
+                        onChange={(e) => setPetition(e.target.value)}
+                        sx={{
+                            width: '50%',
+                            justifyContent: 'center'
+                        }}
+                    >
+                        {createSelectOptions()}
+                    </Select>
+                </Grid>
                 <Grid item xs={12}>
                     <TextField
                         label="Title"
@@ -109,19 +137,7 @@ function createProposal({ pathname }) {
                     />
                 </Grid>
 
-                <Grid item xs={12}>
-                    <Select
-                        displayEmpty
-                        value={category}
-                        onChange={(e) => setCategory(e.target.value)}
-                        sx={{
-                            width: '50%',
-                            justifyContent: 'center'
-                        }}
-                    >
-                        {createSelectOptions()}
-                    </Select>
-                </Grid>
+                
                 <Grid item xs={12}>
                     <TextField
                         id="outlined-multiline-static"
@@ -142,7 +158,7 @@ function createProposal({ pathname }) {
                 )}
 
                 <Grid item xs={12}>
-                    <Button variant="contained" onClick={submitPetition}>
+                    <Button variant="contained" onClick={(() => console.log("test"))}>
                         Submit Proposal
                     </Button>
                 </Grid>
@@ -158,4 +174,4 @@ function createProposal({ pathname }) {
 
 
 
-} export default createProposal;
+} export default CreateProposal;

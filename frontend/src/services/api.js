@@ -117,6 +117,17 @@ export const getClosedPetitions = async () => {
   return response.data;
 }
 
+// get open petitions for community associated with users cookie
+export const getFutureProposals = async () => {
+  const userJwt = Cookies.get("JwtToken");
+  const response = await axios.get("http://localhost:8080/petition/getFutureProposals", {
+    headers: {
+      Authorization: `Bearer ${userJwt}`,
+    },
+  });
+  return response.data;
+}
+
 // check if user has voted on petition
 export const checkHasVotedPetition = async (petitionId) => {
   const userJwt = Cookies.get("JwtToken");

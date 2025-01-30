@@ -7,19 +7,12 @@ import com.example.haveyoursay.repositories.ProposalRepository;
 import java.util.Optional;
 
 @Service
-public class ProposalServiceImplementation implements PetitionService {
+public class ProposalServiceImplementation implements ProposalService {
 
     private ProposalRepository proposalRepository;
 
     public ProposalServiceImplementation(ProposalRepository proposalRepository) {
         this.proposalRepository = proposalRepository;
-    }
-
-    @Override
-    public Long getPetitionCloseTime(Long petitionStartTime) {
-        // add 7 days to the petition start time
-        Long petitionCloseTime = petitionStartTime + 604800000;
-        return petitionCloseTime;
     }
 
     @Override
@@ -35,8 +28,8 @@ public class ProposalServiceImplementation implements PetitionService {
     }
 
     @Override
-    public void updatePetition(Proposal proposal) {
-        proposal.save(proposal);
+    public void updateProposal(Proposal proposal) {
+        proposalRepository.save(proposal);
     }
 
 }
