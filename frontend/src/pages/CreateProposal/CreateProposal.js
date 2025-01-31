@@ -24,7 +24,8 @@ function CreateProposal({ pathname }) {
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
     const [body, setBody] = useState("");
-    const [petition, setPetition] = useState({});
+    const [petition, setPetition] = useState(null);
+    const [petitionId, setPetitionId] = useState("");
     const [futureProposals, setFutureProposals] = useState([]);
     const [startTime, setStartTime] = useState(null);
     const [endTime, setEndTime] = useState(null);
@@ -32,7 +33,6 @@ function CreateProposal({ pathname }) {
     const getFutureProposalData = async () => {
         let data = await getFutureProposals();
         setFutureProposals(data);
-        console.log(data);
     }
 
     useEffect(() => {
@@ -59,21 +59,28 @@ function CreateProposal({ pathname }) {
     }
 
     // hangle change in select
-    function onSelectedCategory(e) {
+    function hanleSelectChange(e) {
         console.log("Selected option: ", e.target.value);
     }
 
     // call api to post proposal
     const submitProposal = async () => {
         console.log("proposal submitted", title)
+
+        console.log("title: " + title)
+        console.log("category: " + category)
+        console.log("body: " + body)
+        console.log("start: " + startTime)
+        console.log("end: " + endTime)
+        console.log("id: " + petitionId)
         try {
-            if (!title || !category || !body || !startTime || !endTime || !petition) {
+            if (!title || !petition?.category || !body || !startTime || !endTime || !petition?.id) {
                 console.log("missing fields")
                 setError("Please fill in all fields");
                 return;
             }
 
-            const proposalSuccessfullyCreated = handleCreateProposal({ title, category, body, startTime, endTime, petition });
+            const proposalSuccessfullyCreated = handleCreateProposal({ title, category: petition.category, body, startTime, endTime, petitionId: petition.id });
             if (proposalSuccessfullyCreated) {
                 setSnackBarOpen(true);
                 setTimeout(() => window.location.reload(), 3000);
@@ -129,10 +136,13 @@ function CreateProposal({ pathname }) {
                         labelId="supported-petition-select"
                         id="supported-petition-select"
                         displayEmpty
-                        value={petition}
-                        onChange={(e) => setPetition(e.target.value)}
+                        value={petition?.id || ""}
+                        onChange={(e) => {
+                            const selected = futureProposals.find(p => p.id === e.target.value);
+                            setPetition(selected || {});
+                        }}
                         sx={{
-                            width: '50%',
+                            width: '80%',
                             justifyContent: 'center'
                         }}
                     >

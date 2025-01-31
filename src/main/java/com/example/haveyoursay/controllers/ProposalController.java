@@ -2,6 +2,7 @@ package com.example.haveyoursay.controllers;
 
 import com.example.haveyoursay.models.Petition;
 import com.example.haveyoursay.models.Proposal;
+import com.example.haveyoursay.repositories.PetitionRepository;
 import com.example.haveyoursay.repositories.ProposalRepository;
 import com.example.haveyoursay.services.ProposalServiceImplementation;
 
@@ -27,6 +28,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ProposalController {
     @Autowired
     private ProposalRepository proposalRepository;
+
+    @Autowired
+    private PetitionRepository petitionRepository;
 
     @Autowired
     private ProposalServiceImplementation proposalServiceImplementation;
@@ -74,6 +78,17 @@ public class ProposalController {
         try {
             Proposal savedProposal = proposalRepository.save(createdProposal);
             System.out.println("Saved Proposal: " + savedProposal);
+
+            // add proposal id to the petition
+            Petition petition = petitionRepository.findById(petitionId).orElse(null);
+            if (petition == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Petition not found");
+            }
+
+            // set proposal id and save
+            petition.setProposalId(savedProposal.getId());
+            petitionRepository.save(petition);
+
             return ResponseEntity.ok(savedProposal);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating proposal");
