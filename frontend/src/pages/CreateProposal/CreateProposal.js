@@ -13,8 +13,9 @@ import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from 'dayjs';
 import { getFutureProposals } from '../../services/api';
+import { handleCreateProposal } from '../../services/api';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import Modal from '@mui/material/Modal';
+import theme from '../../assets/theme';
 // import { handleCreatePetition } from '../../services/api';
 
 
@@ -25,8 +26,8 @@ function CreateProposal({ pathname }) {
     const [body, setBody] = useState("");
     const [petition, setPetition] = useState({});
     const [futureProposals, setFutureProposals] = useState([]);
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
+    const [startTime, setStartTime] = useState(null);
+    const [endTime, setEndTime] = useState(null);
 
     const getFutureProposalData = async () => {
         let data = await getFutureProposals();
@@ -37,14 +38,6 @@ function CreateProposal({ pathname }) {
     useEffect(() => {
         getFutureProposalData();
     }, []);
-
-    useEffect(() => {
-        console.log(startDate)
-        console.log(endDate)
-    }, [startDate, endDate])
-
-
-
 
     // snackbar message for succesfully creating a petition
     const message = "Proposal successfully created";
@@ -65,26 +58,22 @@ function CreateProposal({ pathname }) {
         return selectOptions;
     }
 
+    // hangle change in select
     function onSelectedCategory(e) {
         console.log("Selected option: ", e.target.value);
     }
 
-    /*
+    // call api to post proposal
     const submitProposal = async () => {
         console.log("proposal submitted", title)
-
-
-        // set timestamp for petition starting
-        const startTime = Date.now();
-        console.log(title, category, body, startTime)
         try {
-            if (!title || !category || !body || !startTime) {
+            if (!title || !category || !body || !startTime || !endTime || !petition) {
                 console.log("missing fields")
                 setError("Please fill in all fields");
                 return;
             }
 
-            const proposalSuccessfullyCreated = handleCreateProposal({ title, category, body, startTime });
+            const proposalSuccessfullyCreated = handleCreateProposal({ title, category, body, startTime, endTime, petition });
             if (proposalSuccessfullyCreated) {
                 setSnackBarOpen(true);
                 setTimeout(() => window.location.reload(), 3000);
@@ -98,19 +87,19 @@ function CreateProposal({ pathname }) {
             setError("Error creating proposal")
         }
     }
-    */
+
     // close snackbar
     const handleSnackBarClose = () => {
         setSnackBarOpen(false);
     };
 
     // convert date to ms
-    const handleStartDate = (date) => {
-        setStartDate(dayjs(date).startOf('day').valueOf());
+    const handleStartTime = (date) => {
+        setStartTime(dayjs(date).startOf('day').valueOf());
     };
 
-    const handleEndDate = (date) => {
-        setEndDate(dayjs(date).endOf('day').valueOf());
+    const handleEndTime = (date) => {
+        setEndTime(dayjs(date).endOf('day').valueOf());
     }
 
 
@@ -164,8 +153,8 @@ function CreateProposal({ pathname }) {
                     <Grid item xs={6}>
                         <DatePicker
                             label="Proposal Start Date"
-                            value={startDate ? dayjs(startDate) : null}
-                            onChange={(newDate) => handleStartDate(newDate)}
+                            value={startTime ? dayjs(startTime) : null}
+                            onChange={(newDate) => handleStartTime(newDate)}
                             slotProps={{ textField: { fullWidth: true } }}
                         />
                     </Grid>
@@ -173,8 +162,8 @@ function CreateProposal({ pathname }) {
                     <Grid item xs={6}>
                         <DatePicker
                             label="Proposal End Date"
-                            value={endDate ? dayjs(endDate) : null}
-                            onChange={(newDate) => handleEndDate(newDate)}
+                            value={endTime ? dayjs(endTime) : null}
+                            onChange={(newDate) => handleEndTime(newDate)}
                             slotProps={{ textField: { fullWidth: true } }}
                         />
                     </Grid>
@@ -188,7 +177,7 @@ function CreateProposal({ pathname }) {
                         justifyContent: "center",
                         ml: 3,
                         mt: 1,
-                    }}><InfoOutlinedIcon fontSize='small' sx={{ color: 'gray' }} />Voting will commence at 00:00 of your chosen start date and end at 23:59 on the end date</Typography>
+                    }}><InfoOutlinedIcon fontSize='small' sx={{ color: theme.palette.primary.main }} /> Voting will commence at 00:00 of your chosen start date and end at 23:59 on the end date</Typography>
                 </Grid>
 
 
@@ -212,7 +201,7 @@ function CreateProposal({ pathname }) {
                 )}
 
                 <Grid item xs={12}>
-                    <Button variant="contained" onClick={(() => console.log("test"))}>
+                    <Button variant="contained" onClick={submitProposal}>
                         Submit Proposal
                     </Button>
                 </Grid>

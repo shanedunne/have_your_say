@@ -64,6 +64,10 @@ export const handlelogout = async (
   console.log('Remaining cookies:', Cookies.get());
 
 };
+
+// PETITION API FUNCTIONS
+
+
 // api call to post new petitions
 export const handleCreatePetition = async ({
   title,
@@ -166,3 +170,40 @@ export const submitPetitionVote = async (decision, petitionId) => {
     throw error;
   }
 }
+
+// PROPOSAL API FUNCTIONS
+
+// api call to post new proposal
+export const handleCreateProposal = async ({
+  title,
+  category,
+  body,
+  startTime,
+  endTime,
+  petition
+}) => {
+  try {
+    const userJwt = Cookies.get("JwtToken");
+    const response = await axios.post("http://localhost:8080/proposal/create", {
+      title,
+      category,
+      body,
+      startTime,
+      endTime,
+      petition
+    },
+    {
+      // pass the token in the header to not expose it
+      headers: {
+        Authorization: `Bearer ${userJwt}`,
+      },
+    });
+    // return true if id assigned to proposal
+    if (response.data.id !== null) {
+      return true;
+    }
+  } catch (error) {
+    console.error("Error creating petition:", error);
+    throw error;
+  }
+};
