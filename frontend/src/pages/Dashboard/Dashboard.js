@@ -12,7 +12,7 @@ import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import { useDemoRouter } from '@toolpad/core/internal';
 import theme from '../../assets/theme';
 import CreatePetition from '../CreatePetition/CreatePetition';
-import CreateProposal from "../CreateProposal/CreatePetition";
+import CreateProposal from "../CreateProposal/CreateProposal";
 import OpenPetitions from '../OpenPetitions/OpenPetitions';
 import ClosedPetitions from '../ClosedPetitions/ClosedPetitions';
 import Logout from '../LogoutPage/LogoutPage';

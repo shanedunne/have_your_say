@@ -1,0 +1,135 @@
+Date : 2025-01-30 19:42:12
+Directory : /Users/shane/Desktop/dev_stuff/have_your_say
+Total : 61 files,  22478 codes, 259 comments, 669 blanks, all 23406 lines
+
+Languages
++-----------------+------------+------------+------------+------------+------------+
+| language        | files      | code       | comment    | blank      | total      |
++-----------------+------------+------------+------------+------------+------------+
+| JSON            |          3 |     19,461 |          0 |          3 |     19,464 |
+| JavaScript      |         23 |      1,456 |        128 |        233 |      1,817 |
+| Java            |         23 |      1,183 |         84 |        354 |      1,621 |
+| Batch           |          1 |        108 |         26 |         16 |        150 |
+| XML             |          2 |        106 |          0 |          7 |        113 |
+| Markdown        |          2 |         52 |          0 |         42 |         94 |
+| CSS             |          3 |         50 |          0 |          8 |         58 |
+| HTML Nunjucks   |          1 |         42 |          0 |          4 |         46 |
+| Java Properties |          3 |         20 |         21 |          2 |         43 |
++-----------------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                           | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                              |         61 |     22,478 |        259 |        669 |     23,406 |
+| . (Files)                                                                                                                      |          3 |        227 |         26 |         32 |        285 |
+| .mvn                                                                                                                           |          1 |          3 |         16 |          1 |         20 |
+| .mvn/wrapper                                                                                                                   |          1 |          3 |         16 |          1 |         20 |
+| frontend                                                                                                                       |         32 |     21,048 |        128 |        281 |     21,457 |
+| frontend (Files)                                                                                                               |          3 |     19,474 |          0 |         35 |     19,509 |
+| frontend/public                                                                                                                |          2 |         67 |          0 |          5 |         72 |
+| frontend/src                                                                                                                   |         27 |      1,507 |        128 |        241 |      1,876 |
+| frontend/src (Files)                                                                                                           |          6 |        104 |          0 |         20 |        124 |
+| frontend/src/assets                                                                                                            |          1 |         57 |         54 |          4 |        115 |
+| frontend/src/components                                                                                                        |          4 |        263 |          2 |         28 |        293 |
+| frontend/src/pages                                                                                                             |         11 |        851 |         59 |        142 |      1,052 |
+| frontend/src/pages (Files)                                                                                                     |          1 |          0 |          0 |          1 |          1 |
+| frontend/src/pages/ClosedPetitions                                                                                             |          1 |         36 |          0 |          7 |         43 |
+| frontend/src/pages/CreatePetition                                                                                              |          1 |        128 |          7 |         24 |        159 |
+| frontend/src/pages/CreateProposal                                                                                              |          1 |        114 |         37 |         26 |        177 |
+| frontend/src/pages/Dashboard                                                                                                   |          1 |        218 |          2 |         18 |        238 |
+| frontend/src/pages/Home                                                                                                        |          1 |         25 |          0 |          5 |         30 |
+| frontend/src/pages/LoginPage                                                                                                   |          1 |         87 |          5 |         19 |        111 |
+| frontend/src/pages/LogoutPage                                                                                                  |          1 |         41 |          2 |         11 |         54 |
+| frontend/src/pages/OpenPetitions                                                                                               |          1 |         36 |          0 |          7 |         43 |
+| frontend/src/pages/SignUpPage                                                                                                  |          2 |        166 |          6 |         24 |        196 |
+| frontend/src/services                                                                                                          |          3 |        205 |         13 |         36 |        254 |
+| frontend/src/util                                                                                                              |          2 |         27 |          0 |         11 |         38 |
+| src                                                                                                                            |         25 |      1,200 |         89 |        355 |      1,644 |
+| src/main                                                                                                                       |         24 |      1,191 |         89 |        350 |      1,630 |
+| src/main/java                                                                                                                  |         22 |      1,174 |         84 |        349 |      1,607 |
+| src/main/java/com                                                                                                              |         22 |      1,174 |         84 |        349 |      1,607 |
+| src/main/java/com/example                                                                                                      |         22 |      1,174 |         84 |        349 |      1,607 |
+| src/main/java/com/example/haveyoursay                                                                                          |         22 |      1,174 |         84 |        349 |      1,607 |
+| src/main/java/com/example/haveyoursay (Files)                                                                                  |          1 |         19 |          0 |          6 |         25 |
+| src/main/java/com/example/haveyoursay/SecurityConfig                                                                           |          4 |        107 |         34 |         28 |        169 |
+| src/main/java/com/example/haveyoursay/controllers                                                                              |          3 |        413 |         33 |        107 |        553 |
+| src/main/java/com/example/haveyoursay/models                                                                                   |          3 |        393 |         14 |        112 |        519 |
+| src/main/java/com/example/haveyoursay/repositories                                                                             |          3 |         33 |          1 |         25 |         59 |
+| src/main/java/com/example/haveyoursay/response                                                                                 |          2 |         55 |          0 |         16 |         71 |
+| src/main/java/com/example/haveyoursay/services                                                                                 |          6 |        154 |          2 |         55 |        211 |
+| src/main/resources                                                                                                             |          2 |         17 |          5 |          1 |         23 |
+| src/test                                                                                                                       |          1 |          9 |          0 |          5 |         14 |
+| src/test/java                                                                                                                  |          1 |          9 |          0 |          5 |         14 |
+| src/test/java/com                                                                                                              |          1 |          9 |          0 |          5 |         14 |
+| src/test/java/com/example                                                                                                      |          1 |          9 |          0 |          5 |         14 |
+| src/test/java/com/example/haveyoursay                                                                                          |          1 |          9 |          0 |          5 |         14 |
++--------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------------------------------------------------------------+-----------------+------------+------------+------------+------------+
+| filename                                                                                                                       | language        | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------------------------------+-----------------+------------+------------+------------+------------+
+| /Users/shane/Desktop/dev_stuff/have_your_say/.mvn/wrapper/maven-wrapper.properties                                             | Java Properties |          3 |         16 |          1 |         20 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/README.md                                                                         | Markdown        |         14 |          0 |          9 |         23 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/README.md                                                                | Markdown        |         38 |          0 |         33 |         71 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/package-lock.json                                                        | JSON            |     19,393 |          0 |          1 |     19,394 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/package.json                                                             | JSON            |         43 |          0 |          1 |         44 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/public/index.html                                                        | HTML Nunjucks   |         42 |          0 |          4 |         46 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/public/manifest.json                                                     | JSON            |         25 |          0 |          1 |         26 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/src/App.css                                                              | CSS             |         33 |          0 |          6 |         39 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/src/App.js                                                               | JavaScript      |         37 |          0 |          8 |         45 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/src/App.test.js                                                          | JavaScript      |          7 |          0 |          2 |          9 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/src/assets/theme.js                                                      | JavaScript      |         57 |         54 |          4 |        115 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/src/components/AppBar.js                                                 | JavaScript      |         39 |          0 |          6 |         45 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/src/components/PetitionCard.js                                           | JavaScript      |         86 |          1 |          6 |         93 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/src/components/PetitionDrawer.js                                         | JavaScript      |        120 |          0 |         13 |        133 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/src/components/SnackBar.js                                               | JavaScript      |         18 |          1 |          3 |         22 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/src/index.css                                                            | CSS             |         12 |          0 |          2 |         14 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/src/index.js                                                             | JavaScript      |         14 |          0 |          2 |         16 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/src/logo.svg                                                             | XML             |          1 |          0 |          0 |          1 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/src/pages/AccountPage.js                                                 | JavaScript      |          0 |          0 |          1 |          1 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/src/pages/ClosedPetitions/ClosedPetitions.js                             | JavaScript      |         36 |          0 |          7 |         43 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/src/pages/CreatePetition/CreatePetition.js                               | JavaScript      |        128 |          7 |         24 |        159 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/src/pages/CreateProposal/CreatePetition.js                               | JavaScript      |        114 |         37 |         26 |        177 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/src/pages/Dashboard/Dashboard.js                                         | JavaScript      |        218 |          2 |         18 |        238 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/src/pages/Home/Home.js                                                   | JavaScript      |         25 |          0 |          5 |         30 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/src/pages/LoginPage/LoginPage.js                                         | JavaScript      |         87 |          5 |         19 |        111 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/src/pages/LogoutPage/LogoutPage.js                                       | JavaScript      |         41 |          2 |         11 |         54 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/src/pages/OpenPetitions/OpenPetitions.js                                 | JavaScript      |         36 |          0 |          7 |         43 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/src/pages/SignUpPage/SignUpPage.css                                      | CSS             |          5 |          0 |          0 |          5 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/src/pages/SignUpPage/SignUpPage.js                                       | JavaScript      |        161 |          6 |         24 |        191 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/src/services/api.js                                                      | JavaScript      |        145 |         11 |         13 |        169 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/src/services/authProvider.js                                             | JavaScript      |         46 |          2 |         17 |         65 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/src/services/protectedRoutes.js                                          | JavaScript      |         14 |          0 |          6 |         20 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/src/util/msToTime.js                                                     | JavaScript      |         24 |          0 |         11 |         35 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/frontend/src/util/truncateText.js                                                 | JavaScript      |          3 |          0 |          0 |          3 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/mvnw.cmd                                                                          | Batch           |        108 |         26 |         16 |        150 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/pom.xml                                                                           | XML             |        105 |          0 |          7 |        112 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/src/main/java/com/example/haveyoursay/HaveYourSayApplication.java                 | Java            |         19 |          0 |          6 |         25 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/src/main/java/com/example/haveyoursay/SecurityConfig/ApplicationConfig.java       | Java            |         22 |         34 |          4 |         60 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/src/main/java/com/example/haveyoursay/SecurityConfig/JwtConstant.java             | Java            |          4 |          0 |          2 |          6 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/src/main/java/com/example/haveyoursay/SecurityConfig/JwtProvider.java             | Java            |         37 |          0 |         11 |         48 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/src/main/java/com/example/haveyoursay/SecurityConfig/JwtTokenValidator.java       | Java            |         44 |          0 |         11 |         55 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/src/main/java/com/example/haveyoursay/controllers/PetitionController.java         | Java            |        187 |         23 |         47 |        257 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/src/main/java/com/example/haveyoursay/controllers/ProposalController.java         | Java            |        116 |         10 |         27 |        153 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/src/main/java/com/example/haveyoursay/controllers/UserController.java             | Java            |        110 |          0 |         33 |        143 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/src/main/java/com/example/haveyoursay/models/Petition.java                        | Java            |        150 |          2 |         45 |        197 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/src/main/java/com/example/haveyoursay/models/Proposal.java                        | Java            |        142 |          2 |         44 |        188 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/src/main/java/com/example/haveyoursay/models/User.java                            | Java            |        101 |         10 |         23 |        134 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/src/main/java/com/example/haveyoursay/repositories/PetitionRepository.java        | Java            |         13 |          1 |         10 |         24 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/src/main/java/com/example/haveyoursay/repositories/ProposalRepository.java        | Java            |         10 |          0 |          9 |         19 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/src/main/java/com/example/haveyoursay/repositories/UserRepository.java            | Java            |         10 |          0 |          6 |         16 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/src/main/java/com/example/haveyoursay/response/ApiResponse.java                   | Java            |         23 |          0 |          4 |         27 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/src/main/java/com/example/haveyoursay/response/AuthResponse.java                  | Java            |         32 |          0 |         12 |         44 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/src/main/java/com/example/haveyoursay/services/PetitionService.java               | Java            |          7 |          0 |          4 |         11 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/src/main/java/com/example/haveyoursay/services/PetitionServiceImplementation.java | Java            |         32 |          1 |         10 |         43 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/src/main/java/com/example/haveyoursay/services/ProposalService.java               | Java            |          6 |          0 |          3 |          9 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/src/main/java/com/example/haveyoursay/services/ProposalServiceImplementation.java | Java            |         27 |          0 |          9 |         36 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/src/main/java/com/example/haveyoursay/services/UserService.java                   | Java            |         10 |          0 |          8 |         18 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/src/main/java/com/example/haveyoursay/services/UserServiceImplementation.java     | Java            |         72 |          1 |         21 |         94 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/src/main/resources/application.properties                                         | Java Properties |         15 |          3 |          1 |         19 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/src/main/resources/config.properties                                              | Java Properties |          2 |          2 |          0 |          4 |
+| /Users/shane/Desktop/dev_stuff/have_your_say/src/test/java/com/example/haveyoursay/HaveYourSayApplicationTests.java            | Java            |          9 |          0 |          5 |         14 |
+| Total                                                                                                                          |                 |     22,478 |        259 |        669 |     23,406 |
++--------------------------------------------------------------------------------------------------------------------------------+-----------------+------------+------------+------------+------------+

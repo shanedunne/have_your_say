@@ -6,10 +6,14 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
 import { Grid } from '@mui/material';
 import OpenSnackBar from '../../components/SnackBar'
+import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from 'dayjs';
 import { getFutureProposals } from '../../services/api';
-
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Modal from '@mui/material/Modal';
 // import { handleCreatePetition } from '../../services/api';
 
@@ -21,6 +25,8 @@ function CreateProposal({ pathname }) {
     const [body, setBody] = useState("");
     const [petition, setPetition] = useState({});
     const [futureProposals, setFutureProposals] = useState([]);
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
 
     const getFutureProposalData = async () => {
         let data = await getFutureProposals();
@@ -32,9 +38,14 @@ function CreateProposal({ pathname }) {
         getFutureProposalData();
     }, []);
 
+    useEffect(() => {
+        console.log(startDate)
+        console.log(endDate)
+    }, [startDate, endDate])
 
-    
-    
+
+
+
     // snackbar message for succesfully creating a petition
     const message = "Proposal successfully created";
     const [snackBarOpen, setSnackBarOpen] = useState(false);
@@ -92,7 +103,16 @@ function CreateProposal({ pathname }) {
     const handleSnackBarClose = () => {
         setSnackBarOpen(false);
     };
-    
+
+    // convert date to ms
+    const handleStartDate = (date) => {
+        setStartDate(dayjs(date).startOf('day').valueOf());
+    };
+
+    const handleEndDate = (date) => {
+        setEndDate(dayjs(date).endOf('day').valueOf());
+    }
+
 
     return (
 
@@ -101,7 +121,7 @@ function CreateProposal({ pathname }) {
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
-            maxWidth: {xs: '100%', sm: 400, md: 600},
+            maxWidth: { xs: '100%', sm: 400, md: 600 },
             height: "100vh",
             padding: 2,
         }}>
@@ -112,9 +132,13 @@ function CreateProposal({ pathname }) {
                 Provide your proposal in response to the supported petition below
             </Typography>
 
-            <Grid container spacing={3} sx={{ maxWidth: {xs: '100%', sm: 400, md: 600} }}>
-            <Grid item xs={12}>
+            <Grid container spacing={3} sx={{ maxWidth: { xs: '100%', sm: 400, md: 600 } }}>
+                <Grid item xs={12}>
+                    <InputLabel id="supported-petition-select">Select supported petition</InputLabel>
+
                     <Select
+                        labelId="supported-petition-select"
+                        id="supported-petition-select"
                         displayEmpty
                         value={petition}
                         onChange={(e) => setPetition(e.target.value)}
@@ -136,8 +160,38 @@ function CreateProposal({ pathname }) {
                         onChange={(e) => setTitle(e.target.value)}
                     />
                 </Grid>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <Grid item xs={6}>
+                        <DatePicker
+                            label="Proposal Start Date"
+                            value={startDate ? dayjs(startDate) : null}
+                            onChange={(newDate) => handleStartDate(newDate)}
+                            slotProps={{ textField: { fullWidth: true } }}
+                        />
+                    </Grid>
 
-                
+                    <Grid item xs={6}>
+                        <DatePicker
+                            label="Proposal End Date"
+                            value={endDate ? dayjs(endDate) : null}
+                            onChange={(newDate) => handleEndDate(newDate)}
+                            slotProps={{ textField: { fullWidth: true } }}
+                        />
+                    </Grid>
+                </LocalizationProvider>
+
+                <Grid xs={12}>
+                    <Typography variant='caption' sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        textAlign: "center",
+                        justifyContent: "center",
+                        ml: 3,
+                        mt: 1,
+                    }}><InfoOutlinedIcon fontSize='small' sx={{ color: 'gray' }} />Voting will commence at 00:00 of your chosen start date and end at 23:59 on the end date</Typography>
+                </Grid>
+
+
                 <Grid item xs={12}>
                     <TextField
                         id="outlined-multiline-static"
