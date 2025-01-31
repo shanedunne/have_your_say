@@ -180,7 +180,7 @@ export const handleCreateProposal = async ({
   body,
   startTime,
   endTime,
-  petition
+  petitionId
 }) => {
   try {
     const userJwt = Cookies.get("JwtToken");
@@ -190,7 +190,7 @@ export const handleCreateProposal = async ({
       body,
       startTime,
       endTime,
-      petition
+      petitionId
     },
     {
       // pass the token in the header to not expose it

@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
 
 import lombok.Data;
 
@@ -28,7 +30,10 @@ public class Petition {
     private int voteStanding; // supportVotes - opposeVotes
     private String status; // open, closedSupported, closedOpposed
     private Date lastUpdated; // time of last vote
-    private String proposalId;
+
+    @Field("proposalId")
+    private String proposalId = "";
+    
 
     // constructor
     public Petition(String id, String title, String category, String body, Long startTime, Long closeTime, String userId, String community, int participantsAtStart, int quota) {
@@ -48,7 +53,6 @@ public class Petition {
         this.voteStanding = 0;
         this.status = "open";
         this.lastUpdated = new Date(); // Set the current date/time
-        this.proposalId = null;
     }
     
     public Petition() {

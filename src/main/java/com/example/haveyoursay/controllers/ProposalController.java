@@ -58,7 +58,7 @@ public class ProposalController {
         String category = proposal.getCategory();
         String body = proposal.getBody();
         Long startTime = proposal.getStartTime();
-        Long closeTime = proposal.getCloseTime();
+        Long endTime = proposal.getEndTime();
         String petitionId = proposal.getPetitionId();
 
         Proposal createdProposal = new Proposal();
@@ -66,7 +66,7 @@ public class ProposalController {
         createdProposal.setCategory(category);
         createdProposal.setBody(body);
         createdProposal.setStartTime(startTime);
-        createdProposal.setCloseTime(closeTime);
+        createdProposal.setEndTime(endTime);
         createdProposal.setPetitionId(petitionId);
         createdProposal.setUserId(user.getId());
         createdProposal.setCommunity(user.getCommunity());

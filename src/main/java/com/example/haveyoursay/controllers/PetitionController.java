@@ -67,7 +67,9 @@ public class PetitionController {
 
         // hard coded below for testing
         createdPetition.setParticipantsAtStart(10);
-        createdPetition.setQuota(5);
+        createdPetition.setQuota(1);
+
+        createdPetition.setProposalId("");
 
         try {
             Petition savedPetition = petitionRepository.save(createdPetition);
