@@ -12,7 +12,7 @@ import { msToTimeLong, msToTimeShort } from '../util/msToTime';
 import { truncateText } from '../util/truncateText';
 
 
-function ProposalCard({ title, category, body, startTime, closeTime, petitionId, status }) {
+function ProposalCard({ title, category, body, startTime, closeTime, petitionId, status, proposalId }) {
 
 
   return (
