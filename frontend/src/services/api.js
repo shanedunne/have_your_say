@@ -218,3 +218,21 @@ export const getOpenProposals = async () => {
   });
   return response.data;
 }
+
+// check if user has voted on petition
+export const checkHasVotedProposal = async (proposalId) => {
+  const userJwt = Cookies.get("JwtToken");
+  try {
+    const response = await axios.get("http://localhost:8080/proposal/checkHasVoted", {
+      headers: {
+        Authorization: `Bearer ${userJwt}`,
+      },
+      params: { proposalId },
+    });
+    console.log(response.data);
+    return response.data === true; 
+  } catch (error) {
+    console.error("Error in checking if user has voted on this proposal", error);
+    throw error;
+  }
+};

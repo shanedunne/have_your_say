@@ -162,6 +162,26 @@ public class ProposalController {
         return proposal;
     }
 
+    @GetMapping("checkHasVoted")
+    public Boolean checkHasVoted(@RequestHeader("Authorization") String token, @RequestParam String proposalId) {
+        // remove prefix from token
+        if (token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+
+        // call implenetation method to get user from token
+        User user = userServiceImplementation.findUserProfileByJwt(token);
+        if (user == null) {
+            return false;
+        }
+
+        if (user.getProposalsVotedOn().contains(proposalId)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     
 
 }

@@ -1,10 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { handlelogout } from "../../services/api";
 import Typography from '@mui/material/Typography';
 import { useNavigate } from "react-router-dom";
 import OpenSnackBar from '../../components/SnackBar'
+import CardContent from '@mui/material/CardContent';
+import { Grid } from '@mui/material';
+import Modal from '@mui/material/Modal';
+import { checkHasVotedProposal } from '../../services/api';
+import theme from '../../assets/theme';
+
+const modalStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    borderRadius: 1,
+    boxShadow: 24,
+    p: 4,
+};
 
 
 function ProposalPage({ title, category, body, startTime, closeTime, petitionId, status, proposalId }) {
@@ -22,31 +38,25 @@ function ProposalPage({ title, category, body, startTime, closeTime, petitionId,
     useEffect(() => {
         const fetchVoteStatus = async () => {
             try {
-                const response = await checkHasVotedPetition(petitionId);
+                const response = await checkHasVotedProposal(proposalId);
                 setHasVotedStatus(response);
                 console.log(hasVotedStatus)
             } catch (error) {
                 console.error("Error checking vote status:", error);
             }
         };
-        if (open) {
-            fetchVoteStatus();
-        }
 
-    }, [open, proposalId]);
+    }, [proposalId]);
 
     let navigate = useNavigate();
-
-    const logout = () => {
-        handlelogout("JwtToken")
-        setSnackBarOpen(true);
-        setTimeout(() => navigate('/'), 3000);
-    };
 
     // close snackbar
     const handleSnackBarClose = () => {
         setSnackBarOpen(false);
     };
+    const [openModal, setOpenModal] = useState(false);
+    const handleOpen = () => setOpenModal(true);
+    const handleClose = () => setOpenModal(false);
 
     return (
         <Box sx={{
@@ -125,7 +135,7 @@ function ProposalPage({ title, category, body, startTime, closeTime, petitionId,
                         <Typography id="modal-modal-description" sx={{ m: 2 }}>
                             Are you sure you want to {proposalDecision} this proposal? This decision is final.
                         </Typography>
-                        <Button sx={{ m: 1 }} variant="contained" size='large' onClick={submitVote}>Confirm</Button>
+                        <Button sx={{ m: 1 }} variant="contained" size='large' onClick={(() => console.log("this will submit vote"))}>Confirm</Button>
                         <Button sx={{ m: 1 }} variant='contained' size='medium' color='error' onClick={() => { setProposalDecision(null); handleClose(); }}>Cancel</Button>
                     </Box>
                 </Modal>

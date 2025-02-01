@@ -70,15 +70,6 @@ function ProposalCard({ title, category, body, startTime, closeTime, petitionId,
           </Button>
         </Box>
       </Card>
-      <PetitionDrawer
-        title={title}
-        body={body}
-        category={category}
-        startTime={msToTimeShort(startTime)}
-        closeTime={msToTimeShort(closeTime)}
-        petitionId={petitionId}
-        status={status}
-      />
     </Grid>
   )
 };

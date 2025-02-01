@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useParams } from "react";
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import LayersIcon from '@mui/icons-material/Layers';
@@ -18,6 +18,8 @@ import ClosedPetitions from '../ClosedPetitions/ClosedPetitions';
 import Logout from '../LogoutPage/LogoutPage';
 import logo from '../../assets/images/logo.png';
 import { useAuth } from '../../services/authProvider';
+import OpenProposals from "../OpenProposals/OpenProposals";
+import ProposalPage from "../ProposalPage/ProposalPage";
 
 
 export const NAVIGATION_ADMIN = [
@@ -91,7 +93,7 @@ export const NAVIGATION_ADMIN = [
     {
         segment: 'logout',
         title: 'Logout',
-        icon: <LogoutSharpIcon />, 
+        icon: <LogoutSharpIcon />,
     },
 ];
 
@@ -166,7 +168,7 @@ export const NAVIGATION_CITIZEN = [
     {
         segment: 'logout',
         title: 'Logout',
-        icon: <LogoutSharpIcon />, 
+        icon: <LogoutSharpIcon />,
     },
 ];
 
@@ -174,8 +176,9 @@ export const NAVIGATION_CITIZEN = [
 
 
 function PageContent({ pathname }) {
+    const { proposalId } = useParams();
 
-    
+
     return (
         <Box
             sx={{
@@ -186,11 +189,19 @@ function PageContent({ pathname }) {
                 textAlign: 'center',
             }}
         >
-            {pathname === '/createPetition' && <CreatePetition />}
-            {pathname === '/createProposal' && <CreateProposal/>}
-            {pathname === '/openPetitions' && <OpenPetitions />}
-            {pathname === '/closedPetitions' && <ClosedPetitions />}
-            {pathname === '/logout' && <Logout />}
+            {proposalId ? (
+                <ProposalPage />
+            ) : (
+                <>
+                    {pathname === '/createPetition' && <CreatePetition />}
+                    {pathname === '/createProposal' && <CreateProposal />}
+                    {pathname === '/openPetitions' && <OpenPetitions />}
+                    {pathname === '/openProposals' && <OpenProposals />}
+                    {pathname === '/closedPetitions' && <ClosedPetitions />}
+                    {pathname === '/logout' && <Logout />}
+                </>
+            )}
+
         </Box>
     );
 }
@@ -206,7 +217,7 @@ function DashboardLayoutBasic(props) {
     const { role, community } = useAuth();
     if (role === "ROLE_CITIZEN") {
         NAVIGATION = NAVIGATION_CITIZEN;
-    } else if(role === "ROLE_ADMIN") {
+    } else if (role === "ROLE_ADMIN") {
         NAVIGATION = NAVIGATION_ADMIN;
     }
 

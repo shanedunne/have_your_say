@@ -7,7 +7,7 @@ import ProposalCard from '../../components/ProposalCard';
 import OpenPetitions from '../OpenPetitions/OpenPetitions';
 
 
-function openProposals() {
+function OpenProposals() {
     const [openProposals, setOpenProposals] = useState([]);
 
     useEffect(() => {
