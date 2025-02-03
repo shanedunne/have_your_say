@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useParams } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -9,6 +9,7 @@ import { Grid } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import { checkHasVotedProposal } from '../../services/api';
 import theme from '../../assets/theme';
+import { getProposalById } from '../../services/api';
 
 const modalStyle = {
     position: 'absolute',
@@ -23,7 +24,26 @@ const modalStyle = {
 };
 
 
-function ProposalPage({ title, category, body, startTime, closeTime, petitionId, status, proposalId }) {
+
+
+function ProposalPage() {
+    const { proposalId } = useParams(); // Get ID from URL
+  const [proposal, setProposal] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+useEffect(() => {
+    async function fetchProposal() {
+      try {
+        const data = await getProposalById(proposalId);
+        setProposal(data);
+      } catch (error) {
+        console.error("Error fetching proposal:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchProposal();
+  }, [proposalId]);
 
     // snackbar message for succesfully creating a petition
     const message = "Successfully casted vote on proposal";
@@ -64,14 +84,12 @@ function ProposalPage({ title, category, body, startTime, closeTime, petitionId,
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
-            maxWidth: { xs: '100%', sm: 400, md: 600 },
             height: "100vh",
             padding: 2,
         }}>
             <Grid container spacing={2}>
                 <Box sx={{
-                    width: { xs: '100%', sm: 400, md: 550 }
-                    , p: 2, mb: 2,
+                    p: 2, mb: 2,
                     display: "flex",
                     flexDirection: "row",
                     alignItems: "center",
@@ -80,20 +98,20 @@ function ProposalPage({ title, category, body, startTime, closeTime, petitionId,
 
                     <CardContent sx={{ paddingTop: '100px', fontFamily: theme.typography.fontFamily }}>
                         <Typography variant="h1" sx={{ mb: 2, fontWeight: "bold" }}>
-                            {title}
+                            {proposal.title}
                         </Typography>
                         <Grid item xs={12}>
                             <Typography variant="h5" sx={{}}>
-                                {category}
+                                {proposal.category}
                             </Typography>
-                            {getNowTime > startTime ? (
-                                <Typography variant="subtitle1" sx={{ paddingBottom: '20px' }}>Closing: {closeTime}</Typography>
+                            {getNowTime > proposal.startTime ? (
+                                <Typography variant="subtitle1" sx={{ paddingBottom: '20px' }}>Closing: {proposal.closeTime}</Typography>
 
                             ) : (
-                                <Typography variant="subtitle1" sx={{ paddingBottom: '20px' }}>Starting: {startTime}</Typography>
+                                <Typography variant="subtitle1" sx={{ paddingBottom: '20px' }}>Starting: {proposal.startTime}</Typography>
                             )}
                         </Grid>
-                        {status === "open" ? (
+                        {proposal.status === "open" ? (
                             hasVotedStatus === false ? (
                                 <Grid className='voteProposal' item xs={12} sm={6} md={6} sx={{ mb: 2 }}>
                                     <Button variant="outlined" value="support" sx={{ mr: 1 }} onClick={(e) => { handleOpen(); setProposalDecision(e.target.value); }}>Support</Button>
@@ -113,12 +131,12 @@ function ProposalPage({ title, category, body, startTime, closeTime, petitionId,
                         ) : (
                             <Grid>
                                 <Typography variant='h5'
-                                    sx={{ mb: 1, color: theme.palette.secondary.main }}>{status}</Typography>
+                                    sx={{ mb: 1, color: theme.palette.secondary.main }}>{proposal.status}</Typography>
                             </Grid>
 
                         )}
                         <Grid item xs={12}>
-                            <Typography variant="body1">{body}</Typography>
+                            <Typography variant="body1">{proposal.body}</Typography>
                         </Grid>
                     </CardContent>
                 </Box >

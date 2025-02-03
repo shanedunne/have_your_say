@@ -236,3 +236,13 @@ export const checkHasVotedProposal = async (proposalId) => {
     throw error;
   }
 };
+
+export const getProposalById = async (proposalId) => {
+  const userJwt = Cookies.get("JwtToken");
+  const response = await axios.get(`http://localhost:8080/proposal/${proposalId}`, {
+    headers: {
+      Authorization: `Bearer ${userJwt}`,
+    },
+  });
+  return response.data;
+};
