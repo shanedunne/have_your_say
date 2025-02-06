@@ -21,6 +21,7 @@ import Logout from '../LogoutPage/LogoutPage';
 import logo from '../../assets/images/logo.png';
 import { useAuth } from '../../services/authProvider';
 import OpenProposals from "../OpenProposals/OpenProposals";
+import ClosedProposals from "../ClosedProposal.js/ClosedProposal";
 
 
 export const NAVIGATION_ADMIN = [
@@ -196,6 +197,7 @@ function PageContent({ pathname }) {
                     {pathname === '/openPetitions' && <OpenPetitions />}
                     {pathname === '/openProposals' && <OpenProposals />}
                     {pathname === '/closedPetitions' && <ClosedPetitions />}
+                    {pathname === '/closedProposals' && <ClosedProposals />}
                     {pathname === '/logout' && <Logout />}
 
         </Box>

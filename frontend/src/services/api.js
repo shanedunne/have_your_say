@@ -221,6 +221,18 @@ export const getOpenProposals = async () => {
   return response.data;
 }
 
+// get closed proposals for community associated with users cookie
+export const getClosedProposals = async () => {
+  const userJwt = Cookies.get("JwtToken");
+  const response = await axios.get("http://localhost:8080/proposal/getClosed", {
+    headers: {
+      Authorization: `Bearer ${userJwt}`,
+    },
+  });
+  return response.data;
+}
+
+
 // check if user has voted on petition
 export const checkHasVotedProposal = async (proposalId) => {
   const userJwt = Cookies.get("JwtToken");
