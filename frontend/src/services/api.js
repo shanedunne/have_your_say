@@ -210,11 +210,13 @@ export const handleCreateProposal = async ({
 
 // get open proposals for community associated with users cookie
 export const getOpenProposals = async () => {
+  const now = new Date().getTime();
   const userJwt = Cookies.get("JwtToken");
   const response = await axios.get("http://localhost:8080/proposal/getOpen", {
     headers: {
       Authorization: `Bearer ${userJwt}`,
     },
+    params: { now },
   });
   return response.data;
 }

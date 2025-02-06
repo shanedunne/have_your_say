@@ -109,7 +109,7 @@ public class ProposalController {
     }
     // get open proposals of for given community
     @GetMapping("/getOpen")
-    public ResponseEntity<?> getOpenProposals(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<?> getOpenProposals(@RequestHeader("Authorization") String token, @RequestParam Long now) {
         // remove prefix from token
         if (token.startsWith("Bearer ")) {
             token = token.substring(7);
@@ -121,9 +121,22 @@ public class ProposalController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
         }
         String community = user.getCommunity();
+
+        // check to ensure all open proposals are within their timeframe.
         try {
-            List<Proposal> OpenProposals = proposalRepository.findByCommunityAndStatus(community, "open");
-            return ResponseEntity.ok(OpenProposals);
+            List<Proposal> openProposals = proposalRepository.findByCommunityAndStatus(community, "open");
+            for (Proposal proposal : openProposals) {
+                if (proposal.getEndTime() < now ) {
+                    if (proposal.getSupportVotes() > proposal.getOpposeVotes()) {
+                        proposal.setStatus("Passed");
+                    } else {
+                        proposal.setStatus("Rejected");
+                    }
+                    proposalRepository.save(proposal);
+                }
+            }
+            openProposals = proposalRepository.findByCommunityAndStatus(community, "open");
+            return ResponseEntity.ok(openProposals);
         } catch (Exception e) {
             e.printStackTrace(); // Log the exception for debugging
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error fetching petitions");

@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import theme from '../assets/theme';
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import { Grid } from '@mui/material';
-import { msToTimeLong, msToTimeShort } from '../util/msToTime';
+import {  msToTimeShortClosing } from '../util/msToTime';
 import { truncateText } from '../util/truncateText';
 import PetitionDrawer from './PetitionDrawer';
 
@@ -33,7 +33,7 @@ function PetitionCard({ title, category, body, closeTime, petitionId, status}) {
           }}
         >
           {status === "open" ? (
-            <Typography>{msToTimeShort(closeTime)}</Typography>
+            <Typography>{msToTimeShortClosing(closeTime)}</Typography>
           ) : (
             <Typography> </Typography>
           )}
@@ -82,7 +82,7 @@ function PetitionCard({ title, category, body, closeTime, petitionId, status}) {
         title={title}
         body={body}
         category={category}
-        closeTime={msToTimeShort(closeTime)}
+        closeTime={msToTimeShortClosing(closeTime)}
         petitionId={petitionId}
         status={status}
       />

@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import theme from '../assets/theme';
 import { Grid } from '@mui/material';
-import {  msToTimeShort } from '../util/msToTime';
+import {  msToTimeShortClosing, msToTimeShortOpening } from '../util/msToTime';
 import { truncateText } from '../util/truncateText';
 import ProposalDrawer from './ProposalDrawer';
 
@@ -31,9 +31,9 @@ function ProposalCard({ title, category, body, startTime, closeTime, petitionId,
           }}
         >
           {status === "open" ? (
-            <Typography>{msToTimeShort(closeTime)}</Typography>
+            <Typography>{msToTimeShortClosing(closeTime)}</Typography>
           ) : (
-            <Typography> </Typography>
+            <Typography>{msToTimeShortOpening(startTime)}</Typography>
           )}
 
           <Typography sx={{ color: status === "open" ? "green" : "red" }}>{status}</Typography>
@@ -81,8 +81,8 @@ function ProposalCard({ title, category, body, startTime, closeTime, petitionId,
         body={body}
         category={category}
         proposalId={proposalId}
-        closeTime={msToTimeShort(closeTime)}
-        startTime={msToTimeShort(startTime)}
+        closeTime={msToTimeShortClosing(closeTime)}
+        startTime={msToTimeShortOpening(startTime)}
         petitionId={petitionId}
         status={status}
 

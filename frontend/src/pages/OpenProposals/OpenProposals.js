@@ -17,8 +17,8 @@ function OpenProposals() {
     const populateProposals = async () => {
         const proposalData = await getOpenProposals();
         setOpenProposals(proposalData);
-        
-    } 
+
+    }
 
     return (
         <Box sx={{
@@ -35,9 +35,9 @@ function OpenProposals() {
             <Grid container spacing={3}>
                 {openProposals.map((proposal) => {
                     const comp = openProposals[proposal];
-                    return <ProposalCard key={proposal.id} title={proposal.title} body={proposal.body} startTime={proposal.startTime} closeTime={proposal.closeTime} category={proposal.category} proposalId={proposal.id} status={proposal.status} petitionId={proposal.petitionId}/>
+                    return <ProposalCard key={proposal.id} title={proposal.title} body={proposal.body} startTime={proposal.startTime} closeTime={proposal.endTime} category={proposal.category} proposalId={proposal.id} status={proposal.status} petitionId={proposal.petitionId} />
                 })}
-                
+
             </Grid>
         </Box>
     )
