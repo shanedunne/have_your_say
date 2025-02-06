@@ -1,4 +1,6 @@
-import React, { useState, useParams } from "react";
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import LayersIcon from '@mui/icons-material/Layers';
@@ -177,6 +179,7 @@ export const NAVIGATION_CITIZEN = [
 
 function PageContent({ pathname }) {
     const { proposalId } = useParams();
+    
 
 
     return (
@@ -189,7 +192,7 @@ function PageContent({ pathname }) {
                 textAlign: 'center',
             }}
         >
-            {proposalId ? (
+            {pathname.startsWith('/dashboard/proposals/') ? (
                 <ProposalPage />
             ) : (
                 <>
@@ -210,7 +213,7 @@ PageContent.propTypes = {
     pathname: PropTypes.string.isRequired,
 };
 
-function DashboardLayoutBasic(props) {
+function Dashboard(props) {
     const { window } = props;
     let NAVIGATION;
 
@@ -226,23 +229,25 @@ function DashboardLayoutBasic(props) {
 
     return (
         // preview-start
-        <AppProvider
-            navigation={NAVIGATION}
-            router={router}
-            theme={theme}
-            branding={{
-                logo: <img src={logo} alt="MUI logo" />,
-                title: `Have Your Say - ${community}`,
-                homeUrl: '/',
-            }}
-        >
-            <DashboardLayout >
-                <PageContent pathname={router.pathname} />
-            </DashboardLayout>
-        </AppProvider>
-        // preview-end
+            <AppProvider
+                navigation={NAVIGATION}
+                router={router}
+                theme={theme}
+                branding={{
+                    logo: <img src={logo} alt="MUI logo" />,
+                    title: `Have Your Say - ${community}`,
+                    homeUrl: '/',
+                }}
+            >
+                <DashboardLayout >
+                    <Routes>
+                    <Route path="/*" element={<PageContent pathname={router.pathname} />} />
+                    <Route path="/dashboard/proposals/:proposalId" element={<ProposalPage />} />
+                    </Routes>
+                </DashboardLayout>
+            </AppProvider>
     );
 }
 
 
-export default DashboardLayoutBasic;
+export default Dashboard;

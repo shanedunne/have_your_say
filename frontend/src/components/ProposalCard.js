@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -13,6 +14,7 @@ import { truncateText } from '../util/truncateText';
 
 
 function ProposalCard({ title, category, body, startTime, closeTime, petitionId, status, proposalId }) {
+  const navigate = useNavigate();
 
 
   return (
@@ -52,7 +54,7 @@ function ProposalCard({ title, category, body, startTime, closeTime, petitionId,
           }}
         >
           <Button
-            onClick={() => console.log("this will open proposal page")}
+            onClick={() => navigate(`/dashboard/proposals/${proposalId}`)}
             sx={{
               display: "inline-flex",
               flexDirection: "row",
