@@ -23,9 +23,9 @@ const modalStyle = {
 };
 
 
-export default function ArticleDrawer({ anchor = "right", open, onClose, title, body, category, closeTime, petitionId, proposalId,status }) {
+export default function ProposalDrawer({ anchor = "right", open, onClose, title, body, category, closeTime, petitionId, proposalId,status }) {
 
-  const [proposalDecision setProposalDecision] = useState(null)
+  const [proposalDecision, setProposalDecision] = useState(null)
   const [hasVotedStatus, setHasVotedStatus] = useState(false);
 
   useEffect(() => {

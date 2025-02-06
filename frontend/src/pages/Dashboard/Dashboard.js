@@ -21,7 +21,6 @@ import Logout from '../LogoutPage/LogoutPage';
 import logo from '../../assets/images/logo.png';
 import { useAuth } from '../../services/authProvider';
 import OpenProposals from "../OpenProposals/OpenProposals";
-import ProposalPage from "../ProposalPage/ProposalPage";
 
 
 export const NAVIGATION_ADMIN = [
@@ -192,18 +191,12 @@ function PageContent({ pathname }) {
                 textAlign: 'center',
             }}
         >
-            {pathname.startsWith('/dashboard/proposals/') ? (
-                <ProposalPage />
-            ) : (
-                <>
                     {pathname === '/createPetition' && <CreatePetition />}
                     {pathname === '/createProposal' && <CreateProposal />}
                     {pathname === '/openPetitions' && <OpenPetitions />}
                     {pathname === '/openProposals' && <OpenProposals />}
                     {pathname === '/closedPetitions' && <ClosedPetitions />}
                     {pathname === '/logout' && <Logout />}
-                </>
-            )}
 
         </Box>
     );
@@ -242,7 +235,6 @@ function Dashboard(props) {
                 <DashboardLayout >
                     <Routes>
                     <Route path="/*" element={<PageContent pathname={router.pathname} />} />
-                    <Route path="/dashboard/proposals/:proposalId" element={<ProposalPage />} />
                     </Routes>
                 </DashboardLayout>
             </AppProvider>

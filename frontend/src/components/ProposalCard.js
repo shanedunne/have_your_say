@@ -1,20 +1,21 @@
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import theme from '../assets/theme';
-import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import { Grid } from '@mui/material';
-import { msToTimeLong, msToTimeShort } from '../util/msToTime';
+import {  msToTimeShort } from '../util/msToTime';
 import { truncateText } from '../util/truncateText';
+import ProposalDrawer from './ProposalDrawer';
 
 
 function ProposalCard({ title, category, body, startTime, closeTime, petitionId, status, proposalId }) {
-  const navigate = useNavigate();
+  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+  const handleToggleDrawer = (open) => {
+    setIsDrawerOpen(open);
+  };
 
 
   return (
@@ -54,7 +55,7 @@ function ProposalCard({ title, category, body, startTime, closeTime, petitionId,
           }}
         >
           <Button
-            onClick={() => navigate(`/dashboard/proposals/${proposalId}`)}
+            onClick={() => handleToggleDrawer(true)}
             sx={{
               display: "inline-flex",
               flexDirection: "row",
@@ -72,6 +73,20 @@ function ProposalCard({ title, category, body, startTime, closeTime, petitionId,
           </Button>
         </Box>
       </Card>
+      <ProposalDrawer
+        anchor="right"
+        open={isDrawerOpen}
+        onClose={() => handleToggleDrawer(false)}
+        title={title}
+        body={body}
+        category={category}
+        proposalId={proposalId}
+        closeTime={msToTimeShort(closeTime)}
+        startTime={msToTimeShort(startTime)}
+        petitionId={petitionId}
+        status={status}
+
+      />
     </Grid>
   )
 };
