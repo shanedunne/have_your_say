@@ -19,6 +19,7 @@ public class Community {
     private int petitionVoteCount;
     private String mostSupportedProposal;
     private String mostSupportedPetition;
+    private Object userEmailAccessCode;
 
     // Constructors
     public Community() {
@@ -26,7 +27,7 @@ public class Community {
     }
 
     public Community(String id, String name, List<String> admins, String communityType, int memberCount,
-                     int proposalVoteCount, int petitionVoteCount, String mostSupportedProposal, String mostSupportedPetition) {
+                     int proposalVoteCount, int petitionVoteCount, String mostSupportedProposal, String mostSupportedPetition, Object userEmailAccessCode) {
         this.id = id;
         this.name = name;
         this.admins = admins != null ? admins : new ArrayList<>();
@@ -36,6 +37,7 @@ public class Community {
         this.petitionVoteCount = petitionVoteCount;
         this.mostSupportedProposal = mostSupportedProposal;
         this.mostSupportedPetition = mostSupportedPetition;
+        this.userEmailAccessCode = userEmailAccessCode;
     }
 
     // Getters and Setters
@@ -109,5 +111,13 @@ public class Community {
 
     public void setMostSupportedPetition(String mostSupportedPetition) {
         this.mostSupportedPetition = mostSupportedPetition;
+    }
+
+    public Object getUserEmailAccessCode() {
+        return userEmailAccessCode;
+    }
+
+    public void setUserEmailAccessCode(Object userEmailAccessCode) {
+        this.userEmailAccessCode = userEmailAccessCode;
     }
 }
