@@ -3,12 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
-import LayersIcon from '@mui/icons-material/Layers';
-import CreateIcon from '@mui/icons-material/Create';
-import AccountCircleSharpIcon from '@mui/icons-material/AccountCircleSharp';
-import FileOpenIcon from '@mui/icons-material/FileOpen';
-import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
-import LogoutSharpIcon from '@mui/icons-material/LogoutSharp';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import { useDemoRouter } from '@toolpad/core/internal';
@@ -22,164 +16,11 @@ import logo from '../../assets/images/logo.png';
 import { useAuth } from '../../services/authProvider';
 import OpenProposals from "../OpenProposals/OpenProposals";
 import ClosedProposals from "../ClosedProposal.js/ClosedProposal";
-
-
-export const NAVIGATION_ADMIN = [
-    {
-        kind: 'header',
-        title: 'Create'
-    },
-    {
-        segment: 'createProposal',
-        title: 'Create Proposal',
-        icon: <CreateIcon />,
-    },
-    {
-        kind: 'divider',
-    },
-    {
-        kind: 'header',
-        title: 'Petitions',
-    },
-    {
-        segment: 'openPetitions',
-        title: 'Open Petitions',
-        icon: <FileOpenIcon />,
-    },
-    {
-        segment: 'closedPetitions',
-        title: 'Closed Petitions',
-        icon: <AssignmentTurnedInIcon />,
-    },
-    {
-        kind: 'divider',
-    },
-    {
-        kind: 'header',
-        title: 'Proposals',
-    },
-    {
-        segment: 'openProposals',
-        title: 'Open Proposals',
-        icon: <FileOpenIcon />,
-    },
-    {
-        segment: 'closedProposals',
-        title: 'Closed Proposals',
-        icon: <AssignmentTurnedInIcon />,
-    },
-    {
-        kind: 'divider',
-    },
-    {
-        kind: 'header',
-        title: 'Integrations',
-    },
-    {
-        segment: 'integrations',
-        title: 'Integrations',
-        icon: <LayersIcon />,
-    },
-    {
-        kind: 'divider',
-    },
-    {
-        kind: 'header',
-        title: 'Account',
-    },
-    {
-        segment: 'accountSettings',
-        title: 'Account Settings',
-        icon: <AccountCircleSharpIcon />,
-    },
-    {
-        segment: 'logout',
-        title: 'Logout',
-        icon: <LogoutSharpIcon />,
-    },
-];
-
-export const NAVIGATION_CITIZEN = [
-    {
-        kind: 'header',
-        title: 'Create'
-    },
-    {
-        segment: 'createPetition',
-        title: 'Create Petition',
-        icon: <CreateIcon />,
-    },
-    {
-        kind: 'divider',
-    },
-    {
-        kind: 'header',
-        title: 'Petitions',
-    },
-    {
-        segment: 'openPetitions',
-        title: 'Open Petitions',
-        icon: <FileOpenIcon />,
-    },
-    {
-        segment: 'closedPetitions',
-        title: 'Closed Petitions',
-        icon: <AssignmentTurnedInIcon />,
-    },
-    {
-        kind: 'divider',
-    },
-    {
-        kind: 'header',
-        title: 'Proposals',
-    },
-    {
-        segment: 'openProposals',
-        title: 'Open Proposals',
-        icon: <FileOpenIcon />,
-    },
-    {
-        segment: 'closedProposals',
-        title: 'Closed Proposals',
-        icon: <AssignmentTurnedInIcon />,
-    },
-    {
-        kind: 'divider',
-    },
-    {
-        kind: 'header',
-        title: 'Integrations',
-    },
-    {
-        segment: 'integrations',
-        title: 'Integrations',
-        icon: <LayersIcon />,
-    },
-    {
-        kind: 'divider',
-    },
-    {
-        kind: 'header',
-        title: 'Account',
-    },
-    {
-        segment: 'accountSettings',
-        title: 'Account Settings',
-        icon: <AccountCircleSharpIcon />,
-    },
-    {
-        segment: 'logout',
-        title: 'Logout',
-        icon: <LogoutSharpIcon />,
-    },
-];
-
-
+import { NAVIGATION_ADMIN, NAVIGATION_CITIZEN, NAVIGATION_MASTER_ADMIN } from "./MenuStructures";
 
 
 function PageContent({ pathname }) {
     const { proposalId } = useParams();
-    
 
 
     return (
@@ -217,6 +58,8 @@ function Dashboard(props) {
         NAVIGATION = NAVIGATION_CITIZEN;
     } else if (role === "ROLE_ADMIN") {
         NAVIGATION = NAVIGATION_ADMIN;
+    } else if (role === "ROLE_MASTER_ADMIN") {
+        NAVIGATION = NAVIGATION_MASTER_ADMIN;
     }
 
     const router = useDemoRouter('/dashboard');
