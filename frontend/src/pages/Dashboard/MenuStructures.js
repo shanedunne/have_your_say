@@ -6,6 +6,7 @@ import AccountCircleSharpIcon from '@mui/icons-material/AccountCircleSharp';
 import FileOpenIcon from '@mui/icons-material/FileOpen';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import LogoutSharpIcon from '@mui/icons-material/LogoutSharp';
+import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
 
 export const NAVIGATION_ADMIN = [
     {
@@ -167,6 +168,18 @@ export const NAVIGATION_MASTER_ADMIN =
             segment: 'createCommunity',
             title: 'Create Community',
             icon: <CreateIcon />,
+        },
+        {
+            kind: 'divider',
+        },
+        {
+            kind: 'header',
+            title: 'Manage',
+        },
+        {
+            segment: 'manageCommunities',
+            title: 'Manage Communities',
+            icon: <DashboardOutlinedIcon />,
         },
         {
             kind: 'divider',
