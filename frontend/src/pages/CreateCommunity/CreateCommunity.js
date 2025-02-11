@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import InputLabel from '@mui/material/InputLabel';
+
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import { Grid } from '@mui/material';
+import { FormControl, Grid } from '@mui/material';
 import OpenSnackBar from '../../components/SnackBar'
 import CustomizedSlider from '../../components/PercentSlide';
 import NoOfDaysSelect from '../../components/NoOfDaysSelect';
@@ -21,7 +23,7 @@ function CreateCommunity({ pathname }) {
     const [admin, setAdmin] = useState([]);
     const [groupType, setGroupType] = useState("");
     const [petitionQuota, setPetitionQuota] = useState("");
-    const [petitionTimeframe, setPetitionTimeframe]= useState("");
+    const [petitionTimeframe, setPetitionTimeframe] = useState("");
     const [proposalQuota, setProposalQuota] = useState("");
     const [proposalTimeframe, setProposalTimeframe] = useState("");
     const communityTypeOptions = ["Local Government", "Company", "Company Subdivision", "Society", "Club", "School", "Local Community"];
@@ -73,7 +75,7 @@ function CreateCommunity({ pathname }) {
             }                
 
                 */
-            
+
         } catch (error) {
             console.error("Creation of community failed")
             setError("Error creating community")
@@ -91,7 +93,7 @@ function CreateCommunity({ pathname }) {
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
-            maxWidth: {xs: '100%', sm: 400, md: 600},
+            maxWidth: { xs: '100%', sm: 400, md: 600 },
             height: "100vh",
             padding: 2,
         }}>
@@ -99,7 +101,7 @@ function CreateCommunity({ pathname }) {
                 Create A Community
             </Typography>
 
-            <Grid container spacing={3} sx={{ maxWidth: {xs: '100%', sm: 400, md: 600} }}>
+            <Grid container spacing={3} sx={{ maxWidth: { xs: '100%', sm: 400, md: 600 } }}>
                 <Grid item xs={12}>
                     <TextField
                         label="Name"
@@ -111,32 +113,44 @@ function CreateCommunity({ pathname }) {
                     />
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid item xs={6}>
+                    <FormControl fullWidth>
+                    <InputLabel id="community-type">Conmmunity Type</InputLabel>
                     <Select
-                        displayEmpty
+                        id='community-type'
+                        labelId="community-type"
+                        label={'Community Type'}
                         value={groupType}
                         onChange={(e) => setGroupType(e.target.value)}
-                        sx={{
-                            width: '50%',
-                            justifyContent: 'center'
-                        }}
                     >
                         {createSelectOptions()}
                     </Select>
+                    </FormControl>
+
                 </Grid>
                 <Grid item xs={6}>
-                    <Typography sx={{mb: 2}} gutterBottom>Petition Quota</Typography>
+                    <TextField
+                        label="Admin Email Address"
+                        variant="outlined"
+                        type='text'
+                        fullWidth
+                        value={admin}
+                        onChange={(e) => setAdmin(e.target.value)}
+                    />
+                </Grid>
+                <Grid item xs={6}>
+                    <Typography sx={{ mb: 2 }} gutterBottom>Petition Quota</Typography>
                     <CustomizedSlider value={petitionQuota} onChange={setPetitionQuota} />
                 </Grid>
                 <Grid item xs={6}>
-                <NoOfDaysSelect value={petitionTimeframe} onChange={setPetitionTimeframe} label={'Petition Timeframe'}/>
+                    <NoOfDaysSelect value={petitionTimeframe} onChange={setPetitionTimeframe} label={'Petition Timeframe'} />
                 </Grid>
                 <Grid item xs={6}>
-                    <Typography sx={{mb: 2}} gutterBottom>Proposal Quota</Typography>
+                    <Typography sx={{ mb: 2 }} gutterBottom>Proposal Quota</Typography>
                     <CustomizedSlider value={proposalQuota} onChange={setProposalQuota} />
                 </Grid>
                 <Grid item xs={6}>
-                <NoOfDaysSelect value={proposalTimeframe} onChange={setProposalTimeframe} label={'Proposal Timeframe'}/>
+                    <NoOfDaysSelect value={proposalTimeframe} onChange={setProposalTimeframe} label={'Proposal Timeframe'} />
                 </Grid>
 
                 {error && (
@@ -146,7 +160,7 @@ function CreateCommunity({ pathname }) {
                 )}
 
                 <Grid item xs={12}>
-                    <Button variant="contained" onClick={(() => {console.log("form submit")})}>
+                    <Button variant="contained" onClick={(() => { console.log("form submit") })}>
                         Create Community
                     </Button>
                 </Grid>
