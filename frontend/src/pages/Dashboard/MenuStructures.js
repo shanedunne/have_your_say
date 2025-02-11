@@ -164,8 +164,8 @@ export const NAVIGATION_MASTER_ADMIN =
             title: 'Create'
         },
         {
-            segment: 'createGroup',
-            title: 'Create Group',
+            segment: 'createCommunity',
+            title: 'Create Community',
             icon: <CreateIcon />,
         },
         {
