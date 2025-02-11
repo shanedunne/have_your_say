@@ -78,9 +78,20 @@ const IOSSlider = styled(Slider)(({ theme }) => ({
 
 
 
-export default function CustomizedSlider() {
-  return (
-    
-      <IOSSlider aria-label="ios slider" defaultValue={50} valueLabelDisplay="on" />
-  );
-}
+function CustomizedSlider({ value, onChange }) {
+    return (
+      <IOSSlider
+        aria-label="custom slider"
+        value={value}
+        onChange={(event, newValue) => onChange(newValue)}
+        valueLabelDisplay="on"
+      />
+    );
+  }
+  
+  CustomizedSlider.propTypes = {
+    value: PropTypes.number.isRequired,
+    onChange: PropTypes.func.isRequired,
+  };
+  
+  export default CustomizedSlider;

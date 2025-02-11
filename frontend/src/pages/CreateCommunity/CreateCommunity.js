@@ -8,7 +8,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { Grid } from '@mui/material';
 import OpenSnackBar from '../../components/SnackBar'
-import CustomizedSlider from '../../components/SliderSelect';
+import CustomizedSlider from '../../components/PercentSlide';
+import NoOfDaysSelect from '../../components/NoOfDaysSelect';
 
 import Modal from '@mui/material/Modal';
 import { handleCreatePetition } from '../../services/api';
@@ -21,7 +22,7 @@ function CreateCommunity({ pathname }) {
     const [groupType, setGroupType] = useState("");
     const [petitionQuota, setPetitionQuota] = useState("");
     const [petitionTimeframe, setPetitionTimeframe]= useState("");
-    const [proposalQuota, setProposalQuota] = ("");
+    const [proposalQuota, setProposalQuota] = useState("");
     const [proposalTimeframe, setProposalTimeframe] = useState("");
     const communityTypeOptions = ["Local Government", "Company", "Company Subdivision", "Society", "Club", "School", "Local Community"];
 
@@ -124,8 +125,18 @@ function CreateCommunity({ pathname }) {
                     </Select>
                 </Grid>
                 <Grid item xs={6}>
-                    <Typography gutterBottom>Petition Quota</Typography>
-                    <CustomizedSlider></CustomizedSlider>
+                    <Typography sx={{mb: 2}} gutterBottom>Petition Quota</Typography>
+                    <CustomizedSlider value={petitionQuota} onChange={setPetitionQuota} />
+                </Grid>
+                <Grid item xs={6}>
+                <NoOfDaysSelect value={petitionTimeframe} onChange={setPetitionTimeframe} label={'Petition Timeframe'}/>
+                </Grid>
+                <Grid item xs={6}>
+                    <Typography sx={{mb: 2}} gutterBottom>Proposal Quota</Typography>
+                    <CustomizedSlider value={proposalQuota} onChange={setProposalQuota} />
+                </Grid>
+                <Grid item xs={6}>
+                <NoOfDaysSelect value={proposalTimeframe} onChange={setProposalTimeframe} label={'Proposal Timeframe'}/>
                 </Grid>
 
                 {error && (
