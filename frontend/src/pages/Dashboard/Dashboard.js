@@ -56,7 +56,7 @@ function Dashboard(props) {
     const { window } = props;
     let NAVIGATION;
 
-    const { role, community } = useAuth();
+    const { role, communityId, communityName } = useAuth();
     if (role === "ROLE_CITIZEN") {
         NAVIGATION = NAVIGATION_CITIZEN;
     } else if (role === "ROLE_ADMIN") {
@@ -76,7 +76,7 @@ function Dashboard(props) {
                 theme={theme}
                 branding={{
                     logo: <img src={logo} alt="MUI logo" />,
-                    title: `Have Your Say - ${community}`,
+                    title: `Have Your Say - ${communityName}`,
                     homeUrl: '/',
                 }}
             >

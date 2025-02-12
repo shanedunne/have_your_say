@@ -49,11 +49,9 @@ public class UserController {
         System.out.println("Received request to create user: " + user.toString());
 
         Community communityEntity = communityRepository.findByAccessCode(accessCode);
-        if(communityEntity == null) {
+        if (communityEntity == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid access code");
         }
-
-
 
         String firstName = user.getFirstName();
         String lastName = user.getLastName();
@@ -62,8 +60,8 @@ public class UserController {
         String phoneNumber = user.getPhoneNumber();
         String postcode = user.getPostcode();
         String password = user.getPassword();
-        String role = user.getRole();
         String community = communityEntity.getId();
+        String role = "";
 
         User isEmailExist = userRepository.findByEmail(email);
         System.out.println("Checking if email exists: " + email);
@@ -72,7 +70,15 @@ public class UserController {
             String token = null;
             String emailExistsString = "Email is already used with another account";
             Boolean emailExistsBoolean = false;
-            return new ResponseEntity<>(new AuthResponse(token, emailExistsString, emailExistsBoolean), HttpStatus.CONFLICT);
+            return new ResponseEntity<>(new AuthResponse(token, emailExistsString, emailExistsBoolean),
+                    HttpStatus.CONFLICT);
+        }
+
+        // check if assigned an admin and apply the approporiate role
+        if (communityEntity.getAdmins().contains(email)) {
+            role = "ROLE_ADMIN";
+        } else {
+            role = "ROLE_CITIZEN";
         }
 
         User createdUser = new User();
@@ -91,6 +97,8 @@ public class UserController {
         communityEntity.setMemberCount(communityEntity.getMemberCount() + 1);
         communityRepository.save(communityEntity);
 
+        // get the community name for passing to the jwt
+        String communityName = communityEntity.getName();
 
         User savedUser = userRepository.save(createdUser);
         System.out.println("Saved user: " + savedUser);
@@ -100,7 +108,7 @@ public class UserController {
         try {
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            String token = JwtProvider.generateToken(authentication, community, role);
+            String token = JwtProvider.generateToken(authentication, community, role, communityName);
             String successMessage = "Registration was successful";
             Boolean regBoolean = true;
             return new ResponseEntity<AuthResponse>(new AuthResponse(token, successMessage, regBoolean), HttpStatus.OK);
@@ -120,18 +128,32 @@ public class UserController {
         Authentication authentication = authenticate(username, password);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
+        // get the user by email
         User user = userRepository.findByEmail(username);
-        if(user == null) {
+
+        if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
-        String community = user.getCommunity();
+        // get user role
         String role = user.getRole();
 
-        String token = JwtProvider.generateToken(authentication, community, role);
+        // get the community id from the user
+        String communityId = user.getCommunity();
+
+        // get the community from the community id
+        Community community = communityRepository.findById(communityId)
+                .orElseThrow(() -> new RuntimeException("Community not found"));
+        System.out.println("Community retrieved: " + community);
+
+        // get the community name from the community object
+        String communityName = community.getName();
+        System.out.println("Community Name: " + community.getName());
+
+
+        // create the jwt with community id, role and community name encoded
+        String token = JwtProvider.generateToken(authentication, communityId, role, communityName);
         String loginSuccess = "Login was successful";
         Boolean loginStatus = true;
-
-        
 
         return new ResponseEntity<>(new AuthResponse(token, loginSuccess, loginStatus), HttpStatus.OK);
     }

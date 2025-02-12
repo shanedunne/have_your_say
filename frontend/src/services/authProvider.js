@@ -9,8 +9,9 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
 
   const [isAuthenticated, setIsAuthenticated] = useState(null);
-  const [community, setCommunity] = useState(null);
+  const [communityId, setCommunityId] = useState(null);
   const [role, setRole] = useState(null);
+  const [communityName, setCommunityName] = useState(null);
   const navigate = useNavigate();
 
 
@@ -21,15 +22,17 @@ export const AuthProvider = ({ children }) => {
       const decodedJWT = jwtDecode(token);
 
       setIsAuthenticated(true);
-      setCommunity(decodedJWT.community);
+      setCommunityId(decodedJWT.communityId);
       setRole(decodedJWT.role);
+      setCommunityName(decodedJWT.communityName)
 
     } else {
       setIsAuthenticated(false);
-      setCommunity(null);
+      setCommunityId(null);
       setRole(null);
+      setCommunityName(null);
     }
-  }, [Cookies.get("JwtToken")]);
+  }, []);
 
   const login = (jwt) => {
     Cookies.set("JwtToken", jwt, { expires: 7 });
@@ -37,24 +40,24 @@ export const AuthProvider = ({ children }) => {
     const decodedJWT = jwtDecode(jwt);
 
     setIsAuthenticated(true);
-    setCommunity(decodedJWT.community);
+    setCommunityId(decodedJWT.communityId);
     setRole(decodedJWT.role);
+    setCommunityName(decodedJWT.communityName)
 
   };
 
   const logout = () => {
     Cookies.remove("JwtToken");
-    Cookies.remove("UserCommunity");
-    Cookies.remove("UserRole");
 
     setIsAuthenticated(false);
-    setCommunity(null);
+    setCommunityId(null);
     setRole(null)
+    setCommunityName(null);
     navigate("/");
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, community, role }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout, communityId, role, communityName }}>
       {children}
     </AuthContext.Provider>
   );

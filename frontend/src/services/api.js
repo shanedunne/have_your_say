@@ -1,6 +1,5 @@
 import axios from "axios";
 import Cookies from 'js-cookie';
-import { jwtDecode } from "jwt-decode";
 
 // function to post details of new user
 export const handleSignUp = async ({
@@ -23,9 +22,12 @@ export const handleSignUp = async ({
       postcode,
       password,
       confirmedPassword,
-      phoneNumber,
-      accessCode
-    });
+      phoneNumber
+    }, {
+      params: { accessCode },
+    }
+
+    );
     console.log(response)
     return response.data;
   } catch (error) {
