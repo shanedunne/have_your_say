@@ -4,11 +4,11 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import InputLabel from '@mui/material/InputLabel';
-
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import { FormControl, Grid } from '@mui/material';
+import { FormControl, Grid, List, ListItem, ListItemText, IconButton } from '@mui/material';
 import OpenSnackBar from '../../components/SnackBar'
 import CustomizedSlider from '../../components/PercentSlide';
 import NoOfDaysSelect from '../../components/NoOfDaysSelect';
@@ -20,12 +20,13 @@ import { handleCreatePetition } from '../../services/api';
 function CreateCommunity({ pathname }) {
     // create states for form fields
     const [name, setName] = useState("");
-    const [admin, setAdmin] = useState([]);
+    const [admins, setAdmins] = useState([]);
+    const [adminInput, setAdminInput] = useState("");
     const [groupType, setGroupType] = useState("");
     const [petitionQuota, setPetitionQuota] = useState("");
     const [petitionTimeframe, setPetitionTimeframe] = useState("");
-    const [proposalQuota, setProposalQuota] = useState("");
     const [proposalTimeframe, setProposalTimeframe] = useState("");
+    const [accessCode, setAccessCode] = useState("");
     const communityTypeOptions = ["Local Government", "Company", "Company Subdivision", "Society", "Club", "School", "Local Community"];
 
     // snackbar message for succesfully creating a community
@@ -47,6 +48,24 @@ function CreateCommunity({ pathname }) {
         return selectOptions;
     }
 
+    // handle adding multiple admin
+    const addAdmin = () => {
+        if (adminInput.trim() === "") {
+            setError("Admin email cannot be empty");
+            return;
+        }
+        if (admins.includes(adminInput)) {
+            setError("This email is already added");
+            return;
+        }
+        setAdmins([...admins, adminInput.trim()]);
+        setAdminInput("");
+    };
+
+    const removeAdmin = (email) => {
+        setAdmins(admins.filter((admin) => admin !== email));
+    };
+
     function onSelectedCategory(e) {
         console.log("Selected option: ", e.target.value);
     }
@@ -58,7 +77,7 @@ function CreateCommunity({ pathname }) {
         // set timestamp for petition starting
         const startTime = Date.now();
         try {
-            if (!name || !admin || !groupType || !petitionQuota || !petitionTimeframe || !proposalQuota || !proposalTimeframe) {
+            if (!name || admins.length === 0 || !groupType || !petitionQuota || !petitionTimeframe || !accessCode || !proposalTimeframe) {
                 console.log("missing fields")
                 setError("Please fill in all fields");
                 return;
@@ -115,28 +134,18 @@ function CreateCommunity({ pathname }) {
 
                 <Grid item xs={6}>
                     <FormControl fullWidth>
-                    <InputLabel id="community-type">Conmmunity Type</InputLabel>
-                    <Select
-                        id='community-type'
-                        labelId="community-type"
-                        label={'Community Type'}
-                        value={groupType}
-                        onChange={(e) => setGroupType(e.target.value)}
-                    >
-                        {createSelectOptions()}
-                    </Select>
+                        <InputLabel id="community-type">Conmmunity Type</InputLabel>
+                        <Select
+                            id='community-type'
+                            labelId="community-type"
+                            label={'Community Type'}
+                            value={groupType}
+                            onChange={(e) => setGroupType(e.target.value)}
+                        >
+                            {createSelectOptions()}
+                        </Select>
                     </FormControl>
 
-                </Grid>
-                <Grid item xs={6}>
-                    <TextField
-                        label="Admin Email Address"
-                        variant="outlined"
-                        type='text'
-                        fullWidth
-                        value={admin}
-                        onChange={(e) => setAdmin(e.target.value)}
-                    />
                 </Grid>
                 <Grid item xs={6}>
                     <Typography sx={{ mb: 2 }} gutterBottom>Petition Quota</Typography>
@@ -146,11 +155,48 @@ function CreateCommunity({ pathname }) {
                     <NoOfDaysSelect value={petitionTimeframe} onChange={setPetitionTimeframe} label={'Petition Timeframe'} />
                 </Grid>
                 <Grid item xs={6}>
-                    <Typography sx={{ mb: 2 }} gutterBottom>Proposal Quota</Typography>
-                    <CustomizedSlider value={proposalQuota} onChange={setProposalQuota} />
-                </Grid>
-                <Grid item xs={6}>
                     <NoOfDaysSelect value={proposalTimeframe} onChange={setProposalTimeframe} label={'Proposal Timeframe'} />
+                </Grid>
+                <Grid item xs={12}>
+                    <TextField
+                        label="Access Code For Sign Ups"
+                        variant="outlined"
+                        type='text'
+                        fullWidth
+                        value={accessCode}
+                        onChange={(e) => setAccessCode(e.target.value)}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <TextField
+                        label="Admin Email Address"
+                        variant="outlined"
+                        type="email"
+                        fullWidth
+                        value={adminInput}
+                        onChange={(e) => setAdminInput(e.target.value)}
+                    />
+                    <Button sx={{ mt: 1 }} variant="outlined" onClick={addAdmin}>
+                        Add Admin
+                    </Button>
+                </Grid>
+
+                <Grid item xs={12}>
+                    <Typography variant="h6">Admin Emails</Typography>
+                    <List>
+                        {admins.map((email, index) => (
+                            <ListItem
+                                key={index}
+                                secondaryAction={
+                                    <IconButton edge="end" onClick={() => removeAdmin(email)}>
+                                        <DeleteOutlineOutlinedIcon />
+                                    </IconButton>
+                                }
+                            >
+                                <ListItemText primary={email} />
+                            </ListItem>
+                        ))}
+                    </List>
                 </Grid>
 
                 {error && (
