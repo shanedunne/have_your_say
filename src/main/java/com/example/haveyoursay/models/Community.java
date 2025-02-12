@@ -15,9 +15,9 @@ public class Community {
     private List<String> admins;
     private String communityType;
     private int memberCount;
-    private int proposalTimeframeDays;
-    private int petitionTimeFrameDays;
-    private int petitiionQuotaPercent;
+    private int proposalTimeframe;
+    private int petitionTimeframe;
+    private int petitiionQuota;
     private int proposalVoteCount;
     private int petitionVoteCount;
     private String mostSupportedProposal;
@@ -125,27 +125,27 @@ public class Community {
         this.accessCode = accessCode;
     }
 
-    public int getProposalTimeframeDays() {
-        return proposalTimeframeDays;
+    public int getProposalTimeframe() {
+        return proposalTimeframe;
     }
 
-    public void setProposalTimeframeDays(int proposalTimeframeDays) {
-        this.proposalTimeframeDays = proposalTimeframeDays;
+    public void setProposalTimeframe(int proposalTimeframe) {
+        this.proposalTimeframe = proposalTimeframe;
     }
 
-    public int getPetitionTimeFrameDays() {
-        return petitionTimeFrameDays;
+    public int getPetitionTimeframe() {
+        return petitionTimeframe;
     }
 
-    public void setPetitionTimeFrameDays(int petitionTimeFrameDays) {
-        this.petitionTimeFrameDays = petitionTimeFrameDays;
+    public void setPetitionTimeframe(int petitionTimeframe) {
+        this.petitionTimeframe = petitionTimeframe;
     }
 
-    public int getPetitiionQuotaPercent() {
-        return petitiionQuotaPercent;
+    public int getPetitiionQuota() {
+        return petitiionQuota;
     }
 
-    public void setPetitiionQuotaPercent(int petitiionQuotaPercent) {
-        this.petitiionQuotaPercent = petitiionQuotaPercent;
+    public void setPetitiionQuota(int petitiionQuota) {
+        this.petitiionQuota = petitiionQuota;
     }
 }

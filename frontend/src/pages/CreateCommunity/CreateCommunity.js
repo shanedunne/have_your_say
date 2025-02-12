@@ -22,9 +22,9 @@ function CreateCommunity({ pathname }) {
     const [admins, setAdmins] = useState([]);
     const [adminInput, setAdminInput] = useState("");
     const [groupType, setGroupType] = useState("");
-    const [petitionQuota, setPetitionQuota] = useState("");
-    const [petitionTimeframe, setPetitionTimeframe] = useState("");
-    const [proposalTimeframe, setProposalTimeframe] = useState("");
+    const [petitionQuota, setPetitionQuota] = useState(0);
+    const [petitionTimeframe, setPetitionTimeframe] = useState(7);
+    const [proposalTimeframe, setProposalTimeframe] = useState(7);
     const [accessCode, setAccessCode] = useState("");
     const communityTypeOptions = ["Local Government", "Company", "Company Subdivision", "Society", "Club", "School", "Local Community"];
 
@@ -73,7 +73,7 @@ function CreateCommunity({ pathname }) {
         console.log("community submitted", name)
 
         try {
-            if (!name || admins.length === 0 || !groupType || !petitionQuota || !petitionTimeframe || !accessCode || !proposalTimeframe) {
+            if (!name || admins.length === 0 || !groupType || petitionQuota === 0 || !petitionTimeframe || !accessCode || !proposalTimeframe) {
                 console.log("missing fields")
                 setError("Please fill in all fields");
                 return;

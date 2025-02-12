@@ -50,12 +50,18 @@ public class CommunityController {
         List<String> admins = community.getAdmins();
         String communityType = community.getCommunityType();
         String accessCode = community.getAccessCode();
+        int petitiionQuota = community.getPetitiionQuota();
+        int petitionTimeframe = community.getPetitionTimeframe();
+        int proposalTimeframe = community.getProposalTimeframe();
 
         Community createdCommunity = new Community();
         createdCommunity.setName(name);
         createdCommunity.setAdmins(admins);
         createdCommunity.setCommunityType(communityType);
         createdCommunity.setAccessCode(accessCode);
+        createdCommunity.setPetitiionQuota(petitiionQuota);
+        createdCommunity.setPetitionTimeframe(petitionTimeframe);
+        createdCommunity.setProposalTimeframe(proposalTimeframe);
 
         try {
             Community savedCommunity = communityRepository.save(createdCommunity);
