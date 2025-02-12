@@ -31,13 +31,17 @@ function ClosedPetitions() {
             <Typography variant="h4" sx={{ textAlign: "center", mb: 2 }}>
                 Closed Petitions
             </Typography>
-            <Grid container spacing={3}>
+            {closedPetitions.length === 0 ? (
+                <Typography variant='h5'>No petitions have closed yet</Typography>
+            ) : (
+                <Grid container spacing={3}>
                 {closedPetitions.map((petition) => {
                     const comp = closedPetitions[petition];
                     return <PetitionCard key={petition.id} title={petition.title} body={petition.body} closeTime={petition.closeTime} category={petition.category} petitionId={petition.id} status={petition.status} />
                 })}
 
             </Grid>
+            )}
         </Box>
     )
 } export default ClosedPetitions;

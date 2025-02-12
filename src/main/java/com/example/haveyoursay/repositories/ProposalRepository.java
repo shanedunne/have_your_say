@@ -11,7 +11,7 @@ import com.example.haveyoursay.models.Proposal;
 @Repository
 public interface ProposalRepository extends MongoRepository<Proposal,String> {
     List<Proposal> findByCommunityAndStatus(String community, String status);
-    List<Proposal> findByCommunityAndStatusNot(String community, String status);
+    List<Proposal> findByCommunityAndStatusNotIn(String community, List<String> statuses);
 
     // get proposals by community and multiple statuses
     @Query("{ 'community': ?0, 'status': { $in: ?1 } }")

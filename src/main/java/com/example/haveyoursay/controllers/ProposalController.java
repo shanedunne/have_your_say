@@ -181,7 +181,7 @@ public class ProposalController {
         }
         String community = user.getCommunity();
         try {
-            List<Proposal> OpenProposals = proposalRepository.findByCommunityAndStatusNot(community, "open");
+            List<Proposal> OpenProposals = proposalRepository.findByCommunityAndStatusNotIn(community, List.of("open", "open soon"));
             return ResponseEntity.ok(OpenProposals);
         } catch (Exception e) {
             e.printStackTrace(); // Log the exception for debugging

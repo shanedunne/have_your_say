@@ -31,13 +31,18 @@ function ClosedProposals() {
             <Typography variant="h4" sx={{ textAlign: "center", mb: 2 }}>
                 Closed Proposals
             </Typography>
-            <Grid container spacing={3}>
+            {closedProposals.length === 0 ? (
+                <Typography variant='h5'>No proposals have closed yet</Typography>
+            ) : (
+                <Grid container spacing={3}>
                 {closedProposals.map((proposal) => {
                     const comp = closedProposals[proposal];
                     return <ProposalCard key={proposal.id} title={proposal.title} body={proposal.body} startTime={proposal.startTime} closeTime={proposal.endTime} category={proposal.category} proposalId={proposal.id} status={proposal.status} petitionId={proposal.petitionId} />
                 })}
 
             </Grid>
+            )}
+            
         </Box>
     )
 } export default ClosedProposals;

@@ -68,7 +68,7 @@ function ProposalCard({ title, category, body, startTime, closeTime, petitionId,
               color="text.primary"
               sx={{ fontWeight: "bold", ml: 2, fontSize: "18px" }}
             >
-              View Petition
+              View Proposal
             </Typography>
           </Button>
         </Box>
