@@ -83,12 +83,12 @@ export const handleCreatePetition = async ({
       body,
       startTime,
     },
-    {
-      // pass the token in the header to not expose it
-      headers: {
-        Authorization: `Bearer ${userJwt}`,
-      },
-    });
+      {
+        // pass the token in the header to not expose it
+        headers: {
+          Authorization: `Bearer ${userJwt}`,
+        },
+      });
     // return true if id assigned to petition
     if (response.data.id !== null) {
       return true;
@@ -145,7 +145,7 @@ export const checkHasVotedPetition = async (petitionId) => {
       params: { petitionId },
     });
     console.log(response.data);
-    return response.data === true; 
+    return response.data === true;
   } catch (error) {
     console.error("Error in checking if user has voted on this petition", error);
     throw error;
@@ -158,13 +158,13 @@ export const submitPetitionVote = async (decision, petitionId) => {
   try {
     console.log("calling from the api")
     const response = await axios.post("http://localhost:8080/petition/vote",
-    {},
-     {
-      headers: {
-        Authorization: `Bearer ${userJwt}`,
-      },
-      params: { decision, petitionId },
-    });
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${userJwt}`,
+        },
+        params: { decision, petitionId },
+      });
     console.log("response from api")
     console.log(response.data)
   } catch (error) {
@@ -194,12 +194,12 @@ export const handleCreateProposal = async ({
       endTime,
       petitionId
     },
-    {
-      // pass the token in the header to not expose it
-      headers: {
-        Authorization: `Bearer ${userJwt}`,
-      },
-    });
+      {
+        // pass the token in the header to not expose it
+        headers: {
+          Authorization: `Bearer ${userJwt}`,
+        },
+      });
     // return true if id assigned to proposal
     if (response.data.id !== null) {
       return true;
@@ -246,7 +246,7 @@ export const checkHasVotedProposal = async (proposalId) => {
       params: { proposalId },
     });
     console.log(response.data);
-    return response.data === true; 
+    return response.data === true;
   } catch (error) {
     console.error("Error in checking if user has voted on this proposal", error);
     throw error;
@@ -262,3 +262,41 @@ export const getProposalById = async (proposalId) => {
   });
   return response.data;
 };
+
+
+// COMMUNITY APIS
+export const handleCreateCommunity = async ({
+  name,
+  admins,
+  groupType,
+  petitionQuota,
+  petitionTimeframe,
+  proposalTimeframe,
+  accessCode
+}) => {
+  try {
+    const userJwt = Cookies.get("JwtToken");
+    const response = await axios.post("http://localhost:8080/community/create", {
+      name,
+      admins,
+      groupType,
+      petitionQuota,
+      petitionTimeframe,
+      proposalTimeframe,
+      accessCode
+    },
+      {
+        // pass the token in the header to not expose it
+        headers: {
+          Authorization: `Bearer ${userJwt}`,
+        },
+      });
+    // return true if id assigned to community
+    if (response.data.id !== null) {
+      return true;
+    }
+  } catch (error) {
+    console.error("Error creating community:", error);
+    throw error;
+  }
+}

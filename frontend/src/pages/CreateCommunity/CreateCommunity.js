@@ -14,8 +14,7 @@ import CustomizedSlider from '../../components/PercentSlide';
 import NoOfDaysSelect from '../../components/NoOfDaysSelect';
 
 import Modal from '@mui/material/Modal';
-import { handleCreatePetition } from '../../services/api';
-
+import { handleCreateCommunity } from '../../services/api';
 
 function CreateCommunity({ pathname }) {
     // create states for form fields
@@ -70,12 +69,9 @@ function CreateCommunity({ pathname }) {
         console.log("Selected option: ", e.target.value);
     }
 
-    const submitPetition = async () => {
-        console.log("petition submitted", name)
+    const submitCommunity = async () => {
+        console.log("community submitted", name)
 
-
-        // set timestamp for petition starting
-        const startTime = Date.now();
         try {
             if (!name || admins.length === 0 || !groupType || !petitionQuota || !petitionTimeframe || !accessCode || !proposalTimeframe) {
                 console.log("missing fields")
@@ -83,17 +79,25 @@ function CreateCommunity({ pathname }) {
                 return;
             }
 
-            /*
-            const communitySuccessfullyCreated = handleCreateCommunity({});
+
+            const communitySuccessfullyCreated = handleCreateCommunity({
+                name,
+                admins,
+                groupType,
+                petitionQuota,
+                petitionTimeframe,
+                proposalTimeframe,
+                accessCode
+            });
             if (communitySuccessfullyCreated) {
                 setSnackBarOpen(true);
                 setTimeout(() => window.location.reload(), 2000);
-                
+
             } else {
                 setError("Failed to create community, please try again");
-            }                
+            }
 
-                */
+
 
         } catch (error) {
             console.error("Creation of community failed")
@@ -206,7 +210,7 @@ function CreateCommunity({ pathname }) {
                 )}
 
                 <Grid item xs={12}>
-                    <Button variant="contained" onClick={(() => { console.log("form submit") })}>
+                    <Button variant="contained" onClick={submitCommunity}>
                         Create Community
                     </Button>
                 </Grid>
