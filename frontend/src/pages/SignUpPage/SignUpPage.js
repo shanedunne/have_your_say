@@ -19,7 +19,7 @@ function SignUpPage() {
     const [password, setPassword] = useState("");
     const [confirmedPassword, setConfirmedPassword] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
-    const [community, setCommunity] = useState("");
+    const [accessCode, setAccessCode] = useState("");
 
     // state for error message
     const [error, setError] = useState("")
@@ -29,7 +29,7 @@ function SignUpPage() {
 
     const configureSignUp = async () => {
         try {
-            if (!firstName || !lastName || !dateOfBirth || !email || !postcode || !password || !confirmedPassword || !phoneNumber || !community) {
+            if (!firstName || !lastName || !dateOfBirth || !email || !postcode || !password || !confirmedPassword || !phoneNumber || !accessCode) {
                 setError("Please fill in all form fields");
                 return;
             }
@@ -48,7 +48,7 @@ function SignUpPage() {
                 password,
                 confirmedPassword,
                 phoneNumber,
-                community
+                accessCode
             });
 
             navigate("/login")
@@ -164,11 +164,11 @@ function SignUpPage() {
 
                 <Grid2 size={{ xs: 12, md: 4 }}>
                     <TextField
-                        label="community"
+                        label="Access Code provided by Admin"
                         variant="outlined"
                         fullWidth
-                        value={community}
-                        onChange={(e) => setCommunity(e.target.value)}
+                        value={accessCode}
+                        onChange={(e) => setAccessCode(e.target.value)}
                     />
                 </Grid2>
 

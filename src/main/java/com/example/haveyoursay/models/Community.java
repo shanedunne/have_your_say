@@ -13,13 +13,14 @@ public class Community {
     private String id;
     private String name;
     private List<String> admins;
+    private List<String> members;
     private String communityType;
-    private int memberCount;
+    private int memberCount = 0;
     private int proposalTimeframe;
     private int petitionTimeframe;
     private int petitiionQuota;
-    private int proposalVoteCount;
-    private int petitionVoteCount;
+    private int proposalVoteCount = 0;
+    private int petitionVoteCount = 0;
     private String mostSupportedProposal;
     private String mostSupportedPetition;
     private String accessCode;
@@ -27,6 +28,7 @@ public class Community {
     // Constructors
     public Community() {
         this.admins = new ArrayList<>();
+        this.members = new ArrayList<>();
     }
 
     public Community(String id, String name, List<String> admins, String communityType, int memberCount,
@@ -35,6 +37,7 @@ public class Community {
         this.id = id;
         this.name = name;
         this.admins = admins != null ? admins : new ArrayList<>();
+        this.members = members != null ? members : new ArrayList<>();
         this.communityType = communityType;
         this.memberCount = 0;
         this.proposalVoteCount = 0;
@@ -69,9 +72,19 @@ public class Community {
         this.admins = admins;
     }
 
+    public List<String> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<String> members) {
+        this.members = members;
+    }
+   
+
     public String getCommunityType() {
         return communityType;
     }
+    
 
     public void setCommunityType(String communityType) {
         this.communityType = communityType;

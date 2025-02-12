@@ -20,7 +20,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.haveyoursay.repositories.CommunityRepository;
+import com.example.haveyoursay.models.Community;
 
 @RestController
 @RequestMapping("/auth")
@@ -37,9 +41,19 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CommunityRepository communityRepository;
+
     @PostMapping("/signup")
-    public ResponseEntity<AuthResponse> createUserHandler(@RequestBody User user) {
+    public ResponseEntity<?> createUserHandler(@RequestBody User user, @RequestParam String accessCode) {
         System.out.println("Received request to create user: " + user.toString());
+
+        Community communityEntity = communityRepository.findByAccessCode(accessCode);
+        if(communityEntity == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid access code");
+        }
+
+
 
         String firstName = user.getFirstName();
         String lastName = user.getLastName();
@@ -49,7 +63,7 @@ public class UserController {
         String postcode = user.getPostcode();
         String password = user.getPassword();
         String role = user.getRole();
-        String community = user.getCommunity();
+        String community = communityEntity.getId();
 
         User isEmailExist = userRepository.findByEmail(email);
         System.out.println("Checking if email exists: " + email);
@@ -69,8 +83,14 @@ public class UserController {
         createdUser.setPhoneNumber(phoneNumber);
         createdUser.setPostcode(postcode);
         createdUser.setRole(role);
-        createdUser.setCommunity(community);
+        createdUser.setCommunity(communityEntity.getId());
         createdUser.setPassword(passwordEncoder.encode(password));
+
+        // add to members list and increment the community user count
+        communityEntity.getMembers().add(user.getId());
+        communityEntity.setMemberCount(communityEntity.getMemberCount() + 1);
+        communityRepository.save(communityEntity);
+
 
         User savedUser = userRepository.save(createdUser);
         System.out.println("Saved user: " + savedUser);
