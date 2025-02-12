@@ -15,11 +15,14 @@ public class Community {
     private List<String> admins;
     private String communityType;
     private int memberCount;
+    private int proposalTimeframeDays;
+    private int petitionTimeFrameDays;
+    private int petitiionQuotaPercent;
     private int proposalVoteCount;
     private int petitionVoteCount;
     private String mostSupportedProposal;
     private String mostSupportedPetition;
-    private Object userEmailAccessCode;
+    private String accessCode;
 
     // Constructors
     public Community() {
@@ -27,17 +30,18 @@ public class Community {
     }
 
     public Community(String id, String name, List<String> admins, String communityType, int memberCount,
-                     int proposalVoteCount, int petitionVoteCount, String mostSupportedProposal, String mostSupportedPetition, Object userEmailAccessCode) {
+            int proposalVoteCount, int petitionVoteCount, String mostSupportedProposal, String mostSupportedPetition,
+            String accessCode) {
         this.id = id;
         this.name = name;
         this.admins = admins != null ? admins : new ArrayList<>();
         this.communityType = communityType;
-        this.memberCount = memberCount;
-        this.proposalVoteCount = proposalVoteCount;
-        this.petitionVoteCount = petitionVoteCount;
-        this.mostSupportedProposal = mostSupportedProposal;
-        this.mostSupportedPetition = mostSupportedPetition;
-        this.userEmailAccessCode = userEmailAccessCode;
+        this.memberCount = 0;
+        this.proposalVoteCount = 0;
+        this.petitionVoteCount = 0;
+        this.mostSupportedProposal = "";
+        this.mostSupportedPetition = "";
+        this.accessCode = accessCode;
     }
 
     // Getters and Setters
@@ -113,11 +117,35 @@ public class Community {
         this.mostSupportedPetition = mostSupportedPetition;
     }
 
-    public Object getUserEmailAccessCode() {
-        return userEmailAccessCode;
+    public String getAccessCode() {
+        return accessCode;
     }
 
-    public void setUserEmailAccessCode(Object userEmailAccessCode) {
-        this.userEmailAccessCode = userEmailAccessCode;
+    public void setAccessCode(String accessCode) {
+        this.accessCode = accessCode;
+    }
+
+    public int getProposalTimeframeDays() {
+        return proposalTimeframeDays;
+    }
+
+    public void setProposalTimeframeDays(int proposalTimeframeDays) {
+        this.proposalTimeframeDays = proposalTimeframeDays;
+    }
+
+    public int getPetitionTimeFrameDays() {
+        return petitionTimeFrameDays;
+    }
+
+    public void setPetitionTimeFrameDays(int petitionTimeFrameDays) {
+        this.petitionTimeFrameDays = petitionTimeFrameDays;
+    }
+
+    public int getPetitiionQuotaPercent() {
+        return petitiionQuotaPercent;
+    }
+
+    public void setPetitiionQuotaPercent(int petitiionQuotaPercent) {
+        this.petitiionQuotaPercent = petitiionQuotaPercent;
     }
 }
