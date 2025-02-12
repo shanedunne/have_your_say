@@ -9,6 +9,8 @@ import Modal from '@mui/material/Modal';
 import { checkHasVotedProposal } from '../services/api';
 import { submitPetitionVote } from '../services/api';
 import theme from '../assets/theme';
+import ReactMarkdown from 'react-markdown';
+
 
 const modalStyle = {
   position: 'absolute',
@@ -23,7 +25,7 @@ const modalStyle = {
 };
 
 
-export default function ProposalDrawer({ anchor = "right", open, onClose, title, body, category, closeTime, petitionId, proposalId,status }) {
+export default function ProposalDrawer({ anchor = "right", open, onClose, title, body, category, closeTime, startTime, petitionId, proposalId, status }) {
 
   const [proposalDecision, setProposalDecision] = useState(null)
   const [hasVotedStatus, setHasVotedStatus] = useState(false);
@@ -78,7 +80,13 @@ export default function ProposalDrawer({ anchor = "right", open, onClose, title,
               <Typography variant="h5" sx={{}}>
                 {category}
               </Typography>
-              <Typography variant="subtitle1" sx={{ paddingBottom: '20px' }}>{closeTime}</Typography>
+              {status === "open soon" ? (
+                 <Typography variant="subtitle1" sx={{ paddingBottom: '20px' }}>{startTime}</Typography>
+              ) : (
+                <Typography variant="subtitle1" sx={{ paddingBottom: '20px' }}>{closeTime}</Typography>
+              )
+              }
+             
             </Grid>
             {status === "open" ? (
               hasVotedStatus === false ? (
@@ -105,7 +113,11 @@ export default function ProposalDrawer({ anchor = "right", open, onClose, title,
 
             )}
             <Grid item xs={12}>
-              <Typography variant="body1">{body}</Typography>
+              <Typography variant="body1"  >
+                <ReactMarkdown>
+                  {body}
+                </ReactMarkdown>
+              </Typography>
             </Grid>
           </CardContent>
         </Box >
@@ -122,7 +134,7 @@ export default function ProposalDrawer({ anchor = "right", open, onClose, title,
             <Typography id="modal-modal-description" sx={{ m: 2 }}>
               Are you sure you want to {proposalDecision} this proposal? This decision is final.
             </Typography>
-            <Button sx={{ m: 1 }} variant="contained" size='large' onClick={() => {console.log("submit from here ")}}>Confirm</Button>
+            <Button sx={{ m: 1 }} variant="contained" size='large' onClick={() => { console.log("submit from here ") }}>Confirm</Button>
             <Button sx={{ m: 1 }} variant='contained' size='medium' color='error' onClick={() => { setProposalDecision(null); handleClose(); }}>Cancel</Button>
           </Box>
         </Modal>

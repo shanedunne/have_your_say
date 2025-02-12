@@ -70,7 +70,7 @@ public class ProposalController {
         createdProposal.setPetitionId(petitionId);
         createdProposal.setUserId(user.getId());
         createdProposal.setCommunity(user.getCommunity());
-        createdProposal.setStatus("open");
+        createdProposal.setStatus("open soon");
 
         // hard coded below for testing
         createdProposal.setParticipantsAtStart(10);
@@ -95,6 +95,7 @@ public class ProposalController {
         }
 
     }
+
     // get all proposals
     @GetMapping("/get")
     public ResponseEntity<?> getAllProposals() {
@@ -107,6 +108,7 @@ public class ProposalController {
         }
 
     }
+
     // get open proposals of for given community
     @GetMapping("/getOpen")
     public ResponseEntity<?> getOpenProposals(@RequestHeader("Authorization") String token, @RequestParam Long now) {
@@ -124,25 +126,46 @@ public class ProposalController {
 
         // check to ensure all open proposals are within their timeframe.
         try {
-            List<Proposal> openProposals = proposalRepository.findByCommunityAndStatus(community, "open");
+            List<Proposal> openProposals = proposalRepository.findByCommunityAndStatuses(community,
+                    List.of("open", "open soon"));
             for (Proposal proposal : openProposals) {
-                if (proposal.getEndTime() < now ) {
+
+                // if proposal end time is reached, calculate outcome and set status
+                if (proposal.getEndTime() < now) {
                     if (proposal.getSupportVotes() > proposal.getOpposeVotes()) {
                         proposal.setStatus("Passed");
                     } else {
                         proposal.setStatus("Rejected");
                     }
                     proposalRepository.save(proposal);
+
+                } else if (proposal.getStartTime() > now) {
+                    // if proposal hasnt started yet, set status as open soon
+                    if (!"open soon".equals(proposal.getStatus())) {
+                        proposal.setStatus("open soon");
+                        proposalRepository.save(proposal);
+                    }
+
+                } else if (proposal.getStartTime() <= now && proposal.getEndTime() > now) {
+                    // if proposal start time has been reached and end time not reached, set to open
+                    if (!"open".equals(proposal.getStatus())) {
+                        proposal.setStatus("open");
+                        proposalRepository.save(proposal);
+                    }
                 }
             }
-            openProposals = proposalRepository.findByCommunityAndStatus(community, "open");
-            return ResponseEntity.ok(openProposals);
+            // return proposals that are open and opening soon
+            List<Proposal> updatedProposals = proposalRepository.findByCommunityAndStatuses(community,
+                    List.of("open", "open soon"));
+            return ResponseEntity.ok(updatedProposals);
+
         } catch (Exception e) {
             e.printStackTrace(); // Log the exception for debugging
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error fetching petitions");
         }
 
     }
+
     // get closed petitions
     @GetMapping("/getClosed")
     public ResponseEntity<?> getClosedProposals(@RequestHeader("Authorization") String token) {
@@ -166,8 +189,6 @@ public class ProposalController {
         }
 
     }
-    
-    
 
     @GetMapping("/{id}")
     public Proposal getProposalById(@PathVariable String id) {
@@ -194,7 +215,5 @@ public class ProposalController {
             return false;
         }
     }
-
-    
 
 }

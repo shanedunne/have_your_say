@@ -9,6 +9,8 @@ import Modal from '@mui/material/Modal';
 import { checkHasVotedPetition } from '../services/api';
 import { submitPetitionVote } from '../services/api';
 import theme from '../assets/theme';
+import ReactMarkdown from 'react-markdown';
+
 
 const modalStyle = {
   position: 'absolute',
@@ -105,7 +107,9 @@ export default function ArticleDrawer({ anchor = "right", open, onClose, title, 
 
             )}
             <Grid item xs={12}>
-              <Typography variant="body1">{body}</Typography>
+              <Typography variant="body1">
+                <ReactMarkdown>{body}</ReactMarkdown>
+              </Typography>
             </Grid>
           </CardContent>
         </Box >
