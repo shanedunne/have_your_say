@@ -94,7 +94,7 @@ public class PetitionController {
     }
     // get open petitions of for given community
     @GetMapping("/getOpen")
-    public ResponseEntity<?> getOpenPetitions(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<?> getOpenPetitions(@RequestHeader("Authorization") String token, @RequestParam Long now) {
         // remove prefix from token
         if (token.startsWith("Bearer ")) {
             token = token.substring(7);
@@ -108,6 +108,17 @@ public class PetitionController {
         String community = user.getCommunity();
         try {
             List<Petition> OpenPetitions = petitionRepository.findByCommunityAndStatus(community, "open");
+            for(Petition petition : OpenPetitions) {
+                if(petition.getCloseTime() < now) {
+                    if(petition.getSupportVotes() > petition.getOpposeVotes()) {
+                        petition.setStatus("Closed - Petition Supported");
+                    } else {
+                        petition.setStatus("Closed - Petition Opposed");
+                    }
+                    petitionRepository.save(petition);
+                }
+            }
+            OpenPetitions = petitionRepository.findByCommunityAndStatus(community, "open");
             return ResponseEntity.ok(OpenPetitions);
         } catch (Exception e) {
             e.printStackTrace(); // Log the exception for debugging

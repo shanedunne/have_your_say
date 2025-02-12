@@ -101,11 +101,13 @@ export const handleCreatePetition = async ({
 
 // get open petitions for community associated with users cookie
 export const getOpenPetitions = async () => {
+  const now = new Date().getTime();
   const userJwt = Cookies.get("JwtToken");
   const response = await axios.get("http://localhost:8080/petition/getOpen", {
     headers: {
       Authorization: `Bearer ${userJwt}`,
     },
+    params: { now },
   });
   return response.data;
 }
