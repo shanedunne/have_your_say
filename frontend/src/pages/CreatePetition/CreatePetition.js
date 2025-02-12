@@ -6,9 +6,9 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import { Grid } from '@mui/material';
+import { FormControl, Grid } from '@mui/material';
 import OpenSnackBar from '../../components/SnackBar'
-
+import InputLabel from '@mui/material/InputLabel';
 import Modal from '@mui/material/Modal';
 import { handleCreatePetition } from '../../services/api';
 
@@ -62,7 +62,7 @@ function CreatePetition({ pathname }) {
             if (petitionSuccessfullyCreated) {
                 setSnackBarOpen(true);
                 setTimeout(() => window.location.reload(), 3000);
-                
+
             } else {
                 setError("Failed to create petition, please try again");
 
@@ -84,7 +84,7 @@ function CreatePetition({ pathname }) {
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
-            maxWidth: {xs: '100%', sm: 400, md: 600},
+            maxWidth: { xs: '100%', sm: 400, md: 600 },
             height: "100vh",
             padding: 2,
         }}>
@@ -92,10 +92,10 @@ function CreatePetition({ pathname }) {
                 Create A Petition
             </Typography>
             <Typography variant='body1' sx={{ textAlign: "center", mb: 2 }}>
-                Do you have an idea to improve your community? Create a petition and if enough of your neighbours support it, your local representatives will consider it
+                Do you have an idea to improve your community? Create a petition and if enough of your community members support it, your representatives will consider it for action
             </Typography>
 
-            <Grid container spacing={3} sx={{ maxWidth: {xs: '100%', sm: 400, md: 600} }}>
+            <Grid container spacing={3} sx={{ maxWidth: { xs: '100%', sm: 400, md: 600 } }}>
                 <Grid item xs={12}>
                     <TextField
                         label="Title"
@@ -108,17 +108,19 @@ function CreatePetition({ pathname }) {
                 </Grid>
 
                 <Grid item xs={12}>
-                    <Select
-                        displayEmpty
-                        value={category}
-                        onChange={(e) => setCategory(e.target.value)}
-                        sx={{
-                            width: '50%',
-                            justifyContent: 'center'
-                        }}
-                    >
-                        {createSelectOptions()}
-                    </Select>
+                    <FormControl fullWidth>
+                        <InputLabel id="petition-category">Petition Category</InputLabel>
+                        <Select
+                            labelId="petition-category"
+                            id="petition-category"
+                            label={'Petition Category'}
+                            displayEmpty
+                            value={category}
+                            onChange={(e) => setCategory(e.target.value)}
+                        >
+                            {createSelectOptions()}
+                        </Select>
+                    </FormControl>
                 </Grid>
                 <Grid item xs={12}>
                     <TextField

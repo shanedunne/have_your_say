@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
-import { Grid } from '@mui/material';
+import { FormControl, Grid } from '@mui/material';
 import OpenSnackBar from '../../components/SnackBar'
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -84,7 +84,7 @@ function CreateProposal({ pathname }) {
             if (proposalSuccessfullyCreated) {
                 setSnackBarOpen(true);
                 setTimeout(() => window.location.reload(), 3000);
-                
+
             } else {
                 setError("Failed to create proposal, please try again");
 
@@ -130,24 +130,22 @@ function CreateProposal({ pathname }) {
 
             <Grid container spacing={3} sx={{ maxWidth: { xs: '100%', sm: 400, md: 600 } }}>
                 <Grid item xs={12}>
-                    <InputLabel id="supported-petition-select">Select supported petition</InputLabel>
-
-                    <Select
-                        labelId="supported-petition-select"
-                        id="supported-petition-select"
-                        displayEmpty
-                        value={petition?.id || ""}
-                        onChange={(e) => {
-                            const selected = futureProposals.find(p => p.id === e.target.value);
-                            setPetition(selected || {});
-                        }}
-                        sx={{
-                            width: '80%',
-                            justifyContent: 'center'
-                        }}
-                    >
-                        {createSelectOptions()}
-                    </Select>
+                    <FormControl fullWidth>
+                        <InputLabel id="supported-petition-select">Select supported petition</InputLabel>
+                        <Select
+                            labelId="supported-petition-select"
+                            id="supported-petition-select"
+                            label={'Select supported petition'}
+                            displayEmpty
+                            value={petition?.id || ""}
+                            onChange={(e) => {
+                                const selected = futureProposals.find(p => p.id === e.target.value);
+                                setPetition(selected || {});
+                            }}
+                        >
+                            {createSelectOptions()}
+                        </Select>
+                    </FormControl>
                 </Grid>
                 <Grid item xs={12}>
                     <TextField

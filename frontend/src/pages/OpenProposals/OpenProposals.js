@@ -32,13 +32,19 @@ function OpenProposals() {
             <Typography variant="h4" sx={{ textAlign: "center", mb: 2 }}>
                 Open Proposals
             </Typography>
-            <Grid container spacing={3}>
-                {openProposals.map((proposal) => {
-                    const comp = openProposals[proposal];
-                    return <ProposalCard key={proposal.id} title={proposal.title} body={proposal.body} startTime={proposal.startTime} closeTime={proposal.endTime} category={proposal.category} proposalId={proposal.id} status={proposal.status} petitionId={proposal.petitionId} />
-                })}
+            {openProposals.length === 0 ? (
+                <Typography variant='h5'>There are currently no open proposals at this time.</Typography>
 
-            </Grid>
+            ) : (
+                <Grid container spacing={3}>
+                    {openProposals.map((proposal) => {
+                        const comp = openProposals[proposal];
+                        return <ProposalCard key={proposal.id} title={proposal.title} body={proposal.body} startTime={proposal.startTime} closeTime={proposal.endTime} category={proposal.category} proposalId={proposal.id} status={proposal.status} petitionId={proposal.petitionId} />
+                    })}
+
+                </Grid>
+            )}
+
         </Box>
     )
 } export default OpenProposals;

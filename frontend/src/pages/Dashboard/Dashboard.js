@@ -15,7 +15,7 @@ import Logout from '../LogoutPage/LogoutPage';
 import logo from '../../assets/images/logo.png';
 import { useAuth } from '../../services/authProvider';
 import OpenProposals from "../OpenProposals/OpenProposals";
-import ClosedProposals from "../ClosedProposal.js/ClosedProposal";
+import ClosedProposals from "../ClosedProposal/ClosedProposal";
 import CreateCommunity from "../CreateCommunity/CreateCommunity";
 
 import { NAVIGATION_ADMIN, NAVIGATION_CITIZEN, NAVIGATION_MASTER_ADMIN } from "./MenuStructures";

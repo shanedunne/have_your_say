@@ -16,28 +16,33 @@ function OpenPetitions() {
     const populatePetitions = async () => {
         const petitionData = await getOpenPetitions();
         setOpenPetitions(petitionData);
-        
-    } 
+
+    }
 
     return (
         <Box sx={{
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            idth: "100%",
+            width: "100%",
             height: "100vh",
             padding: 2,
         }}>
             <Typography variant="h4" sx={{ textAlign: "center", mb: 2 }}>
                 Open Petitions
             </Typography>
-            <Grid container spacing={3}>
-                {openPetitions.map((petition) => {
-                    const comp = openPetitions[petition];
-                    return <PetitionCard key={petition.id} title={petition.title} body={petition.body} closeTime={petition.closeTime} category={petition.category} petitionId={petition.id} status={petition.status}/>
-                })}
-                
-            </Grid>
+            {openPetitions.length === 0 ? (
+                <Typography variant='h5'>There are currently no open petitions at this time.</Typography>
+            ) : (
+                <Grid container spacing={3}>
+                    {openPetitions.map((petition) => {
+                        const comp = openPetitions[petition];
+                        return <PetitionCard key={petition.id} title={petition.title} body={petition.body} closeTime={petition.closeTime} category={petition.category} petitionId={petition.id} status={petition.status} />
+                    })}
+
+                </Grid>
+            )}
+
         </Box>
     )
 } export default OpenPetitions;
