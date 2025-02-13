@@ -11,13 +11,22 @@ const theme = createTheme({
       main: '#F07167', // Custom secondary color
       contrastText: '#000000',
     },
+    third: {
+      main: '#00afb9',
+    },
+
+    forth: {
+      main: '#fed9b7'
+    },
+
     background: {
       default: '#f4f6f8', // Page background
-      paper: '#ffffff', // Card or paper background
+      paper: '#ffffff',
+      other: '#fdfcdc'
     },
     text: {
       primary: '#333333',
-      secondary: '#555555', 
+      secondary: '#555555',
     },
     buttons: {
       support: '#00AFB9',
@@ -25,7 +34,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: "Newsreader, serif", 
+    fontFamily: "Newsreader, serif",
     h1: {
       fontSize: '2.5rem',
       fontWeight: 700,
@@ -42,8 +51,8 @@ const theme = createTheme({
       textTransform: 'none',
     },
   },
-  
-  spacing: 8, 
+
+  spacing: 8,
   shape: {
     borderRadius: 8,
   },

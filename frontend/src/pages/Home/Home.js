@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import { Typography } from "@mui/material";
 import theme from "../../assets/theme";
 import ButtonAppBar from "../../components/AppBar";
+import Footer from "../../components/Footer";
 
 
 
@@ -25,7 +26,7 @@ function HomePage() {
                 <Box sm={12} m={9}
                     sx={{
                         flex: 3,
-                        backgroundColor: theme.palette.primary.main,
+                        backgroundColor: theme.palette.third.main,
                         color: theme.palette.primary.contrastText,
                         padding: 4,
                         display: "flex",
@@ -33,7 +34,8 @@ function HomePage() {
                         justifyContent: "center",
                         alignItems: "center",
                         height: { xs: "50%", sm: "100vh" },
-                        margin: 0
+                        margin: 0,
+                        padding: 0
                     }}
                 >
                     <Typography variant="h3" sx={{ fontWeight: "bold", mb: 2 }}>
@@ -77,6 +79,7 @@ function HomePage() {
 
                 </Box>
             </Box>
+            <Footer />
         </Box>
     )
 } export default HomePage;

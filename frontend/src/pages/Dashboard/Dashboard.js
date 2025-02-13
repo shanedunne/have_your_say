@@ -19,6 +19,7 @@ import ClosedProposals from "../ClosedProposal/ClosedProposal";
 import CreateCommunity from "../CreateCommunity/CreateCommunity";
 
 import { NAVIGATION_ADMIN, NAVIGATION_CITIZEN, NAVIGATION_MASTER_ADMIN } from "./MenuStructures";
+import { Typography } from "@mui/material";
 
 
 function PageContent({ pathname }) {
