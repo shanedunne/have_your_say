@@ -17,6 +17,7 @@ import { useAuth } from '../../services/authProvider';
 import OpenProposals from "../OpenProposals/OpenProposals";
 import ClosedProposals from "../ClosedProposal/ClosedProposal";
 import CreateCommunity from "../CreateCommunity/CreateCommunity";
+import Integrations from "../Integrations/Integrations";
 
 import { NAVIGATION_ADMIN, NAVIGATION_CITIZEN, NAVIGATION_MASTER_ADMIN } from "./MenuStructures";
 import { Typography } from "@mui/material";
@@ -43,6 +44,7 @@ function PageContent({ pathname }) {
                     {pathname === '/closedPetitions' && <ClosedPetitions />}
                     {pathname === '/closedProposals' && <ClosedProposals />}
                     {pathname === '/createCommunity' && <CreateCommunity />}
+                    {pathname === '/integrations' && <Integrations />}
                     {pathname === '/logout' && <Logout />}
 
         </Box>

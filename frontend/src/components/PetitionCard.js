@@ -22,7 +22,7 @@ function PetitionCard({ title, category, body, closeTime, petitionId, status}) {
   };
   return (
     <Grid item xs={12} sm={6} md={6} lg={4} xl={4} sx={{ width: "30%" }}>
-      <Card sx={{ borderRadius: 1, p: 2, maxHeight: '300px', minHeight: '300px' }}>
+      <Card sx={{ display: 'flex', flexDirection: 'column', borderRadius: 1, p: 2, maxHeight: '300px', minHeight: '300px' }}>
         <Box
           sx={{
             mb: 2,
@@ -53,7 +53,8 @@ function PetitionCard({ title, category, body, closeTime, petitionId, status}) {
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
-            justifyContent: "space-between"
+            justifyContent: "space-between",
+            mt: 'auto'
           }}
         >
           <Button
