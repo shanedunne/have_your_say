@@ -1,5 +1,7 @@
 package com.example.haveyoursay.controllers;
 
+import com.example.haveyoursay.models.Community;
+import com.example.haveyoursay.repositories.CommunityRepository;
 import com.example.haveyoursay.models.Petition;
 import com.example.haveyoursay.repositories.PetitionRepository;
 import com.example.haveyoursay.services.PetitionServiceImplementation;
@@ -10,6 +12,7 @@ import com.example.haveyoursay.services.UserServiceImplementation;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +36,9 @@ public class PetitionController {
     @Autowired
     private UserServiceImplementation userServiceImplementation;
 
+    @Autowired
+    private CommunityRepository communityRepository;
+
     @PostMapping("/create")
     public ResponseEntity<?> createPetition(@RequestBody Petition petition,
             @RequestHeader("Authorization") String token) {
@@ -55,6 +61,23 @@ public class PetitionController {
         Long startTime = petition.getStartTime();
         Long closeTime = petitionServiceImplementation.getPetitionCloseTime(startTime);
 
+        // handle getting community data when creating petition
+        String communityId = user.getCommunity();
+
+        // get community object for retreiving data from it
+        Community community = communityRepository.findById(communityId)
+                .orElseThrow(() -> new RuntimeException("Community not found"));
+        System.out.println("Community retrieved: " + community);
+
+        // get member count at creation of petition
+        int communityMemberCount = community.getMemberCount();
+
+        // get community quota at creation of petition
+        int communityQuota = community.getPetitiionQuota();
+
+        // calculate quota for petition
+        int petitiionQuota = Math.round((communityMemberCount * communityQuota) / 100);
+
         Petition createdPetition = new Petition();
         createdPetition.setTitle(title);
         createdPetition.setCategory(category);
@@ -62,12 +85,10 @@ public class PetitionController {
         createdPetition.setStartTime(startTime);
         createdPetition.setCloseTime(closeTime);
         createdPetition.setUserId(user.getId());
-        createdPetition.setCommunity(user.getCommunity());
+        createdPetition.setCommunity(communityId);
         createdPetition.setStatus("open");
-
-        // hard coded below for testing
-        createdPetition.setParticipantsAtStart(10);
-        createdPetition.setQuota(1);
+        createdPetition.setParticipantsAtStart(communityMemberCount);
+        createdPetition.setQuota(petitiionQuota);
 
         createdPetition.setProposalId("");
 
