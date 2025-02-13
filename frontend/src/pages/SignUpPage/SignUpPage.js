@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Grid2 } from '@mui/material';
 import './SignUpPage.css'
+import ButtonAppBar from '../../components/AppBar';
 
 
 function SignUpPage() {
@@ -40,7 +41,8 @@ function SignUpPage() {
             }
 
             // call axios post request
-            handleSignUp({firstName,
+            handleSignUp({
+                firstName,
                 lastName,
                 dateOfBirth,
                 email,
@@ -61,129 +63,132 @@ function SignUpPage() {
         }
     }
     return (
-        <Box sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: '50%',
-            height: '100vh',
-            margin: '0 auto',
-          }}>
-            <Grid2 container spacing={2}>
-            <Typography variant="h4" gutterBottom>
-                Sign Up Form
-            </Typography>
+        <Box sx={{ width: "100%", height: "100vh" }}>
+            <ButtonAppBar />
+            <Box sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '50%',
+                height: '100vh',
+                margin: '0 auto',
+            }}>
+                <Grid2 container spacing={2}>
+                    <Typography variant="h4" gutterBottom>
+                        Sign Up Form
+                    </Typography>
 
-            </Grid2>
-            
-            <Grid2 container spacing={2}>
-                <Grid2 size={{ xs: 6, md: 6 }}>
-                    <TextField
-                        label="First Name"
-                        variant="outlined"
-                        fullWidth
-                        value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
-                    />
                 </Grid2>
 
-                <Grid2 size={{ xs: 6, md: 6 }}>
-                    <TextField
-                        label="Last Name"
-                        variant="outlined"
-                        fullWidth
-                        value={lastName}
-                        onChange={(e) => setLasttName(e.target.value)}
-                    />
-                </Grid2>
-
-                <Grid2 size={{ xs: 6, md: 6 }}>
-                    <TextField
-                        label="Date of Birth"
-                        variant="outlined"
-                        fullWidth
-                        placeholder="DD-MM-YYYY"
-                        value={dateOfBirth}
-                        onChange={(e) => setDateOfBirth(e.target.value)}
-                    />
-                </Grid2>
-
-                <Grid2 size={{ xs: 6, md: 6 }}>
-                    <TextField
-                        label="Email"
-                        variant="outlined"
-                        fullWidth
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </Grid2>
-
-                <Grid2 size={{ xs: 6, md: 6 }}>
-                    <TextField
-                        label="Postcode"
-                        variant="outlined"
-                        fullWidth
-                        value={postcode}
-                        onChange={(e) => setPostcode(e.target.value)}
-                    />
-                </Grid2>
-
-                <Grid2 size={{ xs: 6, md: 6 }}>
-                    <TextField
-                        label="Phone Number"
-                        variant="outlined"
-                        fullWidth
-                        value={phoneNumber}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
-                    />
-                </Grid2>
-
-                <Grid2 size={{ xs: 6, md: 4 }}>
-                    <TextField
-                        label="Password"
-                        variant="outlined"
-                        fullWidth
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </Grid2>
-
-                <Grid2 size={{ xs: 6, md: 4 }}>
-                    <TextField
-                        label="Confirm Password"
-                        variant="outlined"
-                        fullWidth
-                        type="password"
-                        value={confirmedPassword}
-                        onChange={(e) => setConfirmedPassword(e.target.value)}
-                    />
-                </Grid2>
-
-                <Grid2 size={{ xs: 12, md: 4 }}>
-                    <TextField
-                        label="Access Code provided by Admin"
-                        variant="outlined"
-                        fullWidth
-                        value={accessCode}
-                        onChange={(e) => setAccessCode(e.target.value)}
-                    />
-                </Grid2>
-
-                {error && (
+                <Grid2 container spacing={2}>
                     <Grid2 size={{ xs: 6, md: 6 }}>
-                        <Typography color="error">{error}</Typography>
+                        <TextField
+                            label="First Name"
+                            variant="outlined"
+                            fullWidth
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
+                        />
                     </Grid2>
-                )}
 
-                <Grid2 xs={12}>
-                    <Button variant="contained" onClick={configureSignUp}>
-                        Sign Up
-                    </Button>
+                    <Grid2 size={{ xs: 6, md: 6 }}>
+                        <TextField
+                            label="Last Name"
+                            variant="outlined"
+                            fullWidth
+                            value={lastName}
+                            onChange={(e) => setLasttName(e.target.value)}
+                        />
+                    </Grid2>
+
+                    <Grid2 size={{ xs: 6, md: 6 }}>
+                        <TextField
+                            label="Date of Birth"
+                            variant="outlined"
+                            fullWidth
+                            placeholder="DD-MM-YYYY"
+                            value={dateOfBirth}
+                            onChange={(e) => setDateOfBirth(e.target.value)}
+                        />
+                    </Grid2>
+
+                    <Grid2 size={{ xs: 6, md: 6 }}>
+                        <TextField
+                            label="Email"
+                            variant="outlined"
+                            fullWidth
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </Grid2>
+
+                    <Grid2 size={{ xs: 6, md: 6 }}>
+                        <TextField
+                            label="Postcode"
+                            variant="outlined"
+                            fullWidth
+                            value={postcode}
+                            onChange={(e) => setPostcode(e.target.value)}
+                        />
+                    </Grid2>
+
+                    <Grid2 size={{ xs: 6, md: 6 }}>
+                        <TextField
+                            label="Phone Number"
+                            variant="outlined"
+                            fullWidth
+                            value={phoneNumber}
+                            onChange={(e) => setPhoneNumber(e.target.value)}
+                        />
+                    </Grid2>
+
+                    <Grid2 size={{ xs: 6, md: 4 }}>
+                        <TextField
+                            label="Password"
+                            variant="outlined"
+                            fullWidth
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </Grid2>
+
+                    <Grid2 size={{ xs: 6, md: 4 }}>
+                        <TextField
+                            label="Confirm Password"
+                            variant="outlined"
+                            fullWidth
+                            type="password"
+                            value={confirmedPassword}
+                            onChange={(e) => setConfirmedPassword(e.target.value)}
+                        />
+                    </Grid2>
+
+                    <Grid2 size={{ xs: 12, md: 4 }}>
+                        <TextField
+                            label="Access Code provided by Admin"
+                            variant="outlined"
+                            fullWidth
+                            value={accessCode}
+                            onChange={(e) => setAccessCode(e.target.value)}
+                        />
+                    </Grid2>
+
+                    {error && (
+                        <Grid2 size={{ xs: 6, md: 6 }}>
+                            <Typography color="error">{error}</Typography>
+                        </Grid2>
+                    )}
+
+                    <Grid2 xs={12}>
+                        <Button variant="contained" onClick={configureSignUp}>
+                            Sign Up
+                        </Button>
+                    </Grid2>
                 </Grid2>
-            </Grid2>
+            </Box>
         </Box>
     );
 

@@ -13,30 +13,25 @@ export default function ButtonAppBar() {
 
   let navigate = useNavigate();
 
-  const logout = () => {
-    handlelogout("JwtToken")
-    navigate('/');
-};
-
+  
   
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
+        <Box
+            onClick={() => navigate('/')}
+            sx={{
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+            }}
           >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Have Your Say
-          </Typography>
-          <Button color="inherit" onClick={() => navigate('/login')}>Login</Button>
-          <Button color="inherit" onClick={logout}>Logout</Button>
+            <Typography variant="h5" component="div" sx={{ mr: 2 }}>
+              Have Your Say
+            </Typography>
+          </Box>
+          
         </Toolbar>
       </AppBar>
     </Box>

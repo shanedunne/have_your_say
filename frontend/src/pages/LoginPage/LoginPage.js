@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import { Grid2 } from '@mui/material';
 import { useAuth } from "../../services/authProvider";
 import Cookies from 'js-cookie';
+import ButtonAppBar from '../../components/AppBar';
 
 
 
@@ -53,6 +54,8 @@ function LoginPage() {
         }
     }
     return (
+        <Box sx={{ width: "100%", height: "100vh" }}>
+            <ButtonAppBar />
         <Box sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -104,6 +107,7 @@ function LoginPage() {
                     </Button>
                 </Grid2>
             </Grid2>
+        </Box>
         </Box>
     );
 
