@@ -76,7 +76,7 @@ public class PetitionController {
         int communityQuota = community.getPetitiionQuota();
 
         // calculate quota for petition
-        int petitiionQuota = Math.round((communityMemberCount * communityQuota) / 100);
+        int petitiionQuota = Math.round((communityMemberCount * communityQuota) / 100.0f);
 
         Petition createdPetition = new Petition();
         createdPetition.setTitle(title);

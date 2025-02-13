@@ -91,17 +91,17 @@ public class UserController {
         createdUser.setRole(role);
         createdUser.setCommunity(communityEntity.getId());
         createdUser.setPassword(passwordEncoder.encode(password));
-
-        // add to members list and increment the community user count
-        communityEntity.getMembers().add(user.getId());
-        communityEntity.setMemberCount(communityEntity.getMemberCount() + 1);
-        communityRepository.save(communityEntity);
-
+       
         // get the community name for passing to the jwt
         String communityName = communityEntity.getName();
 
         User savedUser = userRepository.save(createdUser);
         System.out.println("Saved user: " + savedUser);
+
+         // add to members list and increment the community user count
+         communityEntity.getMembers().add(savedUser.getId());
+         communityEntity.setMemberCount(communityEntity.getMemberCount() + 1);
+         communityRepository.save(communityEntity);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(savedUser.getEmail(),
                 savedUser.getPassword());
