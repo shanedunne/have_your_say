@@ -74,10 +74,11 @@ function SignUpPage() {
                 height: '100vh',
                 margin: '0 auto',
             }}>
-                <Grid2 container spacing={2}>
-                    <Typography variant="h4" gutterBottom>
+                <Grid2 container sx={{mb: 1}} >
+                    <Typography variant="h4">
                         Sign Up Form
                     </Typography>
+                    <Typography variant='body1'>You need an access code to join a community. Use the code 'friends' to join our test community</Typography>
 
                 </Grid2>
 
@@ -168,7 +169,7 @@ function SignUpPage() {
 
                     <Grid2 size={{ xs: 12, md: 4 }}>
                         <TextField
-                            label="Access Code provided by Admin"
+                            label="Access Code"
                             variant="outlined"
                             fullWidth
                             value={accessCode}
