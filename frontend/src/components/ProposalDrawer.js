@@ -29,6 +29,7 @@ export default function ProposalDrawer({ anchor = "right", open, onClose, title,
 
   const [proposalDecision, setProposalDecision] = useState(null)
   const [hasVotedStatus, setHasVotedStatus] = useState(false);
+  const [isEligible, setIsEligible] = useState(null);
 
   useEffect(() => {
     const fetchVoteStatus = async () => {

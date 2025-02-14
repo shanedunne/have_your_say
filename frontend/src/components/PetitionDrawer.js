@@ -6,8 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import { Grid } from '@mui/material';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
-import { checkHasVotedPetition } from '../services/api';
-import { submitPetitionVote } from '../services/api';
+import { checkHasVotedPetition, submitPetitionVote, checkIfEligiblePetition } from '../services/api';
 import theme from '../assets/theme';
 import ReactMarkdown from 'react-markdown';
 
@@ -29,13 +28,16 @@ export default function ArticleDrawer({ anchor = "right", open, onClose, title, 
 
   const [petitionDecision, setPetitionDecision] = useState(null)
   const [hasVotedStatus, setHasVotedStatus] = useState(false);
+  const [isEligible, setIsEligible] = useState(null);
+
 
   useEffect(() => {
     const fetchVoteStatus = async () => {
       try {
-        const response = await checkHasVotedPetition(petitionId);
-        setHasVotedStatus(response);
-        console.log(hasVotedStatus)
+        const voteStatusResponse = await checkHasVotedPetition(petitionId);
+        const isEligibleResponse = await checkIfEligiblePetition(petitionId);
+        setHasVotedStatus(voteStatusResponse);
+        setIsEligible(isEligibleResponse)
       } catch (error) {
         console.error("Error checking vote status:", error);
       }
@@ -83,22 +85,36 @@ export default function ArticleDrawer({ anchor = "right", open, onClose, title, 
               <Typography variant="subtitle1" sx={{ paddingBottom: '20px' }}>{closeTime}</Typography>
             </Grid>
             {status === "open" ? (
-              hasVotedStatus === false ? (
-                <Grid className='votePetitions' item xs={12} sm={6} md={6} sx={{ mb: 2 }}>
-                  <Button variant="outlined" value="support" sx={{ mr: 1 }} onClick={(e) => { handleOpen(); setPetitionDecision(e.target.value); }}>Support</Button>
-                  <Button variant="outlined" value="oppose" onClick={(e) => { handleOpen(); setPetitionDecision(e.target.value); console.log(petitionDecision) }}>Oppose</Button>
-                </Grid>
+              isEligible === true ? (
+                hasVotedStatus === false ? (
+                  <Grid className='votePetitions' item xs={12} sm={6} md={6} sx={{ mb: 2 }}>
+                    <Button variant="outlined" value="support" sx={{ mr: 1 }} onClick={(e) => { handleOpen(); setPetitionDecision(e.target.value); }}>Support</Button>
+                    <Button variant="outlined" value="oppose" onClick={(e) => { handleOpen(); setPetitionDecision(e.target.value); console.log(petitionDecision) }}>Oppose</Button>
+                  </Grid>
+                ) : (
+                  <Grid >
+                    <Box>
+                      <Typography variant='h5' sx={{
+                        mb: 2,
+                        color: theme.palette.primary.main
+                      }} >You have already voted on this petition.</Typography>
+                    </Box>
+  
+                  </Grid>
+                )
               ) : (
                 <Grid >
-                  <Box>
-                    <Typography variant='h5' sx={{
-                      mb: 2,
-                      color: theme.palette.primary.main
-                    }} >You have already voted on this petition.</Typography>
-                  </Box>
-
-                </Grid>
+                    <Box>
+                      <Typography variant='h5' sx={{
+                        mb: 1,
+                        color: theme.palette.primary.main
+                      }} >You are not eligible to vote on this petition</Typography>
+                      <Typography variant='subtitle1' sx={{mb: 2, color: '#002129'}}>This is likely because the petition opened before you joined the community.</Typography>
+                    </Box>
+  
+                  </Grid>
               )
+              
             ) : (
               <Grid>
                 <Typography variant='h5'

@@ -86,9 +86,9 @@ public class ProposalController {
         createdProposal.setStatus("open soon");
         createdProposal.setParticipantsAtStart(community.getMemberCount());
 
-        // set eligable voters at time of proposal creation
+        // set eligible voters at time of proposal creation
         // only members signed up when proposal created can vote
-        createdProposal.setEligableVoters(community.getMembers());
+        createdProposal.setEligibleVoters(community.getMembers());
 
         try {
             Proposal savedProposal = proposalRepository.save(createdProposal);
@@ -255,8 +255,8 @@ public class ProposalController {
             proposal.setVotedCount(proposal.getVotedCount() + 1);
             System.out.println("just updated votedcOUNT");
 
-            // if voter is not eligable to vote, return
-            if (!proposal.getElibableVoters().contains(user.getId())) {
+            // if voter is not eligible to vote, return
+            if (!proposal.getEligibleVoters().contains(user.getId())) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User cannot vote on this proposal");
             }
 
@@ -306,8 +306,8 @@ public class ProposalController {
     }
 
     // Check id the user is elligable to vote on this proposal
-    @GetMapping("checkIfEligable")
-    public Boolean checkIfEligable(@RequestHeader("Authorization") String token, @RequestParam String proposalId) {
+    @GetMapping("checkIfEligible")
+    public Boolean checkIfEligible(@RequestHeader("Authorization") String token, @RequestParam String proposalId) {
         // remove prefix from token
         if (token.startsWith("Bearer ")) {
             token = token.substring(7);
@@ -321,7 +321,7 @@ public class ProposalController {
 
         Proposal proposal = proposalServiceImplementation.getProposalById(proposalId);
 
-        if (proposal.getElibableVoters().contains(user.getId())) {
+        if (proposal.getEligibleVoters().contains(user.getId())) {
             return true;
         } else {
             return false;

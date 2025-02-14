@@ -31,7 +31,7 @@ public class Petition {
     private int voteStanding; // supportVotes - opposeVotes
     private String status; // open, closedSupported, closedOpposed
     private Date lastUpdated; // time of last vote
-    private List<String> eligableVoters;
+    private List<String> eligibleVoters;
 
 
     @Field("proposalId")
@@ -200,12 +200,12 @@ public class Petition {
         this.proposalId = proposalId;
     }
 
-    public List<String> getElibableVoters() {
-        return eligableVoters;
+    public List<String> getEligibleVoters() {
+        return eligibleVoters;
     }
 
-    public void setEligableVoters(List<String> eligableVoters) {
-        this.eligableVoters = eligableVoters;
+    public void setEligibleVoters(List<String> eligibleVoters) {
+        this.eligibleVoters = eligibleVoters;
     }
 
 }

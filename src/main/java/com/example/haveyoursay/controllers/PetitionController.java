@@ -90,9 +90,9 @@ public class PetitionController {
         createdPetition.setParticipantsAtStart(communityMemberCount);
         createdPetition.setQuota(petitiionQuota);
 
-        // set eligable voters at time of petition creation
+        // set eligible voters at time of petition creation
         // only members signed up when petition created can vote
-        createdPetition.setEligableVoters(community.getMembers());
+        createdPetition.setEligibleVoters(community.getMembers());
 
         createdPetition.setProposalId("");
 
@@ -230,8 +230,8 @@ public class PetitionController {
             petition.setVotedCount(petition.getVotedCount() + 1);
             System.out.println("just updated votedcOUNT");
 
-            // if voter is not eligable to vote, return
-            if (!petition.getElibableVoters().contains(user.getId())) {
+            // if voter is not eligIble to vote, return
+            if (!petition.getEligibleVoters().contains(user.getId())) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User cannot vote on this petition");
             }
 
@@ -300,8 +300,8 @@ public class PetitionController {
     }
 
     // Check id the user is elligable to vote on this proposal
-    @GetMapping("checkIfEligable")
-    public Boolean checkIfEligable(@RequestHeader("Authorization") String token, @RequestParam String petitionId) {
+    @GetMapping("checkIfEligible")
+    public Boolean checkIfEligible(@RequestHeader("Authorization") String token, @RequestParam String petitionId) {
         // remove prefix from token
         if (token.startsWith("Bearer ")) {
             token = token.substring(7);
@@ -315,7 +315,7 @@ public class PetitionController {
 
         Petition petition = petitionServiceImplementation.getPetitionById(petitionId);
 
-        if (petition.getElibableVoters().contains(user.getId())) {
+        if (petition.getEligibleVoters().contains(user.getId())) {
             return true;
         } else {
             return false;

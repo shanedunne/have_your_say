@@ -29,7 +29,7 @@ public class Proposal {
     private int voteStanding; // supportVotes - opposeVotes
     private String status; // draft, open, Closed - Passed, Closed - Rejected
     private Date lastUpdated; // time of last vote
-    private List<String> eligableVoters;
+    private List<String> eligibleVoters;
 
 
     // constructor
@@ -187,12 +187,12 @@ public class Proposal {
         this.lastUpdated = lastUpdated;
     }
 
-       public List<String> getElibableVoters() {
-        return eligableVoters;
+       public List<String> getEligibleVoters() {
+        return eligibleVoters;
     }
 
-    public void setEligableVoters(List<String> eligableVoters) {
-        this.eligableVoters = eligableVoters;
+    public void setEligibleVoters(List<String> eligibleVoters) {
+        this.eligibleVoters = eligibleVoters;
     }
 
 }
