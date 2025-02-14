@@ -1,6 +1,9 @@
 package com.example.haveyoursay.controllers;
 
 import java.util.List;
+import java.util.Map;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,9 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.haveyoursay.models.Community;
+import com.example.haveyoursay.models.Petition;
+import com.example.haveyoursay.models.Proposal;
 import com.example.haveyoursay.repositories.CommunityRepository;
+import com.example.haveyoursay.repositories.PetitionRepository;
+import com.example.haveyoursay.repositories.ProposalRepository;
 
 import com.example.haveyoursay.models.User;
+import com.example.haveyoursay.services.CommunityServiceImplementation;
 import com.example.haveyoursay.services.UserServiceImplementation;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +39,14 @@ public class CommunityController {
     @Autowired
     private UserServiceImplementation userServiceImplementation;
 
+    @Autowired
+    private CommunityServiceImplementation communityServiceImplementation;
+
+    @Autowired
+    private PetitionRepository petitionRepository;
+
+    @Autowired
+    private ProposalRepository proposalRepository;
 
     @PostMapping("/create")
     public ResponseEntity<?> CreateCommunity(@RequestBody Community community,
@@ -72,7 +88,84 @@ public class CommunityController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating community");
         }
 
+    }
+
+    @GetMapping("stats")
+    public Map<String, Object> getCommunityStats(@RequestParam String communityId) {
+
+        // declare the map for passing to the front end
+        Map<String, Object> stats = new HashMap<>();
+        Community community = communityServiceImplementation.getCommunityById(communityId);
+
+        stats.put("memberCount", community.getMemberCount());
+        stats.put("proposalTimeframe", community.getProposalTimeframe());
+        stats.put("petitionTimeframe", community.getPetitionTimeframe());
+        stats.put("petitionQuota", community.getPetitiionQuota());
+        stats.put("proposalVoteCount", community.getProposalVoteCount());
+        stats.put("petitionVoteCount", community.getPetitionVoteCount());
+
+        // get info on petitions
+        List<Petition> petitions = petitionRepository.findAll();
+        List<Petition> communityPetitions = new ArrayList<Petition>();
+
+        // get all petitions for this community
+        for (Petition petition : petitions ) {
+            if(petition.getId().equals(communityId)) {
+                communityPetitions.add(petition);
+            }            
+        }
+
+        // initialise a new mapping to handle category tallys
+        Map<String, Integer> categoryStats = new HashMap<>();
+
+        // intialise approved petitions count
+        int approvedPetition  = 0;
         
+        // loop through community petitions
+        for (Petition petition : communityPetitions) {
+            if(categoryStats.containsKey(petition.getCategory())){
+                categoryStats.put(petition.getCategory(), categoryStats.get(petition.getCategory()) + 1);
+
+            } else {
+                categoryStats.put(petition.getCategory(), 1);
+            }
+            
+            if(petition.getStatus().equals("Closed - Petition Supported")) {
+                approvedPetition = approvedPetition + 1;
+            }
+        }
+
+        // add stat to return mapping
+        stats.put("petitionCategoryTally", categoryStats);
+        stats.put("approvedPetitions", approvedPetition);
+
+        // get info on proposals
+        List<Proposal> proposals = proposalRepository.findAll();
+        List<Proposal> communityProposals = new ArrayList<Proposal>();
+
+        // get all proposals for this community
+        for (Proposal proposal : proposals ) {
+            if(proposal.getId().equals(communityId)) {
+                communityProposals.add(proposal);
+            }            
+        }
+
+        // intialise approved proposal count
+        int approvedProposal  = 0;
+        
+        // loop through community proposal
+        for (Proposal proposal : communityProposals) {
+            
+            if(proposal.getStatus().equals("Closed - Passed")) {
+                approvedProposal = approvedProposal + 1;
+            }
+        }
+
+        // add stat to return mapping
+        stats.put("approvedProposal", approvedProposal);
+
+
+        return stats;
     }
 
 }
