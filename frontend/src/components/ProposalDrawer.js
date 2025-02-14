@@ -6,8 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import { Grid } from '@mui/material';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
-import { checkHasVotedProposal } from '../services/api';
-import { submitPetitionVote } from '../services/api';
+import { checkHasVotedProposal, checkIfEligIbleProposal} from '../services/api';
 import theme from '../assets/theme';
 import ReactMarkdown from 'react-markdown';
 
@@ -34,8 +33,10 @@ export default function ProposalDrawer({ anchor = "right", open, onClose, title,
   useEffect(() => {
     const fetchVoteStatus = async () => {
       try {
-        const response = await checkHasVotedProposal(proposalId);
-        setHasVotedStatus(response);
+        const voteStatusResponse = await checkHasVotedProposal(proposalId);
+        const isEligibleResponse = await checkIfEligIbleProposal(proposalId);
+        setHasVotedStatus(voteStatusResponse);
+        setIsEligible(isEligibleResponse);
         console.log(hasVotedStatus)
       } catch (error) {
         console.error("Error checking vote status:", error);
@@ -90,22 +91,36 @@ export default function ProposalDrawer({ anchor = "right", open, onClose, title,
              
             </Grid>
             {status === "open" ? (
-              hasVotedStatus === false ? (
-                <Grid className='votePetitions' item xs={12} sm={6} md={6} sx={{ mb: 2 }}>
-                  <Button variant="outlined" value="support" sx={{ mr: 1 }} onClick={(e) => { handleOpen(); setProposalDecision(e.target.value); }}>Support</Button>
-                  <Button variant="outlined" value="oppose" onClick={(e) => { handleOpen(); setProposalDecision(e.target.value); console.log(proposalDecision) }}>Oppose</Button>
-                </Grid>
+              isEligible === true ? (
+                hasVotedStatus === false ? (
+                  <Grid className='votePetitions' item xs={12} sm={6} md={6} sx={{ mb: 2 }}>
+                    <Button variant="outlined" value="support" sx={{ mr: 1 }} onClick={(e) => { handleOpen(); setProposalDecision(e.target.value); }}>Support</Button>
+                    <Button variant="outlined" value="oppose" onClick={(e) => { handleOpen(); setProposalDecision(e.target.value); console.log(proposalDecision) }}>Oppose</Button>
+                  </Grid>
+                ) : (
+                  <Grid >
+                    <Box>
+                      <Typography variant='h5' sx={{
+                        mb: 2,
+                        color: theme.palette.primary.main
+                      }} >You have already voted on this petition.</Typography>
+                    </Box>
+  
+                  </Grid>
+                )
               ) : (
                 <Grid >
-                  <Box>
-                    <Typography variant='h5' sx={{
-                      mb: 2,
-                      color: theme.palette.primary.main
-                    }} >You have already voted on this petition.</Typography>
-                  </Box>
-
-                </Grid>
+                    <Box>
+                      <Typography variant='h5' sx={{
+                        mb: 1,
+                        color: theme.palette.primary.main
+                      }} >You are not eligible to vote on this proposal</Typography>
+                      <Typography variant='subtitle1' sx={{mb: 2, color: '#002129'}}>This is likely because the proposal opened before you joined the community.</Typography>
+                    </Box>
+  
+                  </Grid>
               )
+              
             ) : (
               <Grid>
                 <Typography variant='h5'
