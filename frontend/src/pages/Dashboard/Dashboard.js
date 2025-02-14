@@ -21,6 +21,7 @@ import Integrations from "../Integrations/Integrations";
 
 import { NAVIGATION_ADMIN, NAVIGATION_CITIZEN, NAVIGATION_MASTER_ADMIN } from "./MenuStructures";
 import { Typography } from "@mui/material";
+import DashboardContent from "./DashboardContent";
 
 
 function PageContent({ pathname }) {
@@ -46,6 +47,7 @@ function PageContent({ pathname }) {
                     {pathname === '/createCommunity' && <CreateCommunity />}
                     {pathname === '/integrations' && <Integrations />}
                     {pathname === '/logout' && <Logout />}
+                    {pathname === '/dashboard' && <DashboardContent />}
 
         </Box>
     );
@@ -80,7 +82,7 @@ function Dashboard(props) {
                 branding={{
                     logo: <img src={logo} alt="MUI logo" />,
                     title: `Have Your Say - ${communityName}`,
-                    homeUrl: '/',
+                    homeUrl: '/dashboard',
                 }}
             >
                 <DashboardLayout >
