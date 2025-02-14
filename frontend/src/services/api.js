@@ -136,6 +136,24 @@ export const getFutureProposals = async () => {
   return response.data;
 }
 
+// check if user is elegible to vote
+export const checkIfEligablePetition = async (petitionId) => {
+  const userJwt = Cookies.get("JwtToken");
+  try {
+    const response = await axios.get("http://localhost:8080/petition/checkIfEligible", {
+      headers: {
+        Authorization: `Bearer ${userJwt}`,
+      },
+      params: { petitionId },
+    });
+    console.log(response.data);
+    return response.data === true;
+  } catch (error) {
+    console.error("Error in checking if user is eligable to vote on petition", error);
+    throw error;
+  }
+};
+
 // check if user has voted on petition
 export const checkHasVotedPetition = async (petitionId) => {
   const userJwt = Cookies.get("JwtToken");
@@ -236,6 +254,23 @@ export const getClosedProposals = async () => {
   return response.data;
 }
 
+// check if user is elegible to vote
+export const checkIfEligableProposal = async (proposalId) => {
+  const userJwt = Cookies.get("JwtToken");
+  try {
+    const response = await axios.get("http://localhost:8080/proposal/checkIfEligible", {
+      headers: {
+        Authorization: `Bearer ${userJwt}`,
+      },
+      params: { proposalId },
+    });
+    console.log(response.data);
+    return response.data === true;
+  } catch (error) {
+    console.error("Error in checking if user is eligable to vote on proposal", error);
+    throw error;
+  }
+};
 
 // check if user has voted on petition
 export const checkHasVotedProposal = async (proposalId) => {
