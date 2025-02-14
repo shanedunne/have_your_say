@@ -90,6 +90,10 @@ public class PetitionController {
         createdPetition.setParticipantsAtStart(communityMemberCount);
         createdPetition.setQuota(petitiionQuota);
 
+        // set eligable voters at time of petition creation
+        // only members signed up when petition created can vote
+        createdPetition.setEligableVoters(community.getMembers());
+
         createdPetition.setProposalId("");
 
         try {
@@ -101,6 +105,7 @@ public class PetitionController {
         }
 
     }
+
     // get all petitions
     @GetMapping("/get")
     public ResponseEntity<?> getAllPetitions() {
@@ -113,6 +118,7 @@ public class PetitionController {
         }
 
     }
+
     // get open petitions of for given community
     @GetMapping("/getOpen")
     public ResponseEntity<?> getOpenPetitions(@RequestHeader("Authorization") String token, @RequestParam Long now) {
@@ -129,9 +135,9 @@ public class PetitionController {
         String community = user.getCommunity();
         try {
             List<Petition> OpenPetitions = petitionRepository.findByCommunityAndStatus(community, "open");
-            for(Petition petition : OpenPetitions) {
-                if(petition.getCloseTime() < now) {
-                    if(petition.getSupportVotes() > petition.getOpposeVotes()) {
+            for (Petition petition : OpenPetitions) {
+                if (petition.getCloseTime() < now) {
+                    if (petition.getSupportVotes() > petition.getOpposeVotes()) {
                         petition.setStatus("Closed - Petition Supported");
                     } else {
                         petition.setStatus("Closed - Petition Opposed");
@@ -147,6 +153,7 @@ public class PetitionController {
         }
 
     }
+
     // get closed petitions
     @GetMapping("/getClosed")
     public ResponseEntity<?> getClosedPetitions(@RequestHeader("Authorization") String token) {
@@ -186,15 +193,13 @@ public class PetitionController {
         }
         try {
             List<Petition> futureProposals = petitionRepository.findFutureProposals("Closed - Petition Supported");
-        return ResponseEntity.ok(futureProposals);
+            return ResponseEntity.ok(futureProposals);
         } catch (Exception e) {
             e.printStackTrace(); // Log the exception for debugging
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error fetching petitions");
         }
 
     }
-    
-    
 
     @GetMapping("/{id}")
     public Petition getPetitionById(@PathVariable String id) {
@@ -218,7 +223,6 @@ public class PetitionController {
         }
         System.out.println("User email from petition page: " + user.getEmail());
 
-
         try {
             // Add petition id to the users records
             Petition petition = petitionServiceImplementation.getPetitionById(petitionId);
@@ -226,27 +230,37 @@ public class PetitionController {
             petition.setVotedCount(petition.getVotedCount() + 1);
             System.out.println("just updated votedcOUNT");
 
-                // if decision is to support, increment support votes count and vote standing
-                if (decision.equals("support")) {
-                    System.out.println("PETITION DECISION IS SUPPORT");
 
-                    petition.setSupportVotes(petition.getSupportVotes() + 1);
-                    petition.setVoteStanding(petition.getVoteStanding() + 1);
+            // if voter is not eligable to vote, return
+            if (!petition.getElibableVoters().contains(user.getId())) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User cannot vote on this petition");
+            }
 
-                    // if decision is to oppose, increment opposed votes count and decrement vote
-                    // standing
-                } else if (decision.equals("oppose")) {
-                    System.out.println("PETITION DECISION IS OPPOSE");
+            // if user has voted already, return
+            if (user.getPetitionsVotedOn().contains(petitionId)) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User has already voted on this petition");
+            }
 
-                    petition.setOpposeVotes(petition.getOpposeVotes() + 1);
-                    petition.setVoteStanding(petition.getVoteStanding() - 1);
-                }
+            // if decision is to support, increment support votes count and vote standing
+            if (decision.equals("support")) {
+                System.out.println("PETITION DECISION IS SUPPORT");
+
+                petition.setSupportVotes(petition.getSupportVotes() + 1);
+                petition.setVoteStanding(petition.getVoteStanding() + 1);
+
+                // if decision is to oppose, increment opposed votes count and decrement vote
+                // standing
+            } else if (decision.equals("oppose")) {
+                System.out.println("PETITION DECISION IS OPPOSE");
+
+                petition.setOpposeVotes(petition.getOpposeVotes() + 1);
+                petition.setVoteStanding(petition.getVoteStanding() - 1);
+            }
 
             // add petition to users voting records
             user.getPetitionsVotedOn().add(petitionId);
             userServiceImplementation.updateUser(user);
             System.out.println("User updated successfully: " + user);
-
 
             // check if latest vote has met the quota
             if (petition.getVoteStanding() >= petition.getQuota()) {
@@ -257,7 +271,6 @@ public class PetitionController {
 
             petitionServiceImplementation.updatePetition(petition);
             System.out.println("Petition saved successfully: " + petition);
-
 
             return ResponseEntity.ok(petition);
         } catch (Exception e) {
