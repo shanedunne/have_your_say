@@ -305,4 +305,27 @@ public class ProposalController {
 
     }
 
+    // Check id the user is elligable to vote on this proposal
+    @GetMapping("checkIfEligable")
+    public Boolean checkIfEligable(@RequestHeader("Authorization") String token, @RequestParam String proposalId) {
+        // remove prefix from token
+        if (token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+
+        // call implenetation method to get user from token
+        User user = userServiceImplementation.findUserProfileByJwt(token);
+        if (user == null) {
+            return false;
+        }
+
+        Proposal proposal = proposalServiceImplementation.getProposalById(proposalId);
+
+        if (proposal.getElibableVoters().contains(user.getId())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

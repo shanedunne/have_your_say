@@ -230,7 +230,6 @@ public class PetitionController {
             petition.setVotedCount(petition.getVotedCount() + 1);
             System.out.println("just updated votedcOUNT");
 
-
             // if voter is not eligable to vote, return
             if (!petition.getElibableVoters().contains(user.getId())) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User cannot vote on this petition");
@@ -294,6 +293,29 @@ public class PetitionController {
         }
 
         if (user.getPetitionsVotedOn().contains(petitionId)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Check id the user is elligable to vote on this proposal
+    @GetMapping("checkIfEligable")
+    public Boolean checkIfEligable(@RequestHeader("Authorization") String token, @RequestParam String petitionId) {
+        // remove prefix from token
+        if (token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+
+        // call implenetation method to get user from token
+        User user = userServiceImplementation.findUserProfileByJwt(token);
+        if (user == null) {
+            return false;
+        }
+
+        Petition petition = petitionServiceImplementation.getPetitionById(petitionId);
+
+        if (petition.getElibableVoters().contains(user.getId())) {
             return true;
         } else {
             return false;

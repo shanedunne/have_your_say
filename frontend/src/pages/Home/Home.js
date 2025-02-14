@@ -28,7 +28,6 @@ function HomePage() {
                         flex: 3,
                         backgroundColor: theme.palette.third.main,
                         color: theme.palette.primary.contrastText,
-                        padding: 4,
                         display: "flex",
                         flexDirection: "column",
                         justifyContent: "center",
@@ -42,7 +41,7 @@ function HomePage() {
                         Welcome to Have Your Say!
                     </Typography>
                     <Typography
-                        variant="body1"
+                        variant="subtitle"
                         sx={{
                             lineHeight: 1.8,
                             textAlign: "center",
@@ -104,7 +103,7 @@ function HomePage() {
                         ---------------------------------------
                     </Typography>
                     <Typography
-                        variant="body1"
+                        variant="subtitle2"
                         sx={{
                             lineHeight: 1.8,
                             textAlign: "center",
