@@ -79,12 +79,10 @@ public class Community {
     public void setMembers(List<String> members) {
         this.members = members;
     }
-   
 
     public String getCommunityType() {
         return communityType;
     }
-    
 
     public void setCommunityType(String communityType) {
         this.communityType = communityType;

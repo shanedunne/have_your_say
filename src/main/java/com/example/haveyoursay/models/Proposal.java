@@ -1,6 +1,7 @@
 package com.example.haveyoursay.models;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -28,6 +29,8 @@ public class Proposal {
     private int voteStanding; // supportVotes - opposeVotes
     private String status; // draft, open, Closed - Passed, Closed - Rejected
     private Date lastUpdated; // time of last vote
+    private List<String> eligableVoters;
+
 
     // constructor
     public Proposal(String id, String title, String category, String body, String petitionId, Long startTime, Long endTime, String userId, String community, int participantsAtStart) {
@@ -182,6 +185,14 @@ public class Proposal {
 
     public void setLastUpdated(Date lastUpdated) {
         this.lastUpdated = lastUpdated;
+    }
+
+       public List<String> getElibableVoters() {
+        return eligableVoters;
+    }
+
+    public void setEligableVoters(List<String> eligableVoters) {
+        this.eligableVoters = eligableVoters;
     }
 
 }
