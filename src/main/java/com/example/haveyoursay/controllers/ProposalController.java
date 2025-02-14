@@ -1,7 +1,9 @@
 package com.example.haveyoursay.controllers;
 
+import com.example.haveyoursay.models.Community;
 import com.example.haveyoursay.models.Petition;
 import com.example.haveyoursay.models.Proposal;
+import com.example.haveyoursay.repositories.CommunityRepository;
 import com.example.haveyoursay.repositories.PetitionRepository;
 import com.example.haveyoursay.repositories.ProposalRepository;
 import com.example.haveyoursay.services.ProposalServiceImplementation;
@@ -38,6 +40,9 @@ public class ProposalController {
     @Autowired
     private UserServiceImplementation userServiceImplementation;
 
+    @Autowired
+    private CommunityRepository communityRepository;
+
     @PostMapping("/create")
     public ResponseEntity<?> createProposal(@RequestBody Proposal proposal,
             @RequestHeader("Authorization") String token) {
@@ -53,6 +58,14 @@ public class ProposalController {
         if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
         }
+
+        // handle getting community data when creating petition
+        String communityId = user.getCommunity();
+
+        // get community object for retreiving data from it
+        Community community = communityRepository.findById(communityId)
+                .orElseThrow(() -> new RuntimeException("Community not found"));
+        System.out.println("Community retrieved: " + community);
 
         String title = proposal.getTitle();
         String category = proposal.getCategory();
@@ -71,9 +84,11 @@ public class ProposalController {
         createdProposal.setUserId(user.getId());
         createdProposal.setCommunity(user.getCommunity());
         createdProposal.setStatus("open soon");
+        createdProposal.setParticipantsAtStart(community.getMemberCount());
 
-        // hard coded below for testing
-        createdProposal.setParticipantsAtStart(10);
+        // set eligable voters at time of proposal creation
+        // only members signed up when proposal created can vote
+        createdProposal.setEligableVoters(community.getMembers());
 
         try {
             Proposal savedProposal = proposalRepository.save(createdProposal);
@@ -181,7 +196,8 @@ public class ProposalController {
         }
         String community = user.getCommunity();
         try {
-            List<Proposal> OpenProposals = proposalRepository.findByCommunityAndStatusNotIn(community, List.of("open", "open soon"));
+            List<Proposal> OpenProposals = proposalRepository.findByCommunityAndStatusNotIn(community,
+                    List.of("open", "open soon"));
             return ResponseEntity.ok(OpenProposals);
         } catch (Exception e) {
             e.printStackTrace(); // Log the exception for debugging
@@ -232,7 +248,6 @@ public class ProposalController {
         }
         System.out.println("User email from proposal page: " + user.getEmail());
 
-
         try {
             // Add petition id to the users records
             Proposal proposal = proposalServiceImplementation.getProposalById(proposalId);
@@ -240,29 +255,39 @@ public class ProposalController {
             proposal.setVotedCount(proposal.getVotedCount() + 1);
             System.out.println("just updated votedcOUNT");
 
-                // if decision is to support, increment support votes count and vote standing
-                if (decision.equals("support")) {
-                    System.out.println("PROPOSAL DECISION IS SUPPORT");
+            // if voter is not eligable to vote, return
+            if (!proposal.getElibableVoters().contains(user.getId())) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User cannot vote on this proposal");
+            }
 
-                    proposal.setSupportVotes(proposal.getSupportVotes() + 1);
-                    proposal.setVoteStanding(proposal.getVoteStanding() + 1);
+            // if user has voted already, return
+            if (user.getProposalsVotedOn().contains(proposalId)) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User has already voted on this proposal");
+            }
 
-                    // if decision is to oppose, increment opposed votes count and decrement vote
-                    // standing
-                } else if (decision.equals("oppose")) {
-                    System.out.println("PROPOSAL DECISION IS OPPOSE");
+            // if decision is to support, increment support votes count and vote standing
+            if (decision.equals("support")) {
+                System.out.println("PROPOSAL DECISION IS SUPPORT");
 
-                    proposal.setOpposeVotes(proposal.getOpposeVotes() + 1);
-                    proposal.setVoteStanding(proposal.getVoteStanding() - 1);
-                }
+                proposal.setSupportVotes(proposal.getSupportVotes() + 1);
+                proposal.setVoteStanding(proposal.getVoteStanding() + 1);
+
+                // if decision is to oppose, increment opposed votes count and decrement vote
+                // standing
+            } else if (decision.equals("oppose")) {
+                System.out.println("PROPOSAL DECISION IS OPPOSE");
+
+                proposal.setOpposeVotes(proposal.getOpposeVotes() + 1);
+                proposal.setVoteStanding(proposal.getVoteStanding() - 1);
+            }
 
             // add petition to users voting records
             user.getProposalsVotedOn().add(proposalId);
             userServiceImplementation.updateUser(user);
             System.out.println("User updated successfully: " + user);
 
-
-            // check if latest vote has caused the inevitable of either a guaranteed support or guaranteed fail
+            // check if latest vote has caused the inevitable of either a guaranteed support
+            // or guaranteed fail
             if (proposal.getSupportVotes() > (Math.round(proposal.getParticipantsAtStart() / 2) + 1)) {
                 proposal.setStatus("Closed - Proposal Supported");
             } else if (proposal.getOpposeVotes() > (Math.round(proposal.getParticipantsAtStart() / 2) + 1)) {
@@ -271,7 +296,6 @@ public class ProposalController {
 
             proposalServiceImplementation.updateProposal(proposal);
             System.out.println("Proposal saved successfully: " + proposal);
-
 
             return ResponseEntity.ok(proposal);
         } catch (Exception e) {
