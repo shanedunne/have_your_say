@@ -35,6 +35,7 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: "Newsreader, serif",
+    color: '#002129',
     h1: {
       fontSize: '2.5rem',
       fontWeight: 700,

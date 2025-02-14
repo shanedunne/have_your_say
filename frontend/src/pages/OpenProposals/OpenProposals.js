@@ -5,6 +5,7 @@ import { Grid } from '@mui/material';
 import { getOpenProposals } from '../../services/api';
 import ProposalCard from '../../components/ProposalCard';
 import OpenPetitions from '../OpenPetitions/OpenPetitions';
+import theme from '../../assets/theme';
 
 
 function OpenProposals() {
@@ -29,7 +30,7 @@ function OpenProposals() {
             height: "100vh",
             padding: 2,
         }}>
-            <Typography variant="h4" sx={{ textAlign: "center", mb: 2 }}>
+            <Typography variant="h4" sx={{ textAlign: "center", mb: 2, color: theme.typography.color }}>
                 Open Proposals
             </Typography>
             {openProposals.length === 0 ? (

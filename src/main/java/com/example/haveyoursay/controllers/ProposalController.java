@@ -216,4 +216,69 @@ public class ProposalController {
         }
     }
 
+    @PostMapping("/vote")
+    public ResponseEntity<?> proposalVote(@RequestHeader("Authorization") String token, @RequestParam String decision,
+            @RequestParam String proposalId) {
+
+        // remove prefix from token
+        if (token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+
+        // call implenetation method to get user from token
+        User user = userServiceImplementation.findUserProfileByJwt(token);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
+        }
+        System.out.println("User email from proposal page: " + user.getEmail());
+
+
+        try {
+            // Add petition id to the users records
+            Proposal proposal = proposalServiceImplementation.getProposalById(proposalId);
+            System.out.println("This is the proposal" + proposal.getTitle());
+            proposal.setVotedCount(proposal.getVotedCount() + 1);
+            System.out.println("just updated votedcOUNT");
+
+                // if decision is to support, increment support votes count and vote standing
+                if (decision.equals("support")) {
+                    System.out.println("PROPOSAL DECISION IS SUPPORT");
+
+                    proposal.setSupportVotes(proposal.getSupportVotes() + 1);
+                    proposal.setVoteStanding(proposal.getVoteStanding() + 1);
+
+                    // if decision is to oppose, increment opposed votes count and decrement vote
+                    // standing
+                } else if (decision.equals("oppose")) {
+                    System.out.println("PROPOSAL DECISION IS OPPOSE");
+
+                    proposal.setOpposeVotes(proposal.getOpposeVotes() + 1);
+                    proposal.setVoteStanding(proposal.getVoteStanding() - 1);
+                }
+
+            // add petition to users voting records
+            user.getProposalsVotedOn().add(proposalId);
+            userServiceImplementation.updateUser(user);
+            System.out.println("User updated successfully: " + user);
+
+
+            // check if latest vote has caused the inevitable of either a guaranteed support or guaranteed fail
+            if (proposal.getSupportVotes() > (Math.round(proposal.getParticipantsAtStart() / 2) + 1)) {
+                proposal.setStatus("Closed - Proposal Supported");
+            } else if (proposal.getOpposeVotes() > (Math.round(proposal.getParticipantsAtStart() / 2) + 1)) {
+                proposal.setStatus("Closed - Proposal Opposed");
+            }
+
+            proposalServiceImplementation.updateProposal(proposal);
+            System.out.println("Proposal saved successfully: " + proposal);
+
+
+            return ResponseEntity.ok(proposal);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error has occured");
+        }
+
+    }
+
 }
