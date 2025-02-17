@@ -18,7 +18,7 @@ public class Community {
     private int memberCount = 0;
     private int proposalTimeframe;
     private int petitionTimeframe;
-    private int petitiionQuota;
+    private int petitionQuota;
     private int proposalVoteCount = 0;
     private int petitionVoteCount = 0;
     private String mostSupportedProposal;
@@ -152,11 +152,11 @@ public class Community {
         this.petitionTimeframe = petitionTimeframe;
     }
 
-    public int getPetitiionQuota() {
-        return petitiionQuota;
+    public int getPetitionQuota() {
+        return petitionQuota;
     }
 
-    public void setPetitiionQuota(int petitiionQuota) {
-        this.petitiionQuota = petitiionQuota;
+    public void setPetitionQuota(int petitionQuota) {
+        this.petitionQuota = petitionQuota;
     }
 }

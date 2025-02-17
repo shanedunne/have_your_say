@@ -18,7 +18,7 @@ public interface ProposalRepository extends MongoRepository<Proposal,String> {
     List<Proposal> findByCommunityAndStatuses(String community, List<String> statuses);
 
     // get list of proposals by community
-    List<Proposal> findByCommunityId(String communityId);
+    List<Proposal> findByCommunity(String communityId);
 
 
 }

@@ -6,8 +6,8 @@ import HowToVoteIcon from "@mui/icons-material/HowToVote";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 import PetitionsPieChart from "../../components/PetitionsPieChart";
-// import theme if needed
 import theme from "../../assets/theme";
+import { getCommunityStats } from "../../services/api";
 
 
 // Example categories (static for now)
@@ -40,17 +40,20 @@ function DashboardContent() {
     const [totalVotes, setTotalVotes] = useState();
     const [petitionsApproved, setPetitionsApproved] = useState();
     const [proposalsApproved, setProposalsApproved] = useState();
+    const [petitionCategories, setPetitionCategories] = useState({});
     const [petitions, setPetitions] = useState([]);
 
 
     useEffect(() => {
         async function fetchStats() {
             try {
-                setMemberCount(34)
-                setTotalVotes(456)
-                setPetitionsApproved(22)
-                setProposalsApproved(14)
-                setPetitions(mockPetitions);
+                const stats = await getCommunityStats(communityId);
+                console.log(stats);
+                setMemberCount(stats.memberCount);
+                setTotalVotes(stats.proposalVoteCount + stats.petitionVoteCount);
+                setPetitionsApproved(stats.approvedPetitions);
+                setProposalsApproved(stats.approvedProposal);
+                setPetitionCategories(stats.petitionCategoryTally);
             } catch (error) {
                 console.error("Error fetching community stats:", error);
             }
@@ -162,7 +165,7 @@ function DashboardContent() {
                     </Grid>
                 </Grid>
                 <Grid item xs={12} md={6}>
-                    <PetitionsPieChart petitions={petitions} categories={categoryOptions} />
+                    <PetitionsPieChart petitionCategories={petitionCategories} />
                 </Grid>
             </Grid>
         </Box>

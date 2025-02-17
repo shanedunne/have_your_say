@@ -343,7 +343,9 @@ export const handleCreateCommunity = async ({
 export const getCommunityStats = async (communityId) => {
   try {
     const response = await axios.get("http://localhost:8080/community/stats", {
-      communityId
+      params: {
+        communityId
+      },
     })
     return response.data;
   } catch(error) {

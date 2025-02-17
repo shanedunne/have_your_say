@@ -73,10 +73,10 @@ public class PetitionController {
         int communityMemberCount = community.getMemberCount();
 
         // get community quota at creation of petition
-        int communityQuota = community.getPetitiionQuota();
+        int communityQuota = community.getPetitionQuota();
 
         // calculate quota for petition
-        int petitiionQuota = Math.round((communityMemberCount * communityQuota) / 100.0f);
+        int petitionQuota = Math.round((communityMemberCount * communityQuota) / 100.0f);
 
         Petition createdPetition = new Petition();
         createdPetition.setTitle(title);
@@ -88,7 +88,7 @@ public class PetitionController {
         createdPetition.setCommunity(communityId);
         createdPetition.setStatus("open");
         createdPetition.setParticipantsAtStart(communityMemberCount);
-        createdPetition.setQuota(petitiionQuota);
+        createdPetition.setQuota(petitionQuota);
 
         // set eligible voters at time of petition creation
         // only members signed up when petition created can vote

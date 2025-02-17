@@ -16,23 +16,15 @@ const colours = [
     "#2F54EB",
 ];
 
-function randomColour() {
-    const max = colours.length;
-    return Math.floor(Math.random() * max)
-}
+const PetitionsPieChart = ({ petitionCategories }) => {
 
-const PetitionsPieChart = ({ petitions, categories }) => {
-    // Calculate distribution of petitions across categories
-    const total = petitions.length;
 
-    const data = categories.map((category) => {
-        const count = petitions.filter((p) => p.category === category).length;
-        const percentage = total > 0 ? (count / total) * 100 : 0;
-        return {
-            name: category,
-            value: percentage,
-        };
-    });
+    const total = Object.values(petitionCategories).reduce((acc, count) => acc + count, 0);
+
+    const data = Object.entries(petitionCategories).map(([category, count]) => ({
+        name: category,
+        value: count
+    }));
 
 
     return (
@@ -54,10 +46,7 @@ const PetitionsPieChart = ({ petitions, categories }) => {
                                 label
                             >
                                 {data.map((entry, index) => (
-                                    <Cell
-                                        key={`cell-${index}`}
-                                        fill={colours[index % colours.length]}
-                                    />
+                                    <Cell key={`cell-${index}`} fill={colours[index % colours.length]} />
                                 ))}
                             </Pie>
                             <Tooltip />

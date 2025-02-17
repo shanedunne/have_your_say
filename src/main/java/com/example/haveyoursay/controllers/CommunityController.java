@@ -66,7 +66,7 @@ public class CommunityController {
         List<String> admins = community.getAdmins();
         String communityType = community.getCommunityType();
         String accessCode = community.getAccessCode();
-        int petitiionQuota = community.getPetitiionQuota();
+        int petitionQuota = community.getPetitionQuota();
         int petitionTimeframe = community.getPetitionTimeframe();
         int proposalTimeframe = community.getProposalTimeframe();
 
@@ -75,7 +75,7 @@ public class CommunityController {
         createdCommunity.setAdmins(admins);
         createdCommunity.setCommunityType(communityType);
         createdCommunity.setAccessCode(accessCode);
-        createdCommunity.setPetitiionQuota(petitiionQuota);
+        createdCommunity.setPetitionQuota(petitionQuota);
         createdCommunity.setPetitionTimeframe(petitionTimeframe);
         createdCommunity.setProposalTimeframe(proposalTimeframe);
 
@@ -105,7 +105,7 @@ public class CommunityController {
         stats.put("petitionVoteCount", community.getPetitionVoteCount());
 
         // get info on petitions
-        List<Petition> communityPetitions = petitionRepository.findByCommunityId(communityId);
+        List<Petition> communityPetitions = petitionRepository.findByCommunity(communityId);
 
         // initialise a new mapping to handle category tallys
         Map<String, Integer> categoryStats = new HashMap<>();
@@ -132,7 +132,7 @@ public class CommunityController {
         stats.put("approvedPetitions", approvedPetition);
 
         // get info on proposals
-        List<Proposal> communityProposals = proposalRepository.findByCommunityId(communityId);
+        List<Proposal> communityProposals = proposalRepository.findByCommunity(communityId);
 
         // intialise approved proposal count
         int approvedProposal  = 0;
