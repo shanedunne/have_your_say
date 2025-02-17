@@ -28,7 +28,7 @@ function CreateProposal({ pathname }) {
     const [petitionId, setPetitionId] = useState("");
     const [futureProposals, setFutureProposals] = useState([]);
     const [startTime, setStartTime] = useState(null);
-    const [endTime, setEndTime] = useState(null);
+    const [closeTime, setCloseTime] = useState(null);
 
     const getFutureProposalData = async () => {
         let data = await getFutureProposals();
@@ -71,16 +71,16 @@ function CreateProposal({ pathname }) {
         console.log("category: " + category)
         console.log("body: " + body)
         console.log("start: " + startTime)
-        console.log("end: " + endTime)
+        console.log("end: " + closeTime)
         console.log("id: " + petitionId)
         try {
-            if (!title || !petition?.category || !body || !startTime || !endTime || !petition?.id) {
+            if (!title || !petition?.category || !body || !startTime || !closeTime || !petition?.id) {
                 console.log("missing fields")
                 setError("Please fill in all fields");
                 return;
             }
 
-            const proposalSuccessfullyCreated = handleCreateProposal({ title, category: petition.category, body, startTime, endTime, petitionId: petition.id });
+            const proposalSuccessfullyCreated = handleCreateProposal({ title, category: petition.category, body, startTime, closeTime, petitionId: petition.id });
             if (proposalSuccessfullyCreated) {
                 setSnackBarOpen(true);
                 setTimeout(() => window.location.reload(), 3000);
@@ -105,8 +105,8 @@ function CreateProposal({ pathname }) {
         setStartTime(dayjs(date).startOf('day').valueOf());
     };
 
-    const handleEndTime = (date) => {
-        setEndTime(dayjs(date).endOf('day').valueOf());
+    const handleCloseTime = (date) => {
+        setCloseTime(dayjs(date).endOf('day').valueOf());
     }
 
 
@@ -170,8 +170,8 @@ function CreateProposal({ pathname }) {
                     <Grid item xs={6}>
                         <DatePicker
                             label="Proposal End Date"
-                            value={endTime ? dayjs(endTime) : null}
-                            onChange={(newDate) => handleEndTime(newDate)}
+                            value={closeTime ? dayjs(closeTime) : null}
+                            onChange={(newDate) => handleCloseTime(newDate)}
                             slotProps={{ textField: { fullWidth: true } }}
                         />
                     </Grid>

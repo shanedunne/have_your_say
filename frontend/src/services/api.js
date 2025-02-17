@@ -202,7 +202,7 @@ export const handleCreateProposal = async ({
   category,
   body,
   startTime,
-  endTime,
+  closeTime,
   petitionId
 }) => {
   try {
@@ -212,7 +212,7 @@ export const handleCreateProposal = async ({
       category,
       body,
       startTime,
-      endTime,
+      closeTime,
       petitionId
     },
       {

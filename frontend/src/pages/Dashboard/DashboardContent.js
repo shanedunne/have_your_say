@@ -6,33 +6,10 @@ import HowToVoteIcon from "@mui/icons-material/HowToVote";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 import PetitionsPieChart from "../../components/PetitionsPieChart";
+import ClosingSoonCard from "../../components/ClosingSoonCard";
 import theme from "../../assets/theme";
 import { getCommunityStats } from "../../services/api";
 
-
-// Example categories (static for now)
-const categoryOptions = [
-    "Infrastructure",
-    "Transport",
-    "Education",
-    "Youth Services",
-    "Health & Social Care",
-    "Environment",
-    "Housing",
-    "Urban Development",
-    "Local Business",
-    "Culture & Recreation",
-];
-
-// Example mock petitions
-const mockPetitions = [
-    { id: 1, category: "Infrastructure", title: "Fix roads" },
-    { id: 2, category: "Environment", title: "Clean parks" },
-    { id: 3, category: "Transport", title: "More bus routes" },
-    { id: 4, category: "Transport", title: "New bike lanes" },
-    { id: 5, category: "Education", title: "More school funding" },
-    // etc...
-];
 
 function DashboardContent() {
     const { communityId, communityName, role } = useAuth();
@@ -166,6 +143,9 @@ function DashboardContent() {
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <PetitionsPieChart petitionCategories={petitionCategories} />
+                </Grid>
+                <Grid item xs={12} md={6} >
+                    <ClosingSoonCard />
                 </Grid>
             </Grid>
         </Box>

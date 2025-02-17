@@ -71,7 +71,7 @@ public class ProposalController {
         String category = proposal.getCategory();
         String body = proposal.getBody();
         Long startTime = proposal.getStartTime();
-        Long endTime = proposal.getEndTime();
+        Long closeTime = proposal.getCloseTime();
         String petitionId = proposal.getPetitionId();
 
         Proposal createdProposal = new Proposal();
@@ -79,7 +79,7 @@ public class ProposalController {
         createdProposal.setCategory(category);
         createdProposal.setBody(body);
         createdProposal.setStartTime(startTime);
-        createdProposal.setEndTime(endTime);
+        createdProposal.setCloseTime(closeTime);
         createdProposal.setPetitionId(petitionId);
         createdProposal.setUserId(user.getId());
         createdProposal.setCommunity(user.getCommunity());
@@ -146,7 +146,7 @@ public class ProposalController {
             for (Proposal proposal : openProposals) {
 
                 // if proposal end time is reached, calculate outcome and set status
-                if (proposal.getEndTime() < now) {
+                if (proposal.getCloseTime() < now) {
                     if (proposal.getSupportVotes() > proposal.getOpposeVotes()) {
                         proposal.setStatus("Passed");
                     } else {
@@ -161,7 +161,7 @@ public class ProposalController {
                         proposalRepository.save(proposal);
                     }
 
-                } else if (proposal.getStartTime() <= now && proposal.getEndTime() > now) {
+                } else if (proposal.getStartTime() <= now && proposal.getCloseTime() > now) {
                     // if proposal start time has been reached and end time not reached, set to open
                     if (!"open".equals(proposal.getStatus())) {
                         proposal.setStatus("open");

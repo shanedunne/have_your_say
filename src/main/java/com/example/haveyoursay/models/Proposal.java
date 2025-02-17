@@ -19,7 +19,7 @@ public class Proposal {
     private String body;
     private String petitionId;
     private Long startTime;
-    private Long endTime;
+    private Long closeTime;
     private String userId;
     private String community;
     private int participantsAtStart; // count of eligible voters
@@ -33,14 +33,14 @@ public class Proposal {
 
 
     // constructor
-    public Proposal(String id, String title, String category, String body, String petitionId, Long startTime, Long endTime, String userId, String community, int participantsAtStart) {
+    public Proposal(String id, String title, String category, String body, String petitionId, Long startTime, Long closeTime, String userId, String community, int participantsAtStart) {
         this.id = id;
         this.title = title;
         this.category = category;
         this.body = body;
         this.petitionId = petitionId;
         this.startTime = startTime;
-        this.endTime = endTime;
+        this.closeTime = closeTime;
         this.userId = userId;
         this.community = community;
         this.participantsAtStart = participantsAtStart;
@@ -106,12 +106,12 @@ public class Proposal {
         this.startTime = startTime;
     }
 
-    public Long getEndTime() {
-        return endTime;
+    public Long getCloseTime() {
+        return closeTime;
     }
 
-    public void setEndTime(Long endTime) {
-        this.endTime = endTime;
+    public void setCloseTime(Long closeTime) {
+        this.closeTime = closeTime;
     }
 
     public String getUserId() {
