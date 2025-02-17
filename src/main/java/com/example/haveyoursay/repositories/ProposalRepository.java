@@ -17,6 +17,9 @@ public interface ProposalRepository extends MongoRepository<Proposal,String> {
     @Query("{ 'community': ?0, 'status': { $in: ?1 } }")
     List<Proposal> findByCommunityAndStatuses(String community, List<String> statuses);
 
+    // get list of proposals by community
+    List<Proposal> findByCommunityId(String communityId);
+
 
 }
 

@@ -17,6 +17,8 @@ public interface PetitionRepository extends MongoRepository<Petition,String> {
     @Query("{'proposalId': '', 'status': ?0}")
     List<Petition> findFutureProposals(String status);
 
+    List<Petition> findByCommunityId(String communityId);
+
 }
 
 

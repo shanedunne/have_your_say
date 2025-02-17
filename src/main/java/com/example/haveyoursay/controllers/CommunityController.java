@@ -100,20 +100,12 @@ public class CommunityController {
         stats.put("memberCount", community.getMemberCount());
         stats.put("proposalTimeframe", community.getProposalTimeframe());
         stats.put("petitionTimeframe", community.getPetitionTimeframe());
-        stats.put("petitionQuota", community.getPetitiionQuota());
+        stats.put("petitionQuota", community.getPetitionQuota());
         stats.put("proposalVoteCount", community.getProposalVoteCount());
         stats.put("petitionVoteCount", community.getPetitionVoteCount());
 
         // get info on petitions
-        List<Petition> petitions = petitionRepository.findAll();
-        List<Petition> communityPetitions = new ArrayList<Petition>();
-
-        // get all petitions for this community
-        for (Petition petition : petitions ) {
-            if(petition.getId().equals(communityId)) {
-                communityPetitions.add(petition);
-            }            
-        }
+        List<Petition> communityPetitions = petitionRepository.findByCommunityId(communityId);
 
         // initialise a new mapping to handle category tallys
         Map<String, Integer> categoryStats = new HashMap<>();
@@ -140,15 +132,7 @@ public class CommunityController {
         stats.put("approvedPetitions", approvedPetition);
 
         // get info on proposals
-        List<Proposal> proposals = proposalRepository.findAll();
-        List<Proposal> communityProposals = new ArrayList<Proposal>();
-
-        // get all proposals for this community
-        for (Proposal proposal : proposals ) {
-            if(proposal.getId().equals(communityId)) {
-                communityProposals.add(proposal);
-            }            
-        }
+        List<Proposal> communityProposals = proposalRepository.findByCommunityId(communityId);
 
         // intialise approved proposal count
         int approvedProposal  = 0;
