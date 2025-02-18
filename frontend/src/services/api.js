@@ -1,6 +1,10 @@
 import axios from "axios";
 import Cookies from 'js-cookie';
 
+// get url from .env
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+const developmentUrl = process.env.REACT_APP_DEVELOPMENT_URL;
+
 // LOGIN LOGOUT ACCOUNT
 
 // function to post details of new user
@@ -16,7 +20,7 @@ export const handleSignUp = async ({
   accessCode,
 }) => {
   try {
-    const response = await axios.post("http://localhost:8080/auth/signup", {
+    const response = await axios.post(`${backendUrl}/auth/signup`, {
       firstName,
       lastName,
       dateOfBirth,
@@ -44,7 +48,7 @@ export const handleLogin = async ({
   password,
 }) => {
   try {
-    const response = await axios.post("http://localhost:8080/auth/login", {
+    const response = await axios.post(`${backendUrl}/auth/login`, {
       email,
       password,
     });
@@ -73,13 +77,13 @@ export const handlelogout = async (
 export const getAccountInfo = async () => {
   const userJwt = Cookies.get("JwtToken");
   try {
-    const response = await axios.get("http://localhost:8080/auth/info", {
+    const response = await axios.get(`${backendUrl}/auth/info`, {
       headers: {
         Authorization: `Bearer ${userJwt}`,
       },
     });
     console.log(response.data);
-    return response.data;
+    return response;
   } catch (error) {
     console.error("Error retrievinfg account information", error);
     throw error;
@@ -98,7 +102,7 @@ export const handleCreatePetition = async ({
 }) => {
   try {
     const userJwt = Cookies.get("JwtToken");
-    const response = await axios.post("http://localhost:8080/petition/create", {
+    const response = await axios.post(`${backendUrl}/petition/create`, {
       title,
       category,
       body,
@@ -124,7 +128,7 @@ export const handleCreatePetition = async ({
 export const getOpenPetitions = async () => {
   const now = new Date().getTime();
   const userJwt = Cookies.get("JwtToken");
-  const response = await axios.get("http://localhost:8080/petition/getOpen", {
+  const response = await axios.get(`${backendUrl}/petition/getOpen`, {
     headers: {
       Authorization: `Bearer ${userJwt}`,
     },
@@ -136,7 +140,7 @@ export const getOpenPetitions = async () => {
 // get open petitions for community associated with users cookie
 export const getClosedPetitions = async () => {
   const userJwt = Cookies.get("JwtToken");
-  const response = await axios.get("http://localhost:8080/petition/getClosed", {
+  const response = await axios.get(`${backendUrl}/petition/getClosed`, {
     headers: {
       Authorization: `Bearer ${userJwt}`,
     },
@@ -147,7 +151,7 @@ export const getClosedPetitions = async () => {
 // get open petitions for community associated with users cookie
 export const getFutureProposals = async () => {
   const userJwt = Cookies.get("JwtToken");
-  const response = await axios.get("http://localhost:8080/petition/getFutureProposals", {
+  const response = await axios.get(`${backendUrl}/petition/getFutureProposals`, {
     headers: {
       Authorization: `Bearer ${userJwt}`,
     },
@@ -160,7 +164,7 @@ export const checkIfEligiblePetition = async (petitionId) => {
   const userJwt = Cookies.get("JwtToken");
   console.log("petition id:" + petitionId)
   try {
-    const response = await axios.get("http://localhost:8080/petition/checkIfEligible", {
+    const response = await axios.get(`${backendUrl}/petition/checkIfEligible`, {
       headers: {
         Authorization: `Bearer ${userJwt}`,
       },
@@ -178,7 +182,7 @@ export const checkIfEligiblePetition = async (petitionId) => {
 export const checkHasVotedPetition = async (petitionId) => {
   const userJwt = Cookies.get("JwtToken");
   try {
-    const response = await axios.get("http://localhost:8080/petition/checkHasVoted", {
+    const response = await axios.get(`${backendUrl}/petition/checkHasVoted`, {
       headers: {
         Authorization: `Bearer ${userJwt}`,
       },
@@ -197,7 +201,7 @@ export const submitPetitionVote = async (decision, petitionId) => {
   const userJwt = Cookies.get("JwtToken");
   try {
     console.log("calling from the api")
-    const response = await axios.post("http://localhost:8080/petition/vote",
+    const response = await axios.post(`${backendUrl}/petition/vote`,
       {},
       {
         headers: {
@@ -226,7 +230,7 @@ export const handleCreateProposal = async ({
 }) => {
   try {
     const userJwt = Cookies.get("JwtToken");
-    const response = await axios.post("http://localhost:8080/proposal/create", {
+    const response = await axios.post(`${backendUrl}/proposal/create`, {
       title,
       category,
       body,
@@ -254,7 +258,7 @@ export const handleCreateProposal = async ({
 export const getOpenProposals = async () => {
   const now = new Date().getTime();
   const userJwt = Cookies.get("JwtToken");
-  const response = await axios.get("http://localhost:8080/proposal/getOpen", {
+  const response = await axios.get(`${backendUrl}/proposal/getOpen`, {
     headers: {
       Authorization: `Bearer ${userJwt}`,
     },
@@ -266,7 +270,7 @@ export const getOpenProposals = async () => {
 // get closed proposals for community associated with users cookie
 export const getClosedProposals = async () => {
   const userJwt = Cookies.get("JwtToken");
-  const response = await axios.get("http://localhost:8080/proposal/getClosed", {
+  const response = await axios.get(`${backendUrl}/proposal/getClosed`, {
     headers: {
       Authorization: `Bearer ${userJwt}`,
     },
@@ -278,7 +282,7 @@ export const getClosedProposals = async () => {
 export const checkIfEligIbleProposal = async (proposalId) => {
   const userJwt = Cookies.get("JwtToken");
   try {
-    const response = await axios.get("http://localhost:8080/proposal/checkIfEligible", {
+    const response = await axios.get(`${backendUrl}/proposal/checkIfEligible`, {
       headers: {
         Authorization: `Bearer ${userJwt}`,
       },
@@ -296,7 +300,7 @@ export const checkIfEligIbleProposal = async (proposalId) => {
 export const checkHasVotedProposal = async (proposalId) => {
   const userJwt = Cookies.get("JwtToken");
   try {
-    const response = await axios.get("http://localhost:8080/proposal/checkHasVoted", {
+    const response = await axios.get(`${backendUrl}/proposal/checkHasVoted`, {
       headers: {
         Authorization: `Bearer ${userJwt}`,
       },
@@ -312,7 +316,7 @@ export const checkHasVotedProposal = async (proposalId) => {
 
 export const getProposalById = async (proposalId) => {
   const userJwt = Cookies.get("JwtToken");
-  const response = await axios.get(`http://localhost:8080/proposal/${proposalId}`, {
+  const response = await axios.get(`${backendUrl}/proposal/${proposalId}`, {
     headers: {
       Authorization: `Bearer ${userJwt}`,
     },
@@ -333,7 +337,7 @@ export const handleCreateCommunity = async ({
 }) => {
   try {
     const userJwt = Cookies.get("JwtToken");
-    const response = await axios.post("http://localhost:8080/community/create", {
+    const response = await axios.post(`${backendUrl}/community/create`, {
       name,
       admins,
       groupType,
@@ -361,7 +365,7 @@ export const handleCreateCommunity = async ({
 // STATS
 export const getCommunityStats = async (communityId) => {
   try {
-    const response = await axios.get("http://localhost:8080/community/stats", {
+    const response = await axios.get(`${backendUrl}/community/stats`, {
       params: {
         communityId
       },
