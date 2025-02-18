@@ -11,11 +11,10 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # ----- Stage 2: Run -----
-FROM openjdk:11-jre-slim
+FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copy the generated jar file from the build stage.
-# Adjust the jar filename if necessary (e.g., if your jar is named differently).
 COPY --from=build /app/target/*.jar app.jar
 
 # Expose the port (Render will provide the PORT env variable; ensure your application uses it)
