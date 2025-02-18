@@ -71,11 +71,17 @@ public class ProposalController {
                 .orElseThrow(() -> new RuntimeException("Community not found"));
         System.out.println("Community retrieved: " + community);
 
+        // get community timeframe (days)
+        int proposalTimeframe = community.getProposalTimeframe();
+        int msInDay = 86400000;
+
         String title = proposal.getTitle();
         String category = proposal.getCategory();
         String body = proposal.getBody();
         Long startTime = proposal.getStartTime();
-        Long closeTime = proposal.getCloseTime();
+
+        // set close time based on community proposal duration selected by admin
+        long closeTime = (proposalTimeframe * (long) msInDay) + startTime;
         String petitionId = proposal.getPetitionId();
 
         Proposal createdProposal = new Proposal();
