@@ -10,6 +10,7 @@ import com.example.haveyoursay.services.ProposalServiceImplementation;
 
 import com.example.haveyoursay.models.User;
 import com.example.haveyoursay.services.UserServiceImplementation;
+import com.example.haveyoursay.services.CommunityServiceImplementation;
 
 import java.util.List;
 
@@ -39,6 +40,9 @@ public class ProposalController {
 
     @Autowired
     private UserServiceImplementation userServiceImplementation;
+
+    @Autowired
+    private CommunityServiceImplementation communityServiceImplementation;
 
     @Autowired
     private CommunityRepository communityRepository;
@@ -248,6 +252,9 @@ public class ProposalController {
         }
         System.out.println("User email from proposal page: " + user.getEmail());
 
+        // get community
+        Community community = communityServiceImplementation.getCommunityById(user.getCommunity());
+
         try {
             // Add petition id to the users records
             Proposal proposal = proposalServiceImplementation.getProposalById(proposalId);
@@ -285,6 +292,11 @@ public class ProposalController {
             user.getProposalsVotedOn().add(proposalId);
             userServiceImplementation.updateUser(user);
             System.out.println("User updated successfully: " + user);
+
+            // increment total petition vote count for community
+            community.setProposalVoteCount(community.getProposalVoteCount() + 1);
+            communityRepository.save(community);
+
 
             // check if latest vote has caused the inevitable of either a guaranteed support
             // or guaranteed fail

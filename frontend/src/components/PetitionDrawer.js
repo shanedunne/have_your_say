@@ -9,6 +9,8 @@ import Modal from '@mui/material/Modal';
 import { checkHasVotedPetition, submitPetitionVote, checkIfEligiblePetition } from '../services/api';
 import theme from '../assets/theme';
 import ReactMarkdown from 'react-markdown';
+import { useNavigate } from 'react-router-dom';
+
 
 
 const modalStyle = {
@@ -29,6 +31,8 @@ export default function ArticleDrawer({ anchor = "right", open, onClose, title, 
   const [petitionDecision, setPetitionDecision] = useState(null)
   const [hasVotedStatus, setHasVotedStatus] = useState(false);
   const [isEligible, setIsEligible] = useState(null);
+  const navigate = useNavigate();
+
 
 
   useEffect(() => {
@@ -53,7 +57,12 @@ export default function ArticleDrawer({ anchor = "right", open, onClose, title, 
     try {
       console.log("submitting vote from frontend", petitionDecision, petitionId);
       await submitPetitionVote(petitionDecision, petitionId);
-      setTimeout(() => setOpenModal(false), 2000);
+      setTimeout(() => {
+        setOpenModal(false)
+        navigate('/dashboard');
+        window.location.reload();
+      }, 2000);
+      
     } catch (error) {
       console.error("error submitting vote", error)
     }

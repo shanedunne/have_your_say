@@ -8,6 +8,7 @@ import com.example.haveyoursay.services.PetitionServiceImplementation;
 
 import com.example.haveyoursay.models.User;
 import com.example.haveyoursay.services.UserServiceImplementation;
+import com.example.haveyoursay.services.CommunityServiceImplementation;
 
 import java.util.List;
 
@@ -35,6 +36,9 @@ public class PetitionController {
 
     @Autowired
     private UserServiceImplementation userServiceImplementation;
+
+    @Autowired
+    private CommunityServiceImplementation communityServiceImplementation;
 
     @Autowired
     private CommunityRepository communityRepository;
@@ -223,6 +227,10 @@ public class PetitionController {
         }
         System.out.println("User email from petition page: " + user.getEmail());
 
+        // get community
+        Community community = communityServiceImplementation.getCommunityById(user.getCommunity());
+
+
         try {
             // Add petition id to the users records
             Petition petition = petitionServiceImplementation.getPetitionById(petitionId);
@@ -260,6 +268,11 @@ public class PetitionController {
             user.getPetitionsVotedOn().add(petitionId);
             userServiceImplementation.updateUser(user);
             System.out.println("User updated successfully: " + user);
+
+            // increment total petition vote count for community
+            community.setPetitionVoteCount(community.getPetitionVoteCount() + 1);
+            communityRepository.save(community);
+
 
             // check if latest vote has met the quota
             if (petition.getVoteStanding() >= petition.getQuota()) {

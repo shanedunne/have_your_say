@@ -104,6 +104,10 @@ public class CommunityController {
         stats.put("proposalVoteCount", community.getProposalVoteCount());
         stats.put("petitionVoteCount", community.getPetitionVoteCount());
 
+        int totalVotes = community.getPetitionVoteCount() + community.getProposalVoteCount();
+
+        stats.put("totalVotes", totalVotes);
+
         // get info on petitions
         List<Petition> communityPetitions = petitionRepository.findByCommunity(communityId);
 
