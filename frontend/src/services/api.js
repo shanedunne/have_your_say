@@ -1,6 +1,8 @@
 import axios from "axios";
 import Cookies from 'js-cookie';
 
+// LOGIN LOGOUT ACCOUNT
+
 // function to post details of new user
 export const handleSignUp = async ({
   firstName,
@@ -65,6 +67,23 @@ export const handlelogout = async (
   console.log("cookie removed on logout")
   console.log('Remaining cookies:', Cookies.get());
 
+};
+
+// get account information
+export const getAccountInfo = async () => {
+  const userJwt = Cookies.get("JwtToken");
+  try {
+    const response = await axios.get("http://localhost:8080/auth/info", {
+      headers: {
+        Authorization: `Bearer ${userJwt}`,
+      },
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error retrievinfg account information", error);
+    throw error;
+  }
 };
 
 // PETITION API FUNCTIONS
@@ -353,3 +372,4 @@ export const getCommunityStats = async (communityId) => {
     throw error;
   }
 } 
+

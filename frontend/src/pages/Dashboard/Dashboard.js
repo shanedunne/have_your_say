@@ -17,6 +17,7 @@ import { useAuth } from '../../services/authProvider';
 import OpenProposals from "../OpenProposals/OpenProposals";
 import ClosedProposals from "../ClosedProposal/ClosedProposal";
 import CreateCommunity from "../CreateCommunity/CreateCommunity";
+import AccountPage from "../AccountPage";
 import Integrations from "../Integrations/Integrations";
 
 import { NAVIGATION_ADMIN, NAVIGATION_CITIZEN, NAVIGATION_MASTER_ADMIN } from "./MenuStructures";
@@ -48,6 +49,7 @@ function PageContent({ pathname }) {
                     {pathname === '/integrations' && <Integrations />}
                     {pathname === '/logout' && <Logout />}
                     {pathname === '/dashboard' && <DashboardContent />}
+                    {pathname === '/accountSettings' && <AccountPage />}
 
         </Box>
     );

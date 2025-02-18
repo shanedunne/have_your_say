@@ -7,6 +7,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.example.haveyoursay.services.UserService;
 import com.example.haveyoursay.SecurityConfig.JwtProvider;
 import com.example.haveyoursay.models.User;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +23,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.haveyoursay.repositories.CommunityRepository;
 import com.example.haveyoursay.models.Community;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 @RestController
 @RequestMapping("/auth")
@@ -36,7 +43,7 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private UserServiceImplementation customUserDetails;
+    private UserServiceImplementation userServiceImplementation;
 
     @Autowired
     private UserService userService;
@@ -162,7 +169,7 @@ public class UserController {
 
         System.out.println(username + "---++----" + password);
 
-        UserDetails userDetails = customUserDetails.loadUserByUsername(username);
+        UserDetails userDetails = userServiceImplementation.loadUserByUsername(username);
 
         System.out.println("Sig in in user details" + userDetails);
 
@@ -180,5 +187,21 @@ public class UserController {
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
     }
+
+    @GetMapping("info")
+    public User getAccountInfo( @RequestHeader("Authorization") String token) {
+
+         // remove prefix from token
+         if (token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+
+         // call implenetation method to get user from token
+         User user = userServiceImplementation.findUserProfileByJwt(token);
+         
+
+        return user;
+    }
+    
 
 }

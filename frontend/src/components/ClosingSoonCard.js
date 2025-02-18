@@ -3,9 +3,10 @@ import { Card, CardContent, Typography, Box } from "@mui/material";
 import { getOpenPetitions, getOpenProposals } from "../services/api";
 import Button from '@mui/material/Button';
 import { Grid } from '@mui/material';
-import { msToTimeShortClosing } from '../util/msToTime';
+import { msToTimeShortClosing, msToTimeShortOpening } from '../util/msToTime';
 import { truncateText } from '../util/truncateText';
 import PetitionDrawer from './PetitionDrawer';
+import ProposalDrawer from "./ProposalDrawer";
 
 
 const ClosingSoonCard = () => {
@@ -27,6 +28,8 @@ const ClosingSoonCard = () => {
                         curr.closingTime < prev.closingTime ? curr : prev
                     );
                     setClosingSoon(soonest);
+
+
                 } else {
                     setClosingSoon(null);
                 }
@@ -37,7 +40,6 @@ const ClosingSoonCard = () => {
         }
         getData();
     }, [])
-
 
 
     // handle opening petition drawer
@@ -99,56 +101,84 @@ const ClosingSoonCard = () => {
                                             alignItems: "center"
                                         }}
                                     >
-                                        <Typography
-                                            component="span"
-                                            variant="body1"
-                                            color="text.primary"
-                                            sx={{ fontWeight: "bold", ml: 2, fontSize: "18px" }}
-                                        >
-                                            View Petition
-                                        </Typography>
+                                        {closingSoon.petitionId ? (
+                                            <Typography
+                                                component="span"
+                                                variant="body1"
+                                                color="text.primary"
+                                                sx={{ fontWeight: "bold", ml: 2, fontSize: "18px" }}
+                                            >
+                                                View Proposal
+                                            </Typography>
+                                        ) : (
+                                            <Typography
+                                                component="span"
+                                                variant="body1"
+                                                color="text.primary"
+                                                sx={{ fontWeight: "bold", ml: 2, fontSize: "18px" }}
+                                            >
+                                                View Petition
+                                            </Typography>
+                                        )}
+
                                     </Button>
                                 </Box>
                             </Card>
-                        ): (
-                        <Card sx={{ display: 'flex', flexDirection: 'column', borderRadius: 1, p: 2, maxHeight: '300px', minHeight: '300px' }}>
-                            <Box
-                                sx={{
-                                    mb: 2,
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    alignItems: "center",
-                                    justifyContent: "space-between"
-                                }}
-                            >
+                        ) : (
+                            <Card sx={{ display: 'flex', flexDirection: 'column', borderRadius: 1, p: 2, maxHeight: '300px', minHeight: '300px' }}>
+                                <Box
+                                    sx={{
+                                        mb: 2,
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        alignItems: "center",
+                                        justifyContent: "space-between"
+                                    }}
+                                >
 
 
 
-                                <CardContent sx={{ p: 0, mb: 0 }}>
-                                    <Typography variant="h5" sx={{ mb: 1, fontWeight: "bold" }}>
-                                        No open items
-                                    </Typography>
-                                    <Typography variant="body1" sx={{ mb: 2 }}>
-                                        Come back soon to see new petitions and proposals
-                                    </Typography>
-                                </CardContent>
-                            </Box>
-                        </Card>
+                                    <CardContent sx={{ p: 0, mb: 0 }}>
+                                        <Typography variant="h5" sx={{ mb: 1, fontWeight: "bold" }}>
+                                            No open items
+                                        </Typography>
+                                        <Typography variant="body1" sx={{ mb: 2 }}>
+                                            Come back soon to see new petitions and proposals
+                                        </Typography>
+                                    </CardContent>
+                                </Box>
+                            </Card>
                         )}
                         {closingSoon && (
-                            <PetitionDrawer
-                            anchor="right"
-                            open={isDrawerOpen}
-                            onClose={() => handleToggleDrawer(false)}
-                            title={closingSoon.title}
-                            body={closingSoon.body}
-                            category={closingSoon.category}
-                            closeTime={msToTimeShortClosing(closingSoon.closeTime)}
-                            petitionId={closingSoon.petitionId}
-                            status={closingSoon.status}
-                        />
+                            closingSoon.quota ? ( // check for quota field to find petitions
+                                <PetitionDrawer
+                                    anchor="right"
+                                    open={isDrawerOpen}
+                                    onClose={() => handleToggleDrawer(false)}
+                                    title={closingSoon.title}
+                                    body={closingSoon.body}
+                                    category={closingSoon.category}
+                                    closeTime={msToTimeShortClosing(closingSoon.closeTime)}
+                                    petitionId={closingSoon.petitionId}
+                                    status={closingSoon.status}
+                                />
+                            ) : (
+                                <ProposalDrawer
+                                    anchor="right"
+                                    open={isDrawerOpen}
+                                    onClose={() => handleToggleDrawer(false)}
+                                    title={closingSoon.title}
+                                    body={closingSoon.body}
+                                    category={closingSoon.category}
+                                    proposalId={closingSoon.proposalId}
+                                    closeTime={msToTimeShortClosing(closingSoon.closeTime)}
+                                    startTime={msToTimeShortOpening(closingSoon.startTime)}
+                                    petitionId={closingSoon.petitionId}
+                                    status={closingSoon.status}
+                                />
+                            )
                         )}
-                        
+
                     </Grid>
                 </Box>
             </CardContent>
