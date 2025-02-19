@@ -13,15 +13,14 @@ function HomePage() {
     const navigate = useNavigate();
 
     return (
-        <Box sx={{ width: "100%", height: "100vh" }}>
+        <Box sx={{ display: "flex", flexDirection: "column", width: "100%", minHeight: "100vh" }}>
             <ButtonAppBar />
             <Box sx={{
                 display: 'flex',
                 flexDirection: { xs: "column", sm: "row" },
-                justifyContent: 'center',
-                alignItems: 'center',
+                flex: 1,
+                alignItems: 'stretch',
                 width: '100%',
-                height: '100vh',
             }}>
                 <Box sm={12} m={9}
                     sx={{
@@ -31,10 +30,9 @@ function HomePage() {
                         display: "flex",
                         flexDirection: "column",
                         justifyContent: "center",
-                        alignItems: "center",
-                        height: { xs: "100vh", sm: "100vh" },
+                        alignItems: 'center',
                         margin: 0,
-                        padding: 0
+                        padding: 3
                     }}
                 >
                     <Typography variant="h3" sx={{ fontWeight: "bold", mb: 2 }}>
@@ -91,30 +89,7 @@ function HomePage() {
                             implementation.
                         </Typography>
                     </Box>
-                    <Typography
-                        variant="body1"
-                        sx={{
-                            lineHeight: 1.8,
-                            textAlign: "center",
-                            maxWidth: { xs: "90%", sm: "70%" },
-                            color: theme.palette.primary.contrastText,
-                        }}
-                    >
-                        ---------------------------------------
-                    </Typography>
-                    <Typography
-                        variant="subtitle2"
-                        sx={{
-                            lineHeight: 1.8,
-                            textAlign: "center",
-                            maxWidth: { xs: "90%", sm: "70%" },
-                            color: theme.palette.primary.contrastText,
-                        }}
-                    >
-                        Whether you're part of a regional community, club, society or company,
-                         use your voice and be heard. Implement <strong>Have Your Say</strong> now, 
-                         the platform you deserve!
-                    </Typography>
+                    
                 </Box>
                 <Box sm={12} m={3}
                     sx={{
@@ -123,7 +98,8 @@ function HomePage() {
                         flexDirection: "column",
                         justifyContent: "center",
                         alignItems: "center",
-                        height: { xs: "50%", sm: "100vh" },
+                        minHeight: {xs: "50vh"},
+                        p: 3,
                         margin: 0,
                         backgroundColor: theme.palette.background.paper,
                         color: theme.palette.primary.main
