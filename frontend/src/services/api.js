@@ -83,7 +83,7 @@ export const getAccountInfo = async () => {
       },
     });
     console.log(response.data);
-    return response;
+    return response.data;
   } catch (error) {
     console.error("Error retrievinfg account information", error);
     throw error;
@@ -371,9 +371,9 @@ export const getCommunityStats = async (communityId) => {
       },
     })
     return response.data;
-  } catch(error) {
+  } catch (error) {
     console.log("error getting community stats", error)
     throw error;
   }
-} 
+}
 
